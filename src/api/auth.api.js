@@ -9,7 +9,6 @@ export const login = user => {
   return axios.post(`${baseURL}/login`, user);
 };
 
-// we need to add the JWT to the authorization
 // headers of the verify request
 export const verify = storedToken => {
   return axios.get(`${baseURL}/verify`, {
