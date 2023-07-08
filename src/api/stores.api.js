@@ -17,3 +17,11 @@ setAuthorizationHeaders();
 export const getAllStores = () => {
   return axios.get(`${baseURL}/stores`);
 };
+
+export const addStore = store => {
+  return axios.post(`${baseURL}/stores`, store);
+};
+
+export const getStore = storeId => {
+  return axios.get(`${baseURL}/stores/${storeId}`);
+};

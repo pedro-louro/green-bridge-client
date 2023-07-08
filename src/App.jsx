@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/login';
 import Signup from './pages/Signup';
 import Stores from './pages/Stores';
+import MyStore from './pages/MyStore';
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route
           path='/stores'
           element={<Stores />}
+        />
+        <Route
+          path='/mystore'
+          element={<MyStore />}
         />
       </Routes>
     </div>

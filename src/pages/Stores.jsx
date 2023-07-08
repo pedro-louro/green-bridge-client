@@ -1,5 +1,6 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
+import AddStore from '../pages/AddStore';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);
@@ -19,7 +20,6 @@ const Stores = () => {
   return (
     <div>
       <h2>Stores</h2>
-
       {stores &&
         stores.map(store => {
           return (
