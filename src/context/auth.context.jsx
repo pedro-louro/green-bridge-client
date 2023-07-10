@@ -22,6 +22,7 @@ const AuthProviderWrapper = props => {
 
         setUser(user);
         setIsLoggedIn(true);
+        localStorage.setItem('userId', response.data._id);
       } catch (error) {
         console.log('An error occurred authenticating the user', error);
 

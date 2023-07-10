@@ -2,10 +2,11 @@ import { addProduct } from '../api/product.api';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth.context';
+import { updateStore } from '../api/stores.api';
 
-const CreateProduct = () => {
+const CreateProduct = ({ hideForm }) => {
   const { user } = useContext(AuthContext);
-
+  const [hiddenForm, setHiddenForm] = useState('hidden');
   const [name, setName] = useState('');
   const [store, setStore] = useState('');
   const [price, setPrice] = useState(0);
@@ -45,7 +46,13 @@ const CreateProduct = () => {
       // }
 
       const createProduct = await addProduct(newProduct);
+      console.log(createProduct.data);
+      const objectForStore = {
+        store: createProduct.data.store,
+        products: createProduct.data._id
+      };
 
+      const addToStore = await updateStore(objectForStore);
       await toast.success('Store added successfully');
     } catch (error) {
       toast.error('Something went wrong, try again later');
@@ -55,11 +62,11 @@ const CreateProduct = () => {
     setPrice(0);
     setStock(0);
     setImg('');
+    hideForm();
   };
 
   return (
     <div>
-      <h1>Add a Product</h1>
       <div>
         <form onSubmit={handleSubmit}>
           <label>Name:</label>
