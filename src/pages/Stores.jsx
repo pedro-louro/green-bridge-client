@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import AddStore from '../pages/AddStore';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);
@@ -25,6 +25,7 @@ const Stores = () => {
           return (
             <div key={store._id}>
               <h3>{store.name}</h3>
+              <Link to={`/stores/${store._id}`}>See details</Link>
             </div>
           );
         })}

@@ -6,6 +6,7 @@ import Login from './pages/login';
 import Signup from './pages/Signup';
 import Stores from './pages/Stores';
 import MyStore from './pages/MyStore';
+import StoreDetails from './pages/StoreDetails';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         <Route
           path='/mystore'
           element={<MyStore />}
+        />
+        <Route
+          path='/stores/:storeId'
+          element={<StoreDetails />}
         />
       </Routes>
     </div>
