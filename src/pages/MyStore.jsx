@@ -30,7 +30,7 @@ const MyStore = () => {
 
   useEffect(() => {
     fetchStore();
-  }, [myStore]);
+  }, []);
 
   return (
     <div>
@@ -44,7 +44,12 @@ const MyStore = () => {
       >
         Add a new product
       </button>
-      {!hiddenForm && <CreateProduct hideForm={hideForm} />}
+      {!hiddenForm && (
+        <CreateProduct
+          hideForm={hideForm}
+          refreshStores={fetchStore}
+        />
+      )}
       {myStore && <h2>{myStore.name}</h2>}
       {myStore &&
         myStore.products.map(product => {

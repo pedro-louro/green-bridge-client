@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth.context';
 import { updateStore } from '../api/stores.api';
 
-const CreateProduct = ({ hideForm }) => {
+const CreateProduct = ({ hideForm, refreshStores }) => {
   const { user } = useContext(AuthContext);
   const [hiddenForm, setHiddenForm] = useState('hidden');
   const [name, setName] = useState('');
@@ -63,6 +63,7 @@ const CreateProduct = ({ hideForm }) => {
     setStock(0);
     setImg('');
     hideForm();
+    refreshStores();
   };
 
   return (
