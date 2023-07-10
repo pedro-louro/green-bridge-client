@@ -13,6 +13,10 @@ export const updateUser = user => {
   return axios.put(`${baseURL}/user/${user._id}`, user);
 };
 
+export const getUser = userId => {
+  return axios.put(`${baseURL}/user/${userId}`);
+};
+
 // headers of the verify request
 export const verify = storedToken => {
   return axios.get(`${baseURL}/verify`, {

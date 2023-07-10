@@ -3,12 +3,14 @@ import { updateUser } from '../api/auth.api';
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth.context';
+import { useNavigate } from 'react-router-dom';
 
 const AddStore = () => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [image, setImg] = useState('');
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleName = event => {
     setName(event.target.value);
@@ -40,11 +42,8 @@ const AddStore = () => {
       // }
 
       const createdStore = await addStore(newStore);
-      console.log(createdStore);
       const userData = { _id: user._id, store: createdStore.data._id };
-      console.log(userData);
       const addToUser = await updateUser(userData);
-      console.log(addToUser);
 
       await toast.success('Store added successfully');
     } catch (error) {
@@ -54,6 +53,8 @@ const AddStore = () => {
     setName('');
     setAddress('');
     // setImg('');
+
+    navigate(`/myStore/`);
   };
 
   return (
