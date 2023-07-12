@@ -5,8 +5,8 @@ import { AuthContext } from '../context/auth.context';
 //
 
 const Navbar = () => {
-  const { isLoggedIn, logOutUser, user } = useContext(AuthContext);
-  const userId = localStorage.getItem('userId');
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const orderId = localStorage.getItem('orderId');
 
   return (
     <nav className='Navbar'>
@@ -26,7 +26,7 @@ const Navbar = () => {
               Stores
             </NavLink>
             <NavLink to={`/mystore`}>My Store</NavLink>
-            <NavLink to={`/users/${userId}/cart`}>My Cart</NavLink>
+            <NavLink to={`/orders/${orderId}/cart`}>My Cart</NavLink>
             <NavLink onClick={logOutUser}>Logout</NavLink>
           </>
         )}

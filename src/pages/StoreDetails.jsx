@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
 import Checkout from './CheckOut';
-import { addOrder, updateOrder } from '../api/order.api';
+import { addOrder, getOrder, updateOrder } from '../api/order.api';
 
 const StoreDetails = () => {
   const [store, setStore] = useState(null);
   const { storeId } = useParams();
   const [orderDetails, setOrderDetails] = useState('');
-  const [orderId, serOrderId] = useState('');
   const userId = localStorage.getItem('userId');
+  const orderId = localStorage.getItem('orderId');
 
   const fetchStore = async storeId => {
     try {
@@ -23,19 +23,30 @@ const StoreDetails = () => {
   const handleOrder = async product => {
     if (!orderId) {
       const response = await addOrder({
-        products: product._id,
+        products: { product: product._id, quantity: 1 },
         status: 'cart',
         user: userId,
         store: storeId
       });
-      serOrderId(response.data._id);
       setOrderDetails(response.data);
+      localStorage.setItem('orderId', response.data._id);
     } else {
+      const fetchOder = await getOrder(orderId);
+      console.log(fetchOder);
+
+      // TODO: finish adding the quantity logic
+      const productExists = fetchOder.data.products.filter(
+        existingProduct => existingProduct === product._id
+      );
+
+      console.log(productExists);
+
       const addToOrder = await updateOrder({
         _id: orderId,
-        products: product._id,
+        products: { product: product._id, quantity: 1 },
         status: 'cart'
       });
+      setOrderDetails(addToOrder.data);
     }
   };
 
@@ -63,9 +74,6 @@ const StoreDetails = () => {
             </div>
           );
         })}
-      <div hidden>
-        <Checkout />
-      </div>
     </div>
   );
 };

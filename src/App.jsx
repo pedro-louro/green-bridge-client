@@ -35,7 +35,7 @@ function App() {
           element={<StoreDetails />}
         />
         <Route
-          path='/users/:userId/cart'
+          path='/orders/:orderId/cart'
           element={<Checkout />}
         />
       </Routes>

@@ -21,3 +21,7 @@ export const addOrder = order => {
 export const updateOrder = order => {
   return axios.put(`${baseURL}/orders/${order._id}`, order);
 };
+
+export const getOrder = orderId => {
+  return axios.get(`${baseURL}/orders/${orderId}`);
+};
