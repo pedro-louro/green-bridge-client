@@ -7,6 +7,7 @@ import Signup from './pages/Signup';
 import Stores from './pages/Stores';
 import MyStore from './pages/MyStore';
 import StoreDetails from './pages/StoreDetails';
+import Checkout from './pages/CheckOut';
 
 function App() {
   return (
@@ -33,9 +34,12 @@ function App() {
           path='/stores/:storeId'
           element={<StoreDetails />}
         />
+        <Route
+          path='/users/:userId/cart'
+          element={<Checkout />}
+        />
       </Routes>
     </div>
   );
 }
-
 export default App;

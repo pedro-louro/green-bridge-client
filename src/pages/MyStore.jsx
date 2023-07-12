@@ -35,8 +35,6 @@ const MyStore = () => {
   return (
     <div>
       <h2>My Store</h2>
-      {!myStore && <AddStore />}
-
       <button
         onClick={() => {
           setHiddenForm('');
@@ -60,6 +58,7 @@ const MyStore = () => {
             </div>
           );
         })}
+      {!myStore && <AddStore />}
     </div>
   );
 };
