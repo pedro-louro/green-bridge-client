@@ -6,12 +6,17 @@ const Checkout = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState({});
   const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const fetchOrder = async () => {
     const response = await getOrder(orderId);
     setOrder(response.data);
     setProducts(response.data.products);
-    console.log(response.data);
+
+    const calcTotal = response.data.products.reduce((acc, curr) => {
+      return acc + curr.quantity * curr.product.price;
+    }, 0);
+    setTotal(calcTotal);
   };
   useEffect(() => {
     fetchOrder();
@@ -25,11 +30,15 @@ const Checkout = () => {
           return (
             <div key={productInCart._id}>
               <p>
-                {productInCart.product.name} {productInCart.product.price}€
+                <b>{productInCart.product.name}</b> | {productInCart.quantity} x{' '}
+                {productInCart.product.price}€
               </p>
             </div>
           );
         })}
+      <p>
+        <b>Total: {total}€</b>
+      </p>
     </div>
   );
 };
