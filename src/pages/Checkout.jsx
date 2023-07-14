@@ -11,7 +11,7 @@ const Checkout = () => {
     const response = await getOrder(orderId);
     setOrder(response.data);
     setProducts(response.data.products);
-    console.log(products);
+    console.log(response.data);
   };
   useEffect(() => {
     fetchOrder();
@@ -21,11 +21,11 @@ const Checkout = () => {
     <div>
       <h2>My Cart</h2>
       {products &&
-        products.map(product => {
+        products.map(productInCart => {
           return (
-            <div key={product._id}>
+            <div key={productInCart._id}>
               <p>
-                {product.name} {product.price}€
+                {productInCart.product.name} {productInCart.product.price}€
               </p>
             </div>
           );

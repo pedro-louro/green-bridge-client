@@ -28,22 +28,34 @@ const StoreDetails = () => {
         user: userId,
         store: storeId
       });
-      setOrderDetails(response.data);
       localStorage.setItem('orderId', response.data._id);
+
+      setOrderDetails(response.data);
     } else {
       const fetchOder = await getOrder(orderId);
-      console.log(fetchOder);
+      const orderProducts = fetchOder.data.products;
 
-      // TODO: finish adding the quantity logic
-      const productExists = fetchOder.data.products.filter(
-        existingProduct => existingProduct === product._id
+      let productExists = orderProducts.filter(
+        current => current.product._id === product._id
       );
-
+      let productToAdd = {};
+      console.log('Exists');
       console.log(productExists);
+
+      if (productExists.length) {
+        productToAdd.product = productExists[0].product._id;
+        productToAdd.quantity = productExists[0].quantity + 1;
+
+        console.log('To add');
+        console.log(productToAdd);
+      } else {
+        productToAdd.product = product._id;
+        productToAdd.quantity = 1;
+      }
 
       const addToOrder = await updateOrder({
         _id: orderId,
-        products: { product: product._id, quantity: 1 },
+        products: productToAdd,
         status: 'cart'
       });
       setOrderDetails(addToOrder.data);
@@ -52,7 +64,7 @@ const StoreDetails = () => {
 
   useEffect(() => {
     fetchStore(storeId);
-  }, [storeId, orderDetails]);
+  }, [storeId, orderDetails, orderId]);
 
   return (
     <div>
