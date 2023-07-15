@@ -26,7 +26,7 @@ const Navbar = () => {
               Stores
             </NavLink>
             <NavLink to={`/mystore`}>My Store</NavLink>
-            <NavLink to={`/orders/${orderId}/cart`}>My Cart</NavLink>
+            <NavLink to={`/mycart`}>My Cart</NavLink>
             <NavLink onClick={logOutUser}>Logout</NavLink>
           </>
         )}

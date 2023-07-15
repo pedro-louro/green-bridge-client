@@ -13,6 +13,8 @@ function App() {
   return (
     <div className='App'>
       <Navbar />
+      <ToastContainer />
+
       <Routes>
         <Route
           path='/login'
@@ -35,7 +37,7 @@ function App() {
           element={<StoreDetails />}
         />
         <Route
-          path='/orders/:orderId/cart'
+          path='/mycart'
           element={<Checkout />}
         />
       </Routes>

@@ -25,3 +25,6 @@ export const updateOrder = order => {
 export const getOrder = orderId => {
   return axios.get(`${baseURL}/orders/${orderId}`);
 };
+export const deleteOrder = orderId => {
+  return axios.delete(`${baseURL}/orders/${orderId}`);
+};
