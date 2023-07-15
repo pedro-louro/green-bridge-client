@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteOrder, getOrder, updateOrder } from '../api/order.api';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { updateStore } from '../api/stores.api';
 
 const Checkout = () => {
   const [orderId, setOrderId] = useState(localStorage.getItem('orderId'));
@@ -9,6 +10,7 @@ const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
+  const store = { _id: order.store, orders: order._id };
 
   const fetchOrder = async () => {
     const response = await getOrder(orderId);
@@ -37,6 +39,8 @@ const Checkout = () => {
       status: 'new',
       total: total
     });
+    await updateStore(store);
+
     toast.success('The store received your order');
     localStorage.removeItem('orderId');
     setOrderId('');

@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import { getUser } from '../api/auth.api';
 import CreateProduct from './AddProduct';
+import { Link } from 'react-router-dom';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
@@ -40,7 +41,10 @@ const MyStore = () => {
         }}
       >
         Add a new product
-      </button>
+      </button>{' '}
+      <Link to={`/mystore/${myStore._id}/orders`}>
+        <button>Store Orders</button>
+      </Link>
       {!hiddenForm && (
         <CreateProduct
           hideForm={hideForm}

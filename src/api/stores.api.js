@@ -26,6 +26,6 @@ export const getStore = storeId => {
   return axios.get(`${baseURL}/stores/${storeId}`);
 };
 
-export const updateStore = product => {
-  return axios.put(`${baseURL}/stores/${product.store}`, product);
+export const updateStore = store => {
+  return axios.put(`${baseURL}/stores/${store._id}`, store);
 };

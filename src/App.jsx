@@ -4,11 +4,12 @@ import { ToastContainer } from 'react-toastify';
 import Navbar from './components/Navbar';
 import Login from './pages/login';
 import Signup from './pages/Signup';
-import Stores from './pages/Stores';
+import Stores from './pages/ListStores';
 import MyStore from './pages/MyStore';
 import StoreDetails from './pages/StoreDetails';
 import Checkout from './pages/CheckOut';
 import MyOrders from './pages/MyOrders';
+import StoreOrders from './pages/StoreOrders';
 
 function App() {
   return (
@@ -34,9 +35,14 @@ function App() {
           element={<MyStore />}
         />
         <Route
+          path='/mystore/:storeId/orders'
+          element={<StoreOrders />}
+        />
+        <Route
           path='/stores/:storeId'
           element={<StoreDetails />}
         />
+
         <Route
           path='/mycart'
           element={<Checkout />}
