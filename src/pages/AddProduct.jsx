@@ -53,7 +53,7 @@ const CreateProduct = ({ hideForm, refreshStores }) => {
       };
 
       const addToStore = await updateStore(objectForStore);
-      await toast.success('Store added successfully');
+      await toast.success('Product added successfully');
     } catch (error) {
       toast.error('Something went wrong, try again later');
       console.log(error);

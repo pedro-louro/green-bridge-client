@@ -5,7 +5,11 @@ const setAuthorizationHeaders = () => {
   axios.interceptors.request.use(config => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
-      config.headers = { Authorization: `Bearer ${storedToken}` };
+      config.headers = {
+        Authorization: `Bearer ${storedToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      };
     }
 
     return config;
@@ -25,6 +29,10 @@ export const updateOrder = order => {
 export const getOrder = orderId => {
   return axios.get(`${baseURL}/orders/${orderId}`);
 };
+export const getOrderByUser = userId => {
+  return axios.get(`${baseURL}/orders/user/${userId}`);
+};
+
 export const deleteOrder = orderId => {
   return axios.delete(`${baseURL}/orders/${orderId}`);
 };

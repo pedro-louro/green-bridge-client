@@ -8,6 +8,7 @@ import Stores from './pages/Stores';
 import MyStore from './pages/MyStore';
 import StoreDetails from './pages/StoreDetails';
 import Checkout from './pages/CheckOut';
+import MyOrders from './pages/MyOrders';
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
         <Route
           path='/mycart'
           element={<Checkout />}
+        />
+        <Route
+          path='/myorders'
+          element={<MyOrders />}
         />
       </Routes>
     </div>

@@ -6,7 +6,6 @@ import { getUser } from '../api/auth.api';
 import CreateProduct from './AddProduct';
 
 const MyStore = () => {
-  const { user } = useContext(AuthContext);
   const [myStore, setMyStore] = useState('');
   const { myProducts, setMyProducts } = useState([]);
   const userId = localStorage.getItem('userId');
@@ -30,7 +29,7 @@ const MyStore = () => {
 
   useEffect(() => {
     fetchStore();
-  }, []);
+  }, [myProducts]);
 
   return (
     <div>

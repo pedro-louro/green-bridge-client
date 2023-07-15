@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const Checkout = () => {
-  const orderId = localStorage.getItem('orderId');
+  const [orderId, setOrderId] = useState(localStorage.getItem('orderId'));
   const [order, setOrder] = useState({});
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -26,6 +26,7 @@ const Checkout = () => {
     toast.success('Order Canceled successfully');
     setOrder({});
     localStorage.removeItem('orderId');
+    setOrderId('');
 
     navigate('/stores');
   };
@@ -33,9 +34,12 @@ const Checkout = () => {
   const placeOrder = async () => {
     const response = await updateOrder({
       _id: orderId,
-      status: 'new'
+      status: 'new',
+      total: total
     });
     toast.success('The store received your order');
+    localStorage.removeItem('orderId');
+    setOrderId('');
   };
 
   useEffect(() => {
