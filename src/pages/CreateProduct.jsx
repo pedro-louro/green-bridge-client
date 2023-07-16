@@ -4,11 +4,10 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth.context';
 import { updateStore } from '../api/stores.api';
 
-const CreateProduct = ({ hideForm, refreshStores }) => {
-  const { user } = useContext(AuthContext);
+const CreateProduct = ({ hideForm, refreshStores, myStore }) => {
+  const userId = localStorage.getItem('userId');
   const [hiddenForm, setHiddenForm] = useState('hidden');
   const [name, setName] = useState('');
-  const [store, setStore] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [img, setImg] = useState('');
@@ -31,7 +30,7 @@ const CreateProduct = ({ hideForm, refreshStores }) => {
     event.preventDefault();
 
     try {
-      const newProduct = { name, img, store: user.store, price, stock };
+      const newProduct = { name, img, store: myStore._id, price, stock };
 
       // if (image) {
       //   //create new formData
@@ -46,9 +45,8 @@ const CreateProduct = ({ hideForm, refreshStores }) => {
       // }
 
       const createProduct = await addProduct(newProduct);
-      console.log(createProduct.data);
       const objectForStore = {
-        store: createProduct.data.store,
+        _id: createProduct.data.store,
         products: createProduct.data._id
       };
 

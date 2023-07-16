@@ -9,6 +9,7 @@ const StoreOrders = () => {
   const [store, setStore] = useState(null);
   const [orders, setOrders] = useState(null);
   const [pastOrders, setPastOrders] = useState(null);
+  const [statusChanged, setStatusChanged] = useState(false);
 
   const fetchStore = async () => {
     try {
@@ -32,9 +33,14 @@ const StoreOrders = () => {
         order => order.status === 'delivered' || order.status === 'canceled'
       );
       setPastOrders(nonActiveOrders);
+      setStatusChanged(false);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const refreshStores = () => {
+    setStatusChanged(true);
   };
 
   const changeOrderStatus = (orderId, newStatus) => {
@@ -51,9 +57,10 @@ const StoreOrders = () => {
     );
     return product[0].name;
   };
+
   useEffect(() => {
     fetchStore();
-  }, []);
+  }, [statusChanged]);
   return (
     <div>
       {orders && <h1>Open Orders</h1>}
@@ -71,6 +78,7 @@ const StoreOrders = () => {
               <UpdateOrderModal
                 orderDetails={order}
                 updateStatus={changeOrderStatus}
+                refreshStores={refreshStores}
               />
               <p>Order Details: </p>
               {order.products &&

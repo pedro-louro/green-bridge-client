@@ -32,6 +32,9 @@ export const getOrder = orderId => {
 export const getOrderByUser = userId => {
   return axios.get(`${baseURL}/orders/user/${userId}`);
 };
+export const getOrderStatus = orderStatus => {
+  return axios.get(`${baseURL}/orders`, { params: { status: orderStatus } });
+};
 
 export const deleteOrder = orderId => {
   return axios.delete(`${baseURL}/orders/${orderId}`);

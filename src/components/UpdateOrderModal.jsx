@@ -12,10 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-function UpdateOrderModal({ orderDetails, updateStatus }) {
+function UpdateOrderModal({ orderDetails, updateStatus, refreshStores }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [status, setStatus] = useState(orderDetails.status);
-  console.log(orderDetails._id);
 
   return (
     <>
@@ -35,7 +34,7 @@ function UpdateOrderModal({ orderDetails, updateStatus }) {
               onChange={e => setStatus(e.target.value)}
             >
               <option value='preparing'>Preparing</option>
-              <option value='ready'>Ready</option>
+              <option value='ready'>Ready For Delivering</option>
               <option value='canceled'>Cancel</option>
             </Select>
           </ModalBody>
@@ -50,7 +49,11 @@ function UpdateOrderModal({ orderDetails, updateStatus }) {
             </Button>
             <Button
               variant='ghost'
-              onClick={() => updateStatus(orderDetails._id, status)}
+              onClick={() => {
+                updateStatus(orderDetails._id, status);
+                onClose();
+                refreshStores();
+              }}
             >
               Update Order
             </Button>

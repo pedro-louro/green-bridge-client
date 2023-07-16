@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const MyOrders = () => {
   const userId = localStorage.getItem('userId');
   const [pastOrders, setPastOrders] = useState([]);
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   const fetchUserOrders = async () => {
     try {
@@ -36,7 +36,7 @@ const MyOrders = () => {
 
   useEffect(() => {
     fetchUserOrders();
-  }, [orders, pastOrders]);
+  }, []);
 
   return (
     <div>

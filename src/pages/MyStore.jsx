@@ -1,14 +1,14 @@
 import AddStore from './AddStore';
 import { getStore } from '../api/stores.api';
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/auth.context';
 import { getUser } from '../api/auth.api';
-import CreateProduct from './AddProduct';
+import CreateProduct from './CreateProduct';
 import { Link } from 'react-router-dom';
+import { deleteProduct } from '../api/product.api';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
-  const { myProducts, setMyProducts } = useState([]);
+  const { numProducts, setNumProducts } = useState(0);
   const userId = localStorage.getItem('userId');
   const [hiddenForm, setHiddenForm] = useState('hidden');
 
@@ -22,15 +22,22 @@ const MyStore = () => {
       const fetchUser = await getUser(userId);
       const response = await getStore(fetchUser.data.store);
       setMyStore(response.data);
-      setMyProducts(response.data.products);
+      setNumProducts(response.data.products.length);
     } catch (error) {
       console.log('Error getting the Store');
+    }
+  };
+  const removeProduct = async productId => {
+    try {
+      await deleteProduct(productId);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     fetchStore();
-  }, [myProducts]);
+  }, [removeProduct]);
 
   return (
     <div>
@@ -49,6 +56,7 @@ const MyStore = () => {
         <CreateProduct
           hideForm={hideForm}
           refreshStores={fetchStore}
+          myStore={myStore}
         />
       )}
       {myStore && <h2>{myStore.name}</h2>}
@@ -57,7 +65,16 @@ const MyStore = () => {
           return (
             <div key={product._id}>
               <h4>{product.name}</h4>
-              <p>Price: {product.price}€</p>
+              <p>
+                Price: {product.price}€ | {product.stock} units in Stock
+              </p>
+              <button
+                onClick={() => {
+                  removeProduct(product._id);
+                }}
+              >
+                Delete Product
+              </button>
             </div>
           );
         })}

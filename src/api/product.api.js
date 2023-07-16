@@ -17,3 +17,6 @@ setAuthorizationHeaders();
 export const addProduct = product => {
   return axios.post(`${baseURL}/products`, product);
 };
+export const deleteProduct = productID => {
+  return axios.delete(`${baseURL}/products/${productID}`);
+};
