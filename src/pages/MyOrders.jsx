@@ -36,7 +36,7 @@ const MyOrders = () => {
 
   useEffect(() => {
     fetchUserOrders();
-  }, [orders]);
+  }, [orders, pastOrders]);
 
   return (
     <div>

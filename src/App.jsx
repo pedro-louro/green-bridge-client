@@ -10,6 +10,7 @@ import StoreDetails from './pages/StoreDetails';
 import Checkout from './pages/CheckOut';
 import MyOrders from './pages/MyOrders';
 import StoreOrders from './pages/StoreOrders';
+import { ChakraProvider } from '@chakra-ui/react';
 
 function App() {
   return (

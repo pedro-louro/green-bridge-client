@@ -1,11 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import UpdateOrderModal from '../components/UpdateOrderModal';
+import { updateOrder } from '../api/order.api';
 
 const StoreOrders = () => {
   const { storeId } = useParams();
   const [store, setStore] = useState(null);
-  const [orders, SetOrders] = useState(null);
+  const [orders, setOrders] = useState(null);
   const [pastOrders, setPastOrders] = useState(null);
 
   const fetchStore = async () => {
@@ -21,7 +23,7 @@ const StoreOrders = () => {
           order.status === 'delivering'
       );
       if (activeOrders.length) {
-        SetOrders(activeOrders);
+        setOrders(activeOrders);
       } else {
         setOrders(null);
       }
@@ -35,17 +37,23 @@ const StoreOrders = () => {
     }
   };
 
+  const changeOrderStatus = (orderId, newStatus) => {
+    try {
+      const response = updateOrder({ _id: orderId, status: newStatus });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getProductName = productId => {
     const product = store.products.filter(
       element => element._id.toString() === productId.toString()
     );
-    console.log(product);
     return product[0].name;
   };
   useEffect(() => {
     fetchStore();
   }, []);
-
   return (
     <div>
       {orders && <h1>Open Orders</h1>}
@@ -59,6 +67,11 @@ const StoreOrders = () => {
                 </u>{' '}
                 order
               </h3>
+
+              <UpdateOrderModal
+                orderDetails={order}
+                updateStatus={changeOrderStatus}
+              />
               <p>Order Details: </p>
               {order.products &&
                 order.products.map(orderProduct => {
@@ -78,7 +91,6 @@ const StoreOrders = () => {
       {!orders && (
         <div>
           <h2>You don't have any open order! </h2>
-          <Link to={'/stores/'}>Find you Favorite Plants Store!</Link>
         </div>
       )}
       <hr />
@@ -97,8 +109,8 @@ const StoreOrders = () => {
               {pastOrder.products &&
                 pastOrder.products.map(orderProduct => {
                   return (
-                    <p key={orderProduct.product._id}>
-                      <b>{orderProduct.product.name}</b> |{' '}
+                    <p key={orderProduct._id}>
+                      <b>{getProductName(orderProduct.product)}</b> |{' '}
                       {orderProduct.quantity} x {orderProduct.product.price}€
                     </p>
                   );
