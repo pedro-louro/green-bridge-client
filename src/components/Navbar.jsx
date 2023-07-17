@@ -28,6 +28,7 @@ const Navbar = () => {
             <NavLink to={`/mycart`}>My Cart</NavLink>
             <NavLink to={`/myOrders`}>My Orders</NavLink>
             <NavLink to={`/mystore`}>My Store</NavLink>
+            <NavLink to={'/driver/orders'}>Driver</NavLink>
             <NavLink onClick={logOutUser}>Logout</NavLink>
           </>
         )}

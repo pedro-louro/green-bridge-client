@@ -13,14 +13,20 @@ const Checkout = () => {
   const store = { _id: order.store, orders: order._id };
 
   const fetchOrder = async () => {
-    const response = await getOrder(orderId);
-    setOrder(response.data);
-    setProducts(response.data.products);
+    if (orderId) {
+      try {
+        const response = await getOrder(orderId);
+        setOrder(response.data);
+        setProducts(response.data.products);
 
-    const calcTotal = response.data.products.reduce((acc, curr) => {
-      return acc + curr.quantity * curr.product.price;
-    }, 0);
-    setTotal(calcTotal);
+        const calcTotal = response.data.products.reduce((acc, curr) => {
+          return acc + curr.quantity * curr.product.price;
+        }, 0);
+        setTotal(calcTotal);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const cancelOrder = async () => {
@@ -39,13 +45,13 @@ const Checkout = () => {
       status: 'new',
       total: total
     });
-    await updateStore(store);
+    console.log(response.data);
+    await updateStore({ _id: order.store._id, orders: order._id });
 
     toast.success('The store received your order');
     localStorage.removeItem('orderId');
     setOrderId('');
   };
-
   useEffect(() => {
     fetchOrder();
   }, [orderId]);

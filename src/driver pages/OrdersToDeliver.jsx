@@ -1,20 +1,35 @@
 import { useEffect, useState } from 'react';
 import { getOrderStatus, updateOrder } from '../api/order.api';
+import { useNavigate } from 'react-router-dom';
 
 const OrdersToDeliver = () => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(null);
+  const userId = localStorage.getItem('userId');
+  const [numOrders, setNumOrders] = useState([]);
+  const navigate = useNavigate();
+
   const fetchOrders = async () => {
     try {
       const response = await getOrderStatus('ready');
-      setOrders(response.data);
+      if (response.data.length) {
+        setOrders(response.data);
+        setNumOrders(response.data.length);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const acceptOrder = orderId => {
+  const acceptOrder = async orderId => {
     try {
-      const response = updateOrder({ _id: orderId, status: 'delivering' });
+      const response = await updateOrder({
+        _id: orderId,
+        status: 'delivering',
+        driver: userId
+      });
+
+      setNumOrders(prevNum => prevNum - 1);
+      navigate(`/driver/orders/${orderId}`);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +37,7 @@ const OrdersToDeliver = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [numOrders]);
   return (
     <div>
       <h1>Orders to Deliver</h1>
@@ -43,6 +58,9 @@ const OrdersToDeliver = () => {
             </div>
           );
         })}
+      {!orders && (
+        <h2>There are not orders ready for delivering at the moment.</h2>
+      )}
     </div>
   );
 };
