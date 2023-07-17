@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
-import { getOrderByUser } from '../api/order.api';
+import { getOrderByDriver } from '../api/order.api';
 import { Link } from 'react-router-dom';
 
-const MyOrders = () => {
+const DriverOrders = () => {
   const userId = localStorage.getItem('userId');
+  const [orders, setOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
-  const [orders, setOrders] = useState(null);
 
-  const fetchUserOrders = async () => {
+  const fetchDriverOrders = async () => {
     try {
-      const response = await getOrderByUser(userId);
+      const response = await getOrderByDriver(userId);
+      console.log(response.data);
 
-      // TO render ongoing orders
       const activeOrders = response.data.filter(
-        order =>
-          order.status === 'new' ||
-          order.status === 'preparing' ||
-          order.status === 'ready' ||
-          order.status === 'delivering'
+        order => order.status === 'delivering'
       );
       if (activeOrders.length) {
         setOrders(activeOrders);
@@ -26,7 +22,7 @@ const MyOrders = () => {
       }
       // To render past orders
       const nonActiveOrders = response.data.filter(
-        order => order.status === 'delivered' || order.status === 'canceled'
+        order => order.status === 'delivered'
       );
       setPastOrders(nonActiveOrders);
     } catch (error) {
@@ -35,27 +31,31 @@ const MyOrders = () => {
   };
 
   useEffect(() => {
-    fetchUserOrders();
+    fetchDriverOrders();
   }, []);
-
+  console.log(orders);
   return (
     <div>
-      {orders && <h1>Open Order</h1>}
+      <h1>Driver Orders</h1>
+      {orders && <h1>Open Orders</h1>}
       {orders &&
         orders.map(order => {
           return (
             <div key={order._id}>
-              <h3>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {order.status}
-                </u>{' '}
-                order from {order.store.name} store
-              </h3>
+              <Link to={`/driver/orders/${order._id}`}>
+                <h3>
+                  <u style={{ textTransform: 'capitalize', color: 'green' }}>
+                    {order.status}
+                  </u>{' '}
+                  order for {order.user.name}
+                </h3>
+              </Link>
+
               <p>Order Details: </p>
               {order.products &&
                 order.products.map(orderProduct => {
                   return (
-                    <p key={orderProduct.product._id}>
+                    <p key={orderProduct._id}>
                       <b>{orderProduct.product.name}</b> |{' '}
                       {orderProduct.quantity} x {orderProduct.product.price}€
                     </p>
@@ -69,8 +69,7 @@ const MyOrders = () => {
         })}
       {!orders && (
         <div>
-          <h2>You don't have any open orders! </h2>
-          <Link to={'/stores/'}>Find you Favorite Plants Store!</Link>
+          <h2>You don't have any open order! </h2>
         </div>
       )}
       <hr />
@@ -89,7 +88,7 @@ const MyOrders = () => {
               {pastOrder.products &&
                 pastOrder.products.map(orderProduct => {
                   return (
-                    <p key={orderProduct.product._id}>
+                    <p key={orderProduct._id}>
                       <b>{orderProduct.product.name}</b> |{' '}
                       {orderProduct.quantity} x {orderProduct.product.price}€
                     </p>
@@ -105,4 +104,4 @@ const MyOrders = () => {
   );
 };
 
-export default MyOrders;
+export default DriverOrders;

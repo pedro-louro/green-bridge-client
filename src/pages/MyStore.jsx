@@ -37,7 +37,7 @@ const MyStore = () => {
 
   useEffect(() => {
     fetchStore();
-  }, [removeProduct]);
+  }, []);
 
   return (
     <div>

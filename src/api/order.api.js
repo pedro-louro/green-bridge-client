@@ -35,6 +35,9 @@ export const getOrderByUser = userId => {
 export const getOrderStatus = orderStatus => {
   return axios.get(`${baseURL}/orders`, { params: { status: orderStatus } });
 };
+export const getOrderByDriver = driverId => {
+  return axios.get(`${baseURL}/orders`, { params: { driver: driverId } });
+};
 
 export const deleteOrder = orderId => {
   return axios.delete(`${baseURL}/orders/${orderId}`);

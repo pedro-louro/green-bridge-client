@@ -13,6 +13,7 @@ import StoreOrders from './pages/StoreOrders';
 import { ChakraProvider } from '@chakra-ui/react';
 import OrdersToDeliver from './driver pages/OrdersToDeliver';
 import OrderDetails from './driver pages/OrderDetails';
+import DriverOrders from './driver pages/DriverOrders';
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
         <Route
           path='/driver/orders/:orderId'
           element={<OrderDetails />}
+        />
+        <Route
+          path='/driver/myorders'
+          element={<DriverOrders />}
         />
       </Routes>
     </div>

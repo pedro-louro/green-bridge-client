@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getOrderStatus, updateOrder } from '../api/order.api';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const OrdersToDeliver = () => {
   const [orders, setOrders] = useState(null);
@@ -11,6 +11,7 @@ const OrdersToDeliver = () => {
   const fetchOrders = async () => {
     try {
       const response = await getOrderStatus('ready');
+      console.log(response.data);
       if (response.data.length) {
         setOrders(response.data);
         setNumOrders(response.data.length);
@@ -38,9 +39,13 @@ const OrdersToDeliver = () => {
   useEffect(() => {
     fetchOrders();
   }, [numOrders]);
+  console.log(orders);
   return (
     <div>
-      <h1>Orders to Deliver</h1>
+      <h1>Orders to Deliver</h1>{' '}
+      <Link to='/driver/myorders'>
+        <button>My orders</button>
+      </Link>
       {orders &&
         orders.map(order => {
           return (
