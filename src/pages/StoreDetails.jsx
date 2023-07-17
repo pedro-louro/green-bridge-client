@@ -22,49 +22,57 @@ const StoreDetails = () => {
 
   const handleOrder = async product => {
     if (!orderId) {
-      const response = await addOrder({
-        products: { product: product._id, quantity: 1 },
-        status: 'cart',
-        user: userId,
-        store: storeId
-      });
-      localStorage.setItem('orderId', response.data._id);
+      try {
+        const response = await addOrder({
+          products: { product: product._id, quantity: 1 },
+          status: 'cart',
+          user: userId,
+          store: storeId
+        });
+        localStorage.setItem('orderId', response.data._id);
 
-      setOrderDetails(response.data);
-    } else {
-      const fetchOder = await getOrder(orderId);
-      const orderProducts = fetchOder.data.products;
-
-      let productExists = orderProducts.filter(
-        current => current.product._id === product._id
-      );
-      let productToAdd = {};
-      console.log('Exists');
-      console.log(productExists);
-
-      if (productExists.length) {
-        productToAdd.product = productExists[0].product._id;
-        productToAdd.quantity = productExists[0].quantity + 1;
-
-        console.log('To add');
-        console.log(productToAdd);
-      } else {
-        productToAdd.product = product._id;
-        productToAdd.quantity = 1;
+        setOrderDetails(response.data);
+      } catch (error) {
+        console.log(error);
       }
+    } else {
+      try {
+        const fetchOder = await getOrder(orderId);
+        const orderProducts = fetchOder.data.products;
 
-      const addToOrder = await updateOrder({
-        _id: orderId,
-        products: productToAdd,
-        status: 'cart'
-      });
-      setOrderDetails(addToOrder.data);
+        let productExists = orderProducts.filter(
+          current => current.product._id === product._id
+        );
+        let productToAdd = {};
+        console.log('Exists');
+        console.log(productExists);
+
+        if (productExists.length) {
+          productToAdd.product = productExists[0].product._id;
+          productToAdd.quantity = productExists[0].quantity + 1;
+
+          console.log('To add');
+          console.log(productToAdd);
+        } else {
+          productToAdd.product = product._id;
+          productToAdd.quantity = 1;
+        }
+
+        const addToOrder = await updateOrder({
+          _id: orderId,
+          products: productToAdd,
+          status: 'cart'
+        });
+        setOrderDetails(addToOrder.data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   useEffect(() => {
     fetchStore(storeId);
-  }, [storeId, orderDetails, orderId]);
+  }, []);
 
   return (
     <div>

@@ -32,6 +32,8 @@ export const getOrder = orderId => {
 export const getOrderByUser = userId => {
   return axios.get(`${baseURL}/orders/user/${userId}`);
 };
+export const fetcher = (...args) => fetch(...args).then(res => res.json());
+
 export const getOrderStatus = orderStatus => {
   return axios.get(`${baseURL}/orders`, { params: { status: orderStatus } });
 };

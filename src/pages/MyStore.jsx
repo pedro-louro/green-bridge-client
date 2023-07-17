@@ -30,6 +30,7 @@ const MyStore = () => {
   const removeProduct = async productId => {
     try {
       await deleteProduct(productId);
+      await fetchStore();
     } catch (error) {
       console.log(error);
     }

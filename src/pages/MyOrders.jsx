@@ -1,11 +1,31 @@
 import { useEffect, useState } from 'react';
-import { getOrderByUser } from '../api/order.api';
+import { fetcher, getOrderByUser } from '../api/order.api';
 import { Link } from 'react-router-dom';
+import useSwr from 'swr';
+
+const fetchOrders = () => {
+  fetch(`http://localhost:5005/api/orders/user/${userId}`, {
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('authToken')}`
+    }
+  }).then(res => res.json());
+};
 
 const MyOrders = () => {
   const userId = localStorage.getItem('userId');
   const [pastOrders, setPastOrders] = useState([]);
   const [orders, setOrders] = useState(null);
+
+  /* const { data, isLoading, error } = useSwr(fetchOrders);
+  console.log(data);
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (error) {
+    return <>Error :(</>;
+  } */
 
   const fetchUserOrders = async () => {
     try {
