@@ -3,8 +3,9 @@ import { deleteOrder, getOrder, updateOrder } from '../api/order.api';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { updateStore } from '../api/stores.api';
+import { useDisclosure } from '@chakra-ui/react';
 
-const Checkout = () => {
+const Checkout = ({ handleOpenClose }) => {
   const [orderId, setOrderId] = useState(localStorage.getItem('orderId'));
   const [order, setOrder] = useState({});
   const [products, setProducts] = useState([]);
@@ -58,7 +59,6 @@ const Checkout = () => {
 
   return (
     <div>
-      <h2>My Cart</h2>
       {orderId && (
         <div>
           {products &&
@@ -104,7 +104,12 @@ const Checkout = () => {
       {!orderId && (
         <div>
           <h3>Your cart is empty</h3>
-          <Link to={'/stores/'}>Find you Favorite Plants Store!</Link>
+          <Link
+            to={'/stores/'}
+            onClick={handleOpenClose('close')}
+          >
+            Find you Favorite Plants Store!
+          </Link>
         </div>
       )}
     </div>
