@@ -1,7 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Navbar from './components/Navbar';
+import NavBar from './components/NavBarUI';
 import Login from './pages/login';
 import Signup from './pages/Signup';
 import Stores from './pages/ListStores';
@@ -18,56 +18,58 @@ import DriverOrders from './driver pages/DriverOrders';
 function App() {
   return (
     <div className='App'>
-      <Navbar />
-      <ToastContainer />
+      <ChakraProvider>
+        <NavBar />
+        <ToastContainer />
 
-      <Routes>
-        <Route
-          path='/login'
-          element={<Login />}
-        />
-        <Route
-          path='/signup'
-          element={<Signup />}
-        />
-        <Route
-          path='/stores'
-          element={<Stores />}
-        />
-        <Route
-          path='/mystore'
-          element={<MyStore />}
-        />
-        <Route
-          path='/mystore/:storeId/orders'
-          element={<StoreOrders />}
-        />
-        <Route
-          path='/stores/:storeId'
-          element={<StoreDetails />}
-        />
+        <Routes>
+          <Route
+            path='/login'
+            element={<Login />}
+          />
+          <Route
+            path='/signup'
+            element={<Signup />}
+          />
+          <Route
+            path='/stores'
+            element={<Stores />}
+          />
+          <Route
+            path='/mystore'
+            element={<MyStore />}
+          />
+          <Route
+            path='/mystore/:storeId/orders'
+            element={<StoreOrders />}
+          />
+          <Route
+            path='/stores/:storeId'
+            element={<StoreDetails />}
+          />
 
-        <Route
-          path='/mycart'
-          element={<Checkout />}
-        />
-        <Route
-          path='/myorders'
-          element={<MyOrders />}
-        />
-        <Route
-          path='/driver/orders'
-          element={<OrdersToDeliver />}
-        />
-        <Route
-          path='/driver/orders/:orderId'
-          element={<OrderDetails />}
-        />
-        <Route
-          path='/driver/myorders'
-          element={<DriverOrders />}
-        />
-      </Routes>
+          <Route
+            path='/mycart'
+            element={<Checkout />}
+          />
+          <Route
+            path='/myorders'
+            element={<MyOrders />}
+          />
+          <Route
+            path='/driver/orders'
+            element={<OrdersToDeliver />}
+          />
+          <Route
+            path='/driver/orders/:orderId'
+            element={<OrderDetails />}
+          />
+          <Route
+            path='/driver/myorders'
+            element={<DriverOrders />}
+          />
+        </Routes>
+      </ChakraProvider>
     </div>
   );
 }

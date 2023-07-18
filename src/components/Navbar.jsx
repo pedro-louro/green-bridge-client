@@ -6,7 +6,6 @@ import { AuthContext } from '../context/auth.context';
 
 const Navbar = () => {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
-  const orderId = localStorage.getItem('orderId');
 
   return (
     <nav className='Navbar'>
