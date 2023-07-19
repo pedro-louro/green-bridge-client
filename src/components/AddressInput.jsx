@@ -9,7 +9,7 @@ import usePlacesAutocomplete, {
 
 export default function AddressInput() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg',
+    googleMapsApiKey: '',
     libraries: ['places']
   });
 
