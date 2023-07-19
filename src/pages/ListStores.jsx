@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
+import AddressInput from '../components/AddressInput';
+import ReactSelect from '../components/ReactSelect';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);
@@ -29,6 +31,7 @@ const Stores = () => {
             </div>
           );
         })}
+      <AddressInput />
     </div>
   );
 };
