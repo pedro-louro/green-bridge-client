@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
-import Checkout from './CheckOut';
 import { addOrder, getOrder, updateOrder } from '../api/order.api';
 
 const StoreDetails = () => {

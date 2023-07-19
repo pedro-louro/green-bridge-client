@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { BsCart4 } from 'react-icons/Bs';
-import Checkout from '../pages/CheckOut';
+import Checkout from '../pages/Checkout';
 
 const Cart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

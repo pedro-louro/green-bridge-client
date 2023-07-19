@@ -7,7 +7,7 @@ import Signup from './pages/Signup';
 import Stores from './pages/ListStores';
 import MyStore from './pages/MyStore';
 import StoreDetails from './pages/StoreDetails';
-import Checkout from './pages/CheckOut';
+import Checkout from './pages/Checkout';
 import MyOrders from './pages/MyOrders';
 import StoreOrders from './pages/StoreOrders';
 import { ChakraProvider } from '@chakra-ui/react';
