@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import {
   Box,
   Flex,
@@ -14,10 +13,9 @@ import {
   MenuDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
-  Icon
+  Stack
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';

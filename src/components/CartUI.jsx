@@ -8,7 +8,6 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Button,
-  Input,
   Icon
 } from '@chakra-ui/react';
 import { useRef } from 'react';

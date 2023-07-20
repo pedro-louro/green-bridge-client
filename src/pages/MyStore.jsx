@@ -5,12 +5,28 @@ import { getUser } from '../api/auth.api';
 import CreateProduct from './CreateProduct';
 import { Link } from 'react-router-dom';
 import { deleteProduct } from '../api/product.api';
+import {
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Container,
+  SimpleGrid,
+  Box,
+  Stack,
+  Heading
+} from '@chakra-ui/react';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
-  const { numProducts, setNumProducts } = useState(0);
   const userId = localStorage.getItem('userId');
   const [hiddenForm, setHiddenForm] = useState('hidden');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const hideForm = () => {
     setHiddenForm('hidden');
@@ -22,7 +38,6 @@ const MyStore = () => {
       const fetchUser = await getUser(userId);
       const response = await getStore(fetchUser.data.store);
       setMyStore(response.data);
-      setNumProducts(response.data.products.length);
     } catch (error) {
       console.log('Error getting the Store');
     }
@@ -41,46 +56,69 @@ const MyStore = () => {
   }, []);
 
   return (
-    <div>
-      <h2>My Store</h2>
-      <button
+    <Stack>
+      {myStore && <Heading>{myStore.name}</Heading>}
+      <hr />
+      <Box>
+        <Button onClick={onOpen}>Add a new Product</Button>
+        <Modal
+          onClose={onClose}
+          isOpen={isOpen}
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add a Product</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <CreateProduct
+                hideForm={hideForm}
+                refreshStores={fetchStore}
+                myStore={myStore}
+              />{' '}
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose}>Close</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        {/* <button
         onClick={() => {
           setHiddenForm('');
         }}
       >
         Add a new product
-      </button>{' '}
-      <Link to={`/mystore/${myStore._id}/orders`}>
-        <button>Store Orders</button>
-      </Link>
-      {!hiddenForm && (
-        <CreateProduct
-          hideForm={hideForm}
-          refreshStores={fetchStore}
-          myStore={myStore}
-        />
-      )}
-      {myStore && <h2>{myStore.name}</h2>}
-      {myStore &&
-        myStore.products.map(product => {
-          return (
-            <div key={product._id}>
-              <h4>{product.name}</h4>
-              <p>
-                Price: {product.price}€ | {product.stock} units in Stock
-              </p>
-              <button
-                onClick={() => {
-                  removeProduct(product._id);
-                }}
-              >
-                Delete Product
-              </button>
-            </div>
-          );
-        })}
+      </button>{' '} */}
+        <Link to={`/mystore/${myStore._id}/orders`}>
+          <button>Store Orders</button>
+        </Link>
+      </Box>
+
+      <SimpleGrid
+        spacing={4}
+        templateColumns='repeat(3, minmax(200px, 1fr))'
+      >
+        {myStore &&
+          myStore.products.map(product => {
+            return (
+              <Container key={product._id}>
+                <h4>{product.name}</h4>
+                <p>
+                  Price: {product.price}€ | {product.stock} units in Stock
+                </p>
+                <button
+                  onClick={() => {
+                    removeProduct(product._id);
+                  }}
+                >
+                  Delete Product
+                </button>
+              </Container>
+            );
+          })}
+      </SimpleGrid>
       {!myStore && <AddStore />}
-    </div>
+    </Stack>
   );
 };
 

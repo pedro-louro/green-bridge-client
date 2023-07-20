@@ -14,7 +14,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import OrdersToDeliver from './driver pages/OrdersToDeliver';
 import OrderDetails from './driver pages/OrderDetails';
 import DriverOrders from './driver pages/DriverOrders';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 
 function App() {
   return (

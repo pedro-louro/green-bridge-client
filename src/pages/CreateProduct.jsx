@@ -1,12 +1,11 @@
 import { addProduct } from '../api/product.api';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../context/auth.context';
 import { updateStore } from '../api/stores.api';
+import { Input, Button, ButtonGroup } from '@chakra-ui/react';
 
 const CreateProduct = ({ hideForm, refreshStores, myStore }) => {
   const userId = localStorage.getItem('userId');
-  const [hiddenForm, setHiddenForm] = useState('hidden');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
@@ -68,33 +67,48 @@ const CreateProduct = ({ hideForm, refreshStores, myStore }) => {
     <div>
       <div>
         <form onSubmit={handleSubmit}>
-          <label>Name:</label>
-          <input
-            type='text'
-            name='name'
-            value={name}
-            onChange={handleName}
-          />
+          <label>
+            Name:
+            <Input
+              type='text'
+              name='name'
+              value={name}
+              onChange={handleName}
+            />
+          </label>
           {/* <label>Image</label>
         <input
           type='text'
           onChange={handleImg}
         /> */}
-          <label>Price:</label>
-          <input
-            type='number'
-            name='price'
-            value={price}
-            onChange={handlePrice}
-          ></input>
-          <label>Stock:</label>
-          <input
-            type='number'
-            name='stock'
-            value={stock}
-            onChange={handleStock}
-          ></input>
-          <button type='submit'>Create Product</button>
+          <label>
+            Price
+            <Input
+              variant='outline'
+              placeholder='Price'
+              type='number'
+              name='price'
+              value={price}
+              onChange={handlePrice}
+            />
+          </label>
+          <label>
+            Stock
+            <Input
+              type='number'
+              placeholder='Stock'
+              name='stock'
+              value={stock}
+              onChange={handleStock}
+            />
+          </label>
+          <Button
+            type='submit'
+            colorScheme='teal'
+            variant='outline'
+          >
+            Create Product
+          </Button>
         </form>
       </div>
     </div>
