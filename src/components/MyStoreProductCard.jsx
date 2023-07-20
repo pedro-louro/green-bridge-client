@@ -8,7 +8,7 @@ import {
   Button,
   Icon
 } from '@chakra-ui/react';
-import { FaTrashCan } from 'react-icons/fa6';
+// import { FaTrashCan } from 'react-icons/fa6';
 
 const StoreProductCard = ({ product, removeProduct }) => {
   const IMAGE =
@@ -91,7 +91,7 @@ const StoreProductCard = ({ product, removeProduct }) => {
                 removeProduct(product._id);
               }}
             >
-              <Icon as={FaTrashCan}></Icon>
+              <Icon>Delete</Icon>
             </Button>
           </Stack>
         </Stack>
