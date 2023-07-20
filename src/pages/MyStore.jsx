@@ -21,6 +21,7 @@ import {
   Stack,
   Heading
 } from '@chakra-ui/react';
+import StoreProductCard from '../components/StoreProductCard';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
@@ -82,18 +83,10 @@ const MyStore = () => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-        {/* <button
-        onClick={() => {
-          setHiddenForm('');
-        }}
-      >
-        Add a new product
-      </button>{' '} */}
         <Link to={`/mystore/${myStore._id}/orders`}>
           <button>Store Orders</button>
         </Link>
       </Box>
-
       <SimpleGrid
         spacing={4}
         templateColumns='repeat(3, minmax(200px, 1fr))'
@@ -102,17 +95,17 @@ const MyStore = () => {
           myStore.products.map(product => {
             return (
               <Container key={product._id}>
-                <h4>{product.name}</h4>
-                <p>
-                  Price: {product.price}€ | {product.stock} units in Stock
-                </p>
-                <button
+                <StoreProductCard
+                  product={product}
+                  removeProduct={removeProduct}
+                />
+                {/* <button
                   onClick={() => {
                     removeProduct(product._id);
                   }}
                 >
                   Delete Product
-                </button>
+                </button> */}
               </Container>
             );
           })}

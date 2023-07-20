@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
-import { fetcher, getOrderByUser } from '../api/order.api';
+import { getOrderByUser } from '../api/order.api';
 import { Link } from 'react-router-dom';
-import useSwr from 'swr';
+// import useSwr from 'swr';
 
-const fetchOrders = () => {
-  fetch(`http://localhost:5005/api/orders/user/${userId}`, {
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('authToken')}`
-    }
-  }).then(res => res.json());
-};
+// const fetchOrders = () => {
+//   fetch(`http://localhost:5005/api/orders/user/${userId}`, {
+//     headers: {
+//       'Content-type': 'application/json',
+//       Authorization: `Bearer ${localStorage.getItem('authToken')}`
+//     }
+//   }).then(res => res.json());
+// };
 
 const MyOrders = () => {
   const userId = localStorage.getItem('userId');
   const [pastOrders, setPastOrders] = useState([]);
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   /* const { data, isLoading, error } = useSwr(fetchOrders);
   console.log(data);
@@ -57,6 +57,7 @@ const MyOrders = () => {
   useEffect(() => {
     fetchUserOrders();
   }, []);
+  console.log(orders);
 
   return (
     <div>
