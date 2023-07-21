@@ -1,4 +1,4 @@
-import { addProduct } from '../api/product.api';
+import { addProduct, uploadImage } from '../api/product.api';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { updateStore } from '../api/stores.api';
@@ -18,9 +18,9 @@ const CreateProduct = ({ refreshStores, myStore }) => {
   const handlePrice = event => {
     setPrice(event.target.value);
   };
-  // const handleImg = event => {
-  //   setImg(event.target.files[0]);
-  // };
+  const handleImg = event => {
+    setImg(event.target.files[0]);
+  };
   const handleStock = event => {
     setStock(event.target.value);
   };
@@ -29,19 +29,23 @@ const CreateProduct = ({ refreshStores, myStore }) => {
     event.preventDefault();
 
     try {
-      const newProduct = { name, img, store: myStore._id, price, stock };
+      const newProduct = { name, store: myStore._id, price, stock };
+      console.log(img);
 
-      // if (image) {
-      //   //create new formData
-      //   // same as encoding type "multipart/form-data"
-      //   const uploadData = new FormData();
+      if (img) {
+        //create new formData
+        const uploadData = new FormData();
 
-      //   //add image to form data
-      //   uploadData.append('file', image);
+        //add image to form data
+        uploadData.append('file', img);
 
-      //   const response = await upload(uploadData);
-      //   newProject.imgUrl = response.data.fileUrl;
-      // }
+        const response = await uploadImage(uploadData);
+        console.log('RESPONSE');
+        console.log(response.data);
+        newProduct.img = response.data.img;
+        console.log('Uploaded image');
+        console.log(newProduct.img);
+      }
 
       const createProduct = await addProduct(newProduct);
       const objectForStore = {
@@ -59,7 +63,6 @@ const CreateProduct = ({ refreshStores, myStore }) => {
     setPrice(0);
     setStock(0);
     setImg('');
-    hideForm();
     refreshStores();
   };
 
@@ -76,11 +79,11 @@ const CreateProduct = ({ refreshStores, myStore }) => {
               onChange={handleName}
             />
           </label>
-          {/* <label>Image</label>
-        <input
-          type='text'
-          onChange={handleImg}
-        /> */}
+          <label>Image</label>
+          <input
+            type='file'
+            onChange={handleImg}
+          />
           <label>
             Price
             <Input

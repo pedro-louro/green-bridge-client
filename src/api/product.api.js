@@ -20,3 +20,6 @@ export const addProduct = product => {
 export const deleteProduct = productID => {
   return axios.delete(`${baseURL}/products/${productID}`);
 };
+export const uploadImage = uploadData => {
+  return axios.post(`${baseURL}/upload`, uploadData);
+};

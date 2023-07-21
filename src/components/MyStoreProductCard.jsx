@@ -9,8 +9,6 @@ import {
 } from '@chakra-ui/react';
 
 const StoreProductCard = ({ product, removeProduct }) => {
-  const IMAGE =
-    'https://viplant.pt/wp-content/uploads/2022/02/monstera-deliciosa-v.17-1.jpg';
   return (
     <Center py={12}>
       <Box
@@ -37,7 +35,7 @@ const StoreProductCard = ({ product, removeProduct }) => {
             pos: 'absolute',
             top: 5,
             left: 0,
-            backgroundImage: `url(${IMAGE})`,
+            backgroundImage: `url(${product.img})`,
             filter: 'blur(15px)',
             zIndex: -1
           }}
@@ -52,7 +50,7 @@ const StoreProductCard = ({ product, removeProduct }) => {
             height={230}
             width={282}
             objectFit={'cover'}
-            src={IMAGE}
+            src={product.img}
           />
         </Box>
         <Stack

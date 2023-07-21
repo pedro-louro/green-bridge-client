@@ -6,9 +6,7 @@ const setAuthorizationHeaders = () => {
     const storedToken = localStorage.getItem('authToken');
     if (storedToken) {
       config.headers = {
-        Authorization: `Bearer ${storedToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
+        Authorization: `Bearer ${storedToken}`
       };
     }
 
