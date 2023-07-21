@@ -40,11 +40,8 @@ const CreateProduct = ({ refreshStores, myStore }) => {
         uploadData.append('file', img);
 
         const response = await uploadImage(uploadData);
-        console.log('RESPONSE');
-        console.log(response.data);
+
         newProduct.img = response.data.img;
-        console.log('Uploaded image');
-        console.log(newProduct.img);
       }
 
       const createProduct = await addProduct(newProduct);

@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import AddressSearchBar from '../components/AddressSearchBar';
+import StoreCard from '../components/StoreCard';
+import { Box, Center, Stack } from '@chakra-ui/react';
+// import AddressSearchBar from '../components/testAutocomplete';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);
@@ -20,18 +21,29 @@ const Stores = () => {
   }, []);
   return (
     <div>
-      <h2>Stores</h2>
-      {stores &&
-        stores.map(store => {
-          return (
-            <div key={store._id}>
-              <h3>{store.name}</h3>
-              <Link to={`/stores/${store._id}`}>See details</Link>
-            </div>
-          );
-        })}
-
-      <AddressSearchBar />
+      <Center>
+        <Stack
+          w='50%'
+          p='20px'
+          spacing='3vh'
+        >
+          {stores &&
+            stores.map(store => {
+              return (
+                <Box
+                  key={store._id}
+                  boxShadow='lg green'
+                >
+                  <StoreCard
+                    w='60%'
+                    store={store}
+                  />
+                </Box>
+              );
+            })}
+        </Stack>
+      </Center>
+      {/* <AddressSearchBar /> */}
     </div>
   );
 };

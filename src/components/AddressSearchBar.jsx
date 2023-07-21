@@ -15,7 +15,6 @@ const AddressSearchBar = () => {
       setCoordinates({ lat, lng });
     }
   };
-  console.log(coordinates);
   return (
     <Autocomplete
       onLoad={onLoad}

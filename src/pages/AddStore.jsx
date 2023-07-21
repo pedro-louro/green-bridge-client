@@ -4,11 +4,12 @@ import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth.context';
 import { useNavigate } from 'react-router-dom';
+import { uploadImage } from '../api/product.api';
 
 const AddStore = () => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
-  const [image, setImg] = useState('');
+  const [img, setImg] = useState('');
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,9 +20,9 @@ const AddStore = () => {
   const handleAddress = event => {
     setAddress(event.target.value);
   };
-  // const handleImg = event => {
-  //   setImg(event.target.files[0]);
-  // };
+  const handleImg = event => {
+    setImg(event.target.files[0]);
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -29,17 +30,17 @@ const AddStore = () => {
     try {
       const newStore = { name, address, admin: user._id };
 
-      // if (image) {
-      //   //create new formData
-      //   // same as encoding type "multipart/form-data"
-      //   const uploadData = new FormData();
+      if (img) {
+        //create new formData
+        const uploadData = new FormData();
 
-      //   //add image to form data
-      //   uploadData.append('file', image);
+        //add image to form data
+        uploadData.append('file', img);
 
-      //   const response = await upload(uploadData);
-      //   newProject.imgUrl = response.data.fileUrl;
-      // }
+        const response = await uploadImage(uploadData);
+
+        newStore.img = response.data.img;
+      }
 
       const createdStore = await addStore(newStore);
       const userData = { _id: user._id, store: createdStore.data._id };
@@ -52,7 +53,7 @@ const AddStore = () => {
     }
     setName('');
     setAddress('');
-    // setImg('');
+    setImg('');
 
     navigate(`/myStore/`);
   };
@@ -76,11 +77,11 @@ const AddStore = () => {
           onChange={handleAddress}
         ></input>
 
-        {/* <label>Image</label>
+        <label>Image</label>
         <input
-          type='text'
+          type='file'
           onChange={handleImg}
-        /> */}
+        />
         <button type='submit'>Create Store</button>
       </form>
     </div>

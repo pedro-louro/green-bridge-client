@@ -87,17 +87,6 @@ const NavBar = () => {
           </HStack>
           {isLoggedIn && (
             <Flex alignItems={'center'}>
-              {/* <Link href='/mycart'>
-                <Button
-                  variant={'solid'}
-                  colorScheme={'teal'}
-                  size={'sm'}
-                  mr={4}
-                  leftIcon={<Icon as={BsCart4} />}
-                >
-                  Cart
-                </Button>
-              </Link> */}
               <Cart />
               <Menu>
                 <MenuButton
@@ -141,7 +130,7 @@ const NavBar = () => {
               as={'nav'}
               spacing={4}
             >
-              {Links.map(link => (
+              {links.map(link => (
                 <NavLink key={link}>{link}</NavLink>
               ))}
             </Stack>
