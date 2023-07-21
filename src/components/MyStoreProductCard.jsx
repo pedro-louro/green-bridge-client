@@ -5,8 +5,7 @@ import {
   Text,
   Stack,
   Image,
-  Button,
-  Icon
+  Button
 } from '@chakra-ui/react';
 
 const StoreProductCard = ({ product, removeProduct }) => {
@@ -90,7 +89,7 @@ const StoreProductCard = ({ product, removeProduct }) => {
                 removeProduct(product._id);
               }}
             >
-              <Icon>Delete</Icon>
+              Delete
             </Button>
           </Stack>
         </Stack>

@@ -1,6 +1,6 @@
 import AddStore from './AddStore';
 import { getStore } from '../api/stores.api';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { getUser } from '../api/auth.api';
 import CreateProduct from './CreateProduct';
 import { Link } from 'react-router-dom';
@@ -21,17 +21,12 @@ import {
   Stack,
   Heading
 } from '@chakra-ui/react';
-import StoreProductCard from '../components/StoreProductCard';
+import StoreProductCard from '../components/MyStoreProductCard';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
   const userId = localStorage.getItem('userId');
-  const [hiddenForm, setHiddenForm] = useState('hidden');
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const hideForm = () => {
-    setHiddenForm('hidden');
-  };
 
   //related to user
   const fetchStore = async () => {
@@ -73,10 +68,9 @@ const MyStore = () => {
             <ModalCloseButton />
             <ModalBody>
               <CreateProduct
-                hideForm={hideForm}
                 refreshStores={fetchStore}
                 myStore={myStore}
-              />{' '}
+              />
             </ModalBody>
             <ModalFooter>
               <Button onClick={onClose}>Close</Button>

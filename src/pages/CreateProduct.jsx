@@ -2,9 +2,9 @@ import { addProduct } from '../api/product.api';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { updateStore } from '../api/stores.api';
-import { Input, Button, ButtonGroup } from '@chakra-ui/react';
+import { Input, Button } from '@chakra-ui/react';
 
-const CreateProduct = ({ hideForm, refreshStores, myStore }) => {
+const CreateProduct = ({ refreshStores, myStore }) => {
   const userId = localStorage.getItem('userId');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);

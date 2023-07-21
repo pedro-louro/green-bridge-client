@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import AddressSearchBar from '../components/testAutocomplete';
+import AddressSearchBar from '../components/AddressSearchBar';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);

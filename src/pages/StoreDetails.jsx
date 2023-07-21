@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
 import { addOrder, getOrder, updateOrder } from '../api/order.api';
+import ProductCard from '../components/ProductCard';
+import { SimpleGrid } from '@chakra-ui/react';
 
 const StoreDetails = () => {
   const [store, setStore] = useState(null);
@@ -76,23 +78,21 @@ const StoreDetails = () => {
   return (
     <div>
       {store && <h2>{store.name}</h2>}
-      {store &&
-        store.products.map(product => {
-          return (
-            <div key={product._id}>
-              <h4>{product.name}</h4>
-              <p>Price: {product.price}€</p>
-              <p>{product.stock} available!</p>
-              <button
-                onClick={() => {
-                  handleOrder(product);
-                }}
-              >
-                Add to Cart
-              </button>
-            </div>
-          );
-        })}
+      <SimpleGrid
+        spacing={4}
+        templateColumns='repeat(3, minmax(200px, 1fr))'
+      >
+        {store &&
+          store.products.map(product => {
+            return (
+              <ProductCard
+                key={product._id}
+                product={product}
+                handleOrder={handleOrder}
+              />
+            );
+          })}
+      </SimpleGrid>
     </div>
   );
 };
