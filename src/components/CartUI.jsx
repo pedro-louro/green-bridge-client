@@ -11,7 +11,7 @@ import {
   Icon
 } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { BsCart4 } from 'react-icons/Bs';
+import { TiShoppingCart } from 'react-icons/ti';
 import Checkout from '../pages/Checkout';
 
 const Cart = () => {
@@ -36,7 +36,7 @@ const Cart = () => {
         variant={'solid'}
         size={'sm'}
         mr={4}
-        leftIcon={<Icon as={BsCart4} />}
+        leftIcon={<Icon as={TiShoppingCart} />}
       >
         Cart
       </Button>
