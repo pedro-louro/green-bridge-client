@@ -73,6 +73,7 @@ const MyOrders = () => {
                 order from {order.store.name} store
               </h3>
               <p>Order Details: </p>
+
               {order.products &&
                 order.products.map(orderProduct => {
                   return (

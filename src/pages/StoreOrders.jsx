@@ -4,38 +4,40 @@ import { useEffect, useRef, useState } from 'react';
 import UpdateOrderModal from '../components/UpdateOrderModal';
 import { updateOrder } from '../api/order.api';
 
-const StoreOrders = () => {
-  const { storeId } = useParams();
+const StoreOrders = ({ storeId }) => {
+  // const { storeId } = useParams();
   const [store, setStore] = useState(null);
   const [orders, setOrders] = useState(null);
   const [pastOrders, setPastOrders] = useState(null);
   const [statusChanged, setStatusChanged] = useState(false);
 
   const fetchStore = async () => {
-    try {
-      const response = await getStore(storeId);
-      setStore(response.data);
+    if (storeId) {
+      try {
+        const response = await getStore(storeId);
+        setStore(response.data);
 
-      const activeOrders = response.data.orders.filter(
-        order =>
-          order.status === 'new' ||
-          order.status === 'preparing' ||
-          order.status === 'ready' ||
-          order.status === 'delivering'
-      );
-      if (activeOrders.length) {
-        setOrders(activeOrders);
-      } else {
-        setOrders(null);
+        const activeOrders = response.data.orders.filter(
+          order =>
+            order.status === 'new' ||
+            order.status === 'preparing' ||
+            order.status === 'ready' ||
+            order.status === 'delivering'
+        );
+        if (activeOrders.length) {
+          setOrders(activeOrders);
+        } else {
+          setOrders(null);
+        }
+        // To render past orders
+        const nonActiveOrders = response.data.orders.filter(
+          order => order.status === 'delivered' || order.status === 'canceled'
+        );
+        setPastOrders(nonActiveOrders);
+        setStatusChanged(false);
+      } catch (error) {
+        console.log(error);
       }
-      // To render past orders
-      const nonActiveOrders = response.data.orders.filter(
-        order => order.status === 'delivered' || order.status === 'canceled'
-      );
-      setPastOrders(nonActiveOrders);
-      setStatusChanged(false);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -60,7 +62,7 @@ const StoreOrders = () => {
 
   useEffect(() => {
     fetchStore();
-  }, [statusChanged]);
+  }, [statusChanged, storeId]);
   return (
     <div>
       {orders && <h1>Open Orders</h1>}

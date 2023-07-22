@@ -43,7 +43,7 @@ const Stores = () => {
             })}
         </Stack>
       </Center>
-      <AddressSearchBar />
+      {/* <AddressSearchBar /> */}
     </div>
   );
 };

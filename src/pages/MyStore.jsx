@@ -19,14 +19,21 @@ import {
   SimpleGrid,
   Box,
   Stack,
-  Heading
+  Heading,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
+import StoreOrders from './StoreOrders';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
   const userId = localStorage.getItem('userId');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [currentTab, setCurrentTab] = useState('products');
 
   //related to user
   const fetchStore = async () => {
@@ -49,61 +56,90 @@ const MyStore = () => {
 
   useEffect(() => {
     fetchStore();
-  }, []);
+  }, [currentTab]);
 
   return (
     <Stack>
       {myStore && <Heading>{myStore.name}</Heading>}
-      <hr />
-      <Box>
-        <Button onClick={onOpen}>Add a new Product</Button>
-        <Modal
-          onClose={onClose}
-          isOpen={isOpen}
-          isCentered
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Add a Product</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <CreateProduct
-                refreshStores={fetchStore}
-                myStore={myStore}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-        <Link to={`/mystore/${myStore._id}/orders`}>
-          <button>Store Orders</button>
-        </Link>
-      </Box>
-      <SimpleGrid
-        spacing={4}
-        templateColumns='repeat(3, minmax(200px, 1fr))'
+
+      <Tabs
+        isFitted
+        variant='enclosed'
       >
-        {myStore &&
-          myStore.products.map(product => {
-            return (
-              <Container key={product._id}>
-                <StoreProductCard
-                  product={product}
-                  removeProduct={removeProduct}
-                />
-                {/* <button
-                  onClick={() => {
-                    removeProduct(product._id);
-                  }}
-                >
-                  Delete Product
-                </button> */}
-              </Container>
-            );
-          })}
-      </SimpleGrid>
+        <TabList mb='1em'>
+          <Tab
+            onClick={() => {
+              setCurrentTab('products');
+            }}
+          >
+            Products
+          </Tab>
+          <Tab
+            onClick={() => {
+              setCurrentTab('orders');
+            }}
+          >
+            Orders
+          </Tab>
+          <Tab
+            onClick={() => {
+              setCurrentTab('updateStore');
+            }}
+          >
+            Update Store Details
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Box>
+              <Button onClick={onOpen}>Add a new Product</Button>
+              <Modal
+                onClose={onClose}
+                isOpen={isOpen}
+                isCentered
+              >
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Add a Product</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <CreateProduct
+                      refreshStores={fetchStore}
+                      myStore={myStore}
+                    />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={onClose}>Close</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </Box>
+            <SimpleGrid
+              spacing={4}
+              templateColumns='repeat(3, minmax(200px, 1fr))'
+            >
+              {myStore &&
+                myStore.products.map(product => {
+                  return (
+                    <Container key={product._id}>
+                      <StoreProductCard
+                        product={product}
+                        removeProduct={removeProduct}
+                      />
+                    </Container>
+                  );
+                })}
+            </SimpleGrid>{' '}
+          </TabPanel>
+          <TabPanel>
+            {/* <Link to={`/mystore/${myStore._id}/orders`}>
+              <button>Store Orders</button>
+            </Link> */}
+            <StoreOrders storeId={myStore._id} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+
       {!myStore && <AddStore />}
     </Stack>
   );
