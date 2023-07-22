@@ -14,6 +14,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import OrdersToDeliver from './driver pages/OrdersToDeliver';
 import OrderDetails from './driver pages/OrderDetails';
 import DriverOrders from './driver pages/DriverOrders';
+import UserDetails from './pages/UserDetails';
 // import Navbar from './components/Navbar';
 
 function App() {
@@ -21,7 +22,6 @@ function App() {
     <div className='App'>
       <ChakraProvider>
         <NavBar />
-        {/* <Navbar/> */}
         <ToastContainer />
 
         <Routes>
@@ -57,6 +57,10 @@ function App() {
           <Route
             path='/myorders'
             element={<MyOrders />}
+          />
+          <Route
+            path='/userdetails'
+            element={<UserDetails />}
           />
           <Route
             path='/driver/orders'

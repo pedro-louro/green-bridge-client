@@ -15,13 +15,20 @@ const AddressSearchBar = () => {
       setCoordinates({ lat, lng });
     }
   };
+  console.log(coordinates);
   return (
-    <Autocomplete
-      onLoad={onLoad}
-      onPlaceChanged={onPlaceChanged}
-    >
-      <input placeholder='Search…' />
-    </Autocomplete>
+    <div>
+      <script
+        async
+        src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg&callback=initMap'
+      ></script>
+      <Autocomplete
+        onLoad={onLoad}
+        onPlaceChanged={onPlaceChanged}
+      >
+        <input placeholder='Search' />
+      </Autocomplete>
+    </div>
   );
 };
 export default AddressSearchBar;

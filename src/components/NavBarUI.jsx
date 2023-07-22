@@ -19,6 +19,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
+import OpenModal from './ModalUpdateUser';
 
 const links = [
   { name: 'Stores', to: '/stores' },
@@ -80,7 +81,7 @@ const NavBar = () => {
                 display={{ base: 'none', md: 'flex' }}
               >
                 {links.map(link => (
-                  <NavLink key={link}>{link}</NavLink>
+                  <NavLink>{link}</NavLink>
                 ))}
               </HStack>
             )}
@@ -104,7 +105,11 @@ const NavBar = () => {
                   />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>
+                    <NavLink>
+                      {{ name: 'Update User', to: '/userdetails' }}
+                    </NavLink>
+                  </MenuItem>
                   <MenuItem>Link 2</MenuItem>
                   <MenuDivider />
                   <MenuItem onClick={logOutUser}>Logout</MenuItem>
@@ -115,7 +120,7 @@ const NavBar = () => {
           {!isLoggedIn && (
             <Flex alignItems={'center'}>
               {authLinks.map(link => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name}>{link}</NavLink>
               ))}
             </Flex>
           )}

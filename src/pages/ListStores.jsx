@@ -2,7 +2,7 @@ import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import StoreCard from '../components/StoreCard';
 import { Box, Center, Stack } from '@chakra-ui/react';
-// import AddressSearchBar from '../components/testAutocomplete';
+import AddressSearchBar from '../components/AddressSearchBar';
 
 const Stores = () => {
   const [stores, setStores] = useState([]);
@@ -43,7 +43,7 @@ const Stores = () => {
             })}
         </Stack>
       </Center>
-      {/* <AddressSearchBar /> */}
+      <AddressSearchBar />
     </div>
   );
 };
