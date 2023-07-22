@@ -26,7 +26,7 @@ const AddressSearchBar = ({ user, handleAddress }) => {
       >
         <input
           placeholder='Search'
-          defaultValue={user.address}
+          // defaultValue={user.address}
         />
       </Autocomplete>
     </div>

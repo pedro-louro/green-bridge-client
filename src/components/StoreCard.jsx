@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const StoreCard = ({ store }) => {
+const StoreCard = ({ store, distance }) => {
   return (
     <Card
       direction={{ base: 'column', sm: 'row' }}
@@ -29,7 +29,7 @@ const StoreCard = ({ store }) => {
         <CardBody>
           <Heading size='lg'>{store.name}</Heading>
 
-          <Text py='2'>Lorem</Text>
+          <Text py='2'>{distance}Km from you</Text>
         </CardBody>
 
         <CardFooter>

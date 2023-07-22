@@ -1,6 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UpdateOrderModal from '../components/UpdateOrderModal';
 import { updateOrder } from '../api/order.api';
 

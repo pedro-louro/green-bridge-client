@@ -3,7 +3,6 @@ import { getStore } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import { getUser } from '../api/auth.api';
 import CreateProduct from './CreateProduct';
-import { Link } from 'react-router-dom';
 import { deleteProduct } from '../api/product.api';
 import {
   Button,
@@ -28,6 +27,7 @@ import {
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
 import StoreOrders from './StoreOrders';
+import UpdateStore from '../components/UpdateStoreForm';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
@@ -132,10 +132,13 @@ const MyStore = () => {
             </SimpleGrid>{' '}
           </TabPanel>
           <TabPanel>
-            {/* <Link to={`/mystore/${myStore._id}/orders`}>
-              <button>Store Orders</button>
-            </Link> */}
             <StoreOrders storeId={myStore._id} />
+          </TabPanel>
+          <TabPanel>
+            <UpdateStore
+              storeId={myStore._id}
+              refreshStores={fetchStore}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
