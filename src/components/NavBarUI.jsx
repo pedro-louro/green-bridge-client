@@ -56,6 +56,9 @@ const NavBar = () => {
       <Box
         bg={useColorModeValue('green.100', 'gray.900')}
         px={4}
+        // as='header'
+        // position='fixed'
+        // w='100%'
       >
         <Flex
           h={16}

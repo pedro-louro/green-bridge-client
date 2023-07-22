@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
+import { Input } from '@chakra-ui/react';
 
 const AddressSearchBar = ({ user, handleAddress }) => {
   const [autocomplete, setAutocomplete] = useState(null);
@@ -24,7 +25,7 @@ const AddressSearchBar = ({ user, handleAddress }) => {
         onLoad={onLoad}
         onPlaceChanged={onPlaceChanged}
       >
-        <input
+        <Input
           placeholder='Search'
           // defaultValue={user.address}
         />
