@@ -66,7 +66,7 @@ const MyStore = () => {
 
       <Tabs
         isFitted
-        variant='soft-rounded'
+        variant='solid-rounded'
         colorScheme='green'
       >
         <TabList mb='1em'>

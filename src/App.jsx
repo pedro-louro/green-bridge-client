@@ -15,6 +15,8 @@ import OrdersToDeliver from './driver pages/OrdersToDeliver';
 import OrderDetails from './driver pages/OrderDetails';
 import DriverOrders from './driver pages/DriverOrders';
 import UserDetails from './pages/UserDetails';
+import IsPrivate from './components/IsPrivate';
+import IsAnon from './components/IsAnon';
 // import Navbar from './components/Navbar';
 
 function App() {
@@ -27,52 +29,100 @@ function App() {
         <Routes>
           <Route
             path='/login'
-            element={<Login />}
+            element={
+              <IsAnon>
+                <Login />
+              </IsAnon>
+            }
           />
           <Route
             path='/signup'
-            element={<Signup />}
+            element={
+              <IsAnon>
+                <Signup />
+              </IsAnon>
+            }
           />
           <Route
             path='/stores'
-            element={<Stores />}
+            element={
+              <IsPrivate>
+                <Stores />
+              </IsPrivate>
+            }
           />
           <Route
             path='/mystore'
-            element={<MyStore />}
+            element={
+              <IsPrivate>
+                <MyStore />
+              </IsPrivate>
+            }
           />
           <Route
             path='/mystore/:storeId/orders'
-            element={<StoreOrders />}
+            element={
+              <IsPrivate>
+                <StoreOrders />
+              </IsPrivate>
+            }
           />
           <Route
             path='/stores/:storeId'
-            element={<StoreDetails />}
+            element={
+              <IsPrivate>
+                <StoreDetails />
+              </IsPrivate>
+            }
           />
 
           <Route
             path='/mycart'
-            element={<Checkout />}
+            element={
+              <IsPrivate>
+                <Checkout />
+              </IsPrivate>
+            }
           />
           <Route
             path='/myorders'
-            element={<MyOrders />}
+            element={
+              <IsPrivate>
+                <MyOrders />
+              </IsPrivate>
+            }
           />
           <Route
             path='/userdetails'
-            element={<UserDetails />}
+            element={
+              <IsPrivate>
+                <UserDetails />
+              </IsPrivate>
+            }
           />
           <Route
             path='/driver/orders'
-            element={<OrdersToDeliver />}
+            element={
+              <IsPrivate>
+                <OrdersToDeliver />
+              </IsPrivate>
+            }
           />
           <Route
             path='/driver/orders/:orderId'
-            element={<OrderDetails />}
+            element={
+              <IsPrivate>
+                <OrderDetails />
+              </IsPrivate>
+            }
           />
           <Route
             path='/driver/myorders'
-            element={<DriverOrders />}
+            element={
+              <IsPrivate>
+                <DriverOrders />
+              </IsPrivate>
+            }
           />
         </Routes>
       </ChakraProvider>
