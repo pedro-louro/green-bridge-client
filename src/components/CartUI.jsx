@@ -63,9 +63,8 @@ const Cart = () => {
               mr={3}
               onClick={onClose}
             >
-              Cancel
+              Close Cart
             </Button>
-            <Button colorScheme='blue'>Save</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

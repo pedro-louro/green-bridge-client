@@ -4,6 +4,16 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { updateStore } from '../api/stores.api';
 import { useDisclosure } from '@chakra-ui/react';
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Stack,
+  StackDivider,
+  Box,
+  Heading,
+  Text
+} from '@chakra-ui/react';
 
 const Checkout = ({ handleOpenClose }) => {
   const [orderId, setOrderId] = useState(localStorage.getItem('orderId'));
@@ -60,46 +70,66 @@ const Checkout = ({ handleOpenClose }) => {
   return (
     <div>
       {orderId && (
-        <div>
-          {products &&
-            products.map(productInCart => {
-              return (
-                <div key={productInCart._id}>
-                  <p>
-                    <b>{productInCart.product.name}</b> |{' '}
-                    {productInCart.quantity} x {productInCart.product.price}€
-                  </p>
-                </div>
-              );
-            })}
-          <p>
-            <b>Total: {total}€</b>
-          </p>
-          <div>
-            <p>
-              Forgot something?{' '}
-              <Link to={`/stores/${order.store}`}>
-                <button>Back to Store</button>{' '}
-              </Link>
-            </p>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                cancelOrder();
-              }}
+        <Card bg='#ebf2e8'>
+          <CardHeader>
+            <Heading size='sm'>Products in the Cart</Heading>
+          </CardHeader>
+
+          <CardBody>
+            <Stack
+              divider={<StackDivider />}
+              spacing='4'
             >
-              Cancel Order
-            </button>
-            <button
-              onClick={() => {
-                placeOrder();
-              }}
-            >
-              Place Order
-            </button>
-          </div>
-        </div>
+              {products &&
+                products.map(productInCart => {
+                  return (
+                    <Box key={productInCart._id}>
+                      <Heading
+                        size='xs'
+                        textTransform='uppercase'
+                      >
+                        {productInCart.product.name}
+                      </Heading>
+                      <Text
+                        pt='2'
+                        fontSize='sm'
+                      >
+                        {productInCart.quantity} x {productInCart.product.price}
+                        €
+                      </Text>
+                    </Box>
+                  );
+                })}
+              <p>
+                <b>Total: {total}€</b>
+              </p>
+              <div>
+                <p>
+                  Forgot something?{' '}
+                  <Link to={`/stores/${order.store}`}>
+                    <button>Back to Store</button>{' '}
+                  </Link>
+                </p>
+              </div>
+              <div>
+                <button
+                  onClick={() => {
+                    cancelOrder();
+                  }}
+                >
+                  Cancel Order
+                </button>
+                <button
+                  onClick={() => {
+                    placeOrder();
+                  }}
+                >
+                  Place Order
+                </button>
+              </div>
+            </Stack>
+          </CardBody>
+        </Card>
       )}
       {!orderId && (
         <div>
@@ -112,6 +142,18 @@ const Checkout = ({ handleOpenClose }) => {
           </Link>
         </div>
       )}
+
+      {/* {products &&
+            products.map(productInCart => {
+              return (
+                <div key={productInCart._id}>
+                  <p>
+                    <b>{productInCart.product.name}</b> |{' '}
+                    {productInCart.quantity} x {productInCart.product.price}€
+                  </p>
+                </div>
+              );
+            })} */}
     </div>
   );
 };
