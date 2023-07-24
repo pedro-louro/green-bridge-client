@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getOrderByUser } from '../api/order.api';
 import { Link } from 'react-router-dom';
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 // import useSwr from 'swr';
 
 // const fetchOrders = () => {
@@ -61,68 +62,88 @@ const MyOrders = () => {
 
   return (
     <div>
-      {orders && <h1>Open Order</h1>}
-      {orders &&
-        orders.map(order => {
-          return (
-            <div key={order._id}>
-              <h3>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {order.status}
-                </u>{' '}
-                order from {order.store.name} store
-              </h3>
-              <p>Order Details: </p>
+      <Tabs
+        p={6}
+        isFitted
+        variant='solid-rounded'
+        colorScheme='green'
+      >
+        <TabList>
+          <Tab>Open Orders</Tab>
+          <Tab>Past Orders</Tab>
+        </TabList>
+        <TabPanels p={4}>
+          <TabPanel>
+            {orders &&
+              orders.map(order => {
+                return (
+                  <div key={order._id}>
+                    <h3>
+                      <u
+                        style={{ textTransform: 'capitalize', color: 'green' }}
+                      >
+                        {order.status}
+                      </u>{' '}
+                      order from {order.store.name} store
+                    </h3>
+                    <p>Order Details: </p>
 
-              {order.products &&
-                order.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct.product._id}>
-                      <b>{orderProduct.product.name}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
+                    {order.products &&
+                      order.products.map(orderProduct => {
+                        return (
+                          <p key={orderProduct.product._id}>
+                            <b>{orderProduct.product.name}</b> |{' '}
+                            {orderProduct.quantity} x{' '}
+                            {orderProduct.product.price}€
+                          </p>
+                        );
+                      })}
+                    <p>
+                      <b>Total: {order.total}€</b>
                     </p>
-                  );
-                })}
-              <p>
-                <b>Total: {order.total}€</b>
-              </p>
-            </div>
-          );
-        })}
+                  </div>
+                );
+              })}
+          </TabPanel>
+          <TabPanel>
+            {pastOrders &&
+              pastOrders.map(pastOrder => {
+                return (
+                  <div key={pastOrder._id}>
+                    <h4>
+                      <u
+                        style={{ textTransform: 'capitalize', color: 'green' }}
+                      >
+                        {pastOrder.status}
+                      </u>{' '}
+                      order from {pastOrder.store.name} store
+                    </h4>
+                    <p>Order Details: </p>
+                    {pastOrder.products &&
+                      pastOrder.products.map(orderProduct => {
+                        return (
+                          <p key={orderProduct.product._id}>
+                            <b>{orderProduct.product.name}</b> |{' '}
+                            {orderProduct.quantity} x{' '}
+                            {orderProduct.product.price}€
+                          </p>
+                        );
+                      })}
+                    <p>
+                      <b>Total: {pastOrder.total}€</b>
+                    </p>
+                  </div>
+                );
+              })}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
       {!orders && (
         <div>
           <h2>You don't have any open orders! </h2>
           <Link to={'/stores/'}>Find you Favorite Plants Store!</Link>
         </div>
       )}
-      <hr />
-      {pastOrders && <h2>Past Orders</h2>}
-      {pastOrders &&
-        pastOrders.map(pastOrder => {
-          return (
-            <div key={pastOrder._id}>
-              <h4>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {pastOrder.status}
-                </u>{' '}
-                order from {pastOrder.store.name} store
-              </h4>
-              <p>Order Details: </p>
-              {pastOrder.products &&
-                pastOrder.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct.product._id}>
-                      <b>{orderProduct.product.name}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
-                    </p>
-                  );
-                })}
-              <p>
-                <b>Total: {pastOrder.total}€</b>
-              </p>
-            </div>
-          );
-        })}
     </div>
   );
 };

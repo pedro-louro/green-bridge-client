@@ -30,7 +30,6 @@ const CreateProduct = ({ refreshStores, myStore }) => {
 
     try {
       const newProduct = { name, store: myStore._id, price, stock };
-      console.log(img);
 
       if (img) {
         //create new formData
@@ -106,6 +105,11 @@ const CreateProduct = ({ refreshStores, myStore }) => {
             type='submit'
             colorScheme='teal'
             variant='outline'
+            bg={'green.500'}
+            color={'white'}
+            _hover={{
+              bg: 'green.700'
+            }}
           >
             Create Product
           </Button>

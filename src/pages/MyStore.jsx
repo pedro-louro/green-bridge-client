@@ -23,11 +23,13 @@ import {
   TabList,
   Tab,
   TabPanels,
-  TabPanel
+  TabPanel,
+  Icon
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
 import StoreOrders from './StoreOrders';
 import UpdateStore from '../components/UpdateStoreForm';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 const MyStore = () => {
   const [myStore, setMyStore] = useState('');
@@ -60,11 +62,12 @@ const MyStore = () => {
 
   return (
     <Stack>
-      {myStore && <Heading>{myStore.name}</Heading>}
+      {myStore && <Heading p={6}>{myStore.name}</Heading>}
 
       <Tabs
         isFitted
-        variant='enclosed'
+        variant='soft-rounded'
+        colorScheme='green'
       >
         <TabList mb='1em'>
           <Tab
@@ -92,7 +95,17 @@ const MyStore = () => {
         <TabPanels>
           <TabPanel>
             <Box>
-              <Button onClick={onOpen}>Add a new Product</Button>
+              <Button
+                bg={'green.500'}
+                color={'white'}
+                _hover={{
+                  bg: 'green.700'
+                }}
+                leftIcon={<Icon as={AiOutlinePlusCircle} />}
+                onClick={onOpen}
+              >
+                Add a new Product
+              </Button>
               <Modal
                 onClose={onClose}
                 isOpen={isOpen}

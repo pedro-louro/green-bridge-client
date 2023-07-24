@@ -118,11 +118,11 @@ const UpdateStore = ({ storeId, refreshStores }) => {
               </Button>
               <Button
                 type='submit'
-                bg={'blue.400'}
+                bg={'green.500'}
                 color={'white'}
                 w='full'
                 _hover={{
-                  bg: 'blue.500'
+                  bg: 'green.700'
                 }}
                 onClick={handleSubmit}
               >

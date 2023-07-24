@@ -31,7 +31,7 @@ const OrderDetails = () => {
     <div>
       <h1>Order details</h1>
       {order && (
-        <div>
+        <div key={order._id}>
           <p>From: {order.store.name} Store | Address: ....</p>
           <p>To Deliver to: {order.user.name} | Address: ....</p>
           {order.products &&

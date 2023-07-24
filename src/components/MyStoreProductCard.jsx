@@ -5,8 +5,10 @@ import {
   Text,
   Stack,
   Image,
-  Button
+  Button,
+  Icon
 } from '@chakra-ui/react';
+import { PiTrash } from 'react-icons/pi';
 
 const StoreProductCard = ({ product, removeProduct }) => {
   return (
@@ -83,11 +85,17 @@ const StoreProductCard = ({ product, removeProduct }) => {
             </Text>
             <Text color={'gray.600'}>{product.stock} units in Stock</Text>
             <Button
+              size={'sm'}
+              bg={'green.500'}
+              color={'white'}
+              _hover={{
+                bg: 'green.700'
+              }}
               onClick={() => {
                 removeProduct(product._id);
               }}
             >
-              Delete
+              <Icon as={PiTrash} />
             </Button>
           </Stack>
         </Stack>
