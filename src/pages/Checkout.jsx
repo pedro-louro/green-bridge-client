@@ -3,25 +3,29 @@ import { deleteOrder, getOrder, updateOrder } from '../api/order.api';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { updateStore } from '../api/stores.api';
-import { useDisclosure } from '@chakra-ui/react';
+// import { useDisclosure } from '@chakra-ui/react';
+import { FiMinusCircle } from 'react-icons/fi';
+import { FiPlusCircle } from 'react-icons/fi';
+
 import {
   Card,
   CardHeader,
   CardBody,
+  Icon,
   Stack,
   StackDivider,
   Box,
   Heading,
-  Text
+  Text,
+  Button
 } from '@chakra-ui/react';
 
 const Checkout = ({ handleOpenClose }) => {
   const [orderId, setOrderId] = useState(localStorage.getItem('orderId'));
-  const [order, setOrder] = useState({});
+  const [order, setOrder] = useState(null);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
-  const store = { _id: order.store, orders: order._id };
 
   const fetchOrder = async () => {
     if (orderId) {
@@ -63,14 +67,40 @@ const Checkout = ({ handleOpenClose }) => {
     localStorage.removeItem('orderId');
     setOrderId('');
   };
+
+  // to add/remove product quantity from within the cart
+  const updateOrderQuantity = async (productID, operation) => {
+    let existingProduct = products.filter(
+      current => current.product._id === productID
+    );
+
+    if (operation === 'add') {
+      existingProduct[0].quantity += 1;
+    }
+    if (operation === 'remove') {
+      existingProduct[0].quantity -= 1;
+    }
+
+    const productToAdd = {
+      product: productID,
+      quantity: existingProduct[0].quantity
+    };
+
+    const response = await updateOrder({
+      _id: orderId,
+      products: productToAdd,
+      status: 'cart'
+    });
+    fetchOrder();
+  };
   useEffect(() => {
     fetchOrder();
+    console.log(order);
   }, [orderId]);
-
   return (
-    <div>
+    <Stack bg='#ebf2e8'>
       {orderId && (
-        <Card bg='#ebf2e8'>
+        <Card>
           <CardHeader>
             <Heading size='sm'>Products in the Cart</Heading>
           </CardHeader>
@@ -95,7 +125,39 @@ const Checkout = ({ handleOpenClose }) => {
                         fontSize='sm'
                       >
                         {productInCart.quantity} x {productInCart.product.price}
-                        €
+                        €{'   '}
+                        <Button
+                          bg={'green.500'}
+                          color={'white'}
+                          _hover={{
+                            bg: 'green.700'
+                          }}
+                          size='xs'
+                          onClick={() => {
+                            updateOrderQuantity(
+                              productInCart.product._id,
+                              'remove'
+                            );
+                          }}
+                        >
+                          <Icon as={FiMinusCircle}></Icon>{' '}
+                        </Button>
+                        <Button
+                          bg={'green.500'}
+                          color={'white'}
+                          _hover={{
+                            bg: 'green.700'
+                          }}
+                          size='xs'
+                          onClick={() => {
+                            updateOrderQuantity(
+                              productInCart.product._id,
+                              'add'
+                            );
+                          }}
+                        >
+                          <Icon as={FiPlusCircle}></Icon>
+                        </Button>
                       </Text>
                     </Box>
                   );
@@ -103,14 +165,19 @@ const Checkout = ({ handleOpenClose }) => {
               <p>
                 <b>Total: {total}€</b>
               </p>
-              <div>
-                <p>
-                  Forgot something?{' '}
-                  <Link to={`/stores/${order.store}`}>
-                    <button>Back to Store</button>{' '}
-                  </Link>
-                </p>
-              </div>
+              {order && (
+                <div>
+                  <p>
+                    Forgot something?{' '}
+                    <Link to={`/stores/${order.store._id}`}>
+                      <button onClick={handleOpenClose('close')}>
+                        Back to Store
+                      </button>{' '}
+                    </Link>
+                  </p>
+                </div>
+              )}
+
               <div>
                 <button
                   onClick={() => {
@@ -154,7 +221,7 @@ const Checkout = ({ handleOpenClose }) => {
                 </div>
               );
             })} */}
-    </div>
+    </Stack>
   );
 };
 

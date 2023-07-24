@@ -49,18 +49,23 @@ const Cart = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>
+          <DrawerHeader bg='#ebf2e8'>
             <Icon /> Your Cart
           </DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody bg='#ebf2e8'>
             <Checkout handleOpenClose={handleOpenClose} />
           </DrawerBody>
 
-          <DrawerFooter>
+          <DrawerFooter bg='#ebf2e8'>
             <Button
-              variant='outline'
+              variant='solid-rounded'
               mr={3}
+              bg={'blue.400'}
+              color={'white'}
+              _hover={{
+                bg: 'blue.700'
+              }}
               onClick={onClose}
             >
               Close Cart
