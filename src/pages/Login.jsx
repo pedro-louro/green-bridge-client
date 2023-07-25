@@ -9,8 +9,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Link,
-  Checkbox,
   Stack,
   Button,
   Heading,
@@ -40,7 +38,7 @@ const Login = () => {
       const user = { email, password };
       // const response = await login(user);
       const response = await toast.promise(login(user), {
-        pending: 'We are had at work, please wait',
+        pending: 'We are working on your request, please wait',
         success: 'Welcome',
         error: 'Something went wrong - try again later'
       });
