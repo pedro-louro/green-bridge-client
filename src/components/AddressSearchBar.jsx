@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
 import { Input, Icon, HStack, Button } from '@chakra-ui/react';
 import { BiCurrentLocation } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 
-const AddressSearchBar = ({ user, handleAddress, currentAddress }) => {
+const AddressSearchBar = ({ handleAddress, currentAddress }) => {
   const [autocomplete, setAutocomplete] = useState(null);
   const [coordinates, setCoordinates] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState(null);
@@ -33,10 +34,7 @@ const AddressSearchBar = ({ user, handleAddress, currentAddress }) => {
     const lat = crd.latitude;
     const lng = crd.longitude;
 
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-
-    // Google Maps rever geocoding to get readable addess
+    // Google Maps reverse geocoding to get readable address
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
     )
@@ -44,12 +42,23 @@ const AddressSearchBar = ({ user, handleAddress, currentAddress }) => {
       .then(responseJSON => {
         setFormattedAddress(responseJSON.results[0].formatted_address);
         setCoordinates({ lat, lng });
-        console.log(formattedAddress);
       });
+    // toast.success('We found your address!');
+    toast.success('We found your address!', {
+      position: 'top-center',
+      autoClose: 3000
+    });
   };
 
   function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
+    toast.error(
+      'Something went wrong getting your address. Search for the address instead',
+      {
+        position: 'top-center',
+        autoClose: 3000
+      }
+    );
   }
 
   useEffect(() => {
@@ -63,6 +72,10 @@ const AddressSearchBar = ({ user, handleAddress, currentAddress }) => {
           bg: 'blue.400'
         }}
         onClick={async () => {
+          toast.info('Searching for your Address', {
+            position: 'top-center',
+            autoClose: 3000
+          });
           await navigator.geolocation.getCurrentPosition(
             success,
             error,

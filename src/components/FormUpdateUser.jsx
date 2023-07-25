@@ -65,7 +65,6 @@ const UpdateUser = () => {
   useEffect(() => {
     fetchUser();
   }, []);
-  console.log(address);
 
   return (
     <div>
