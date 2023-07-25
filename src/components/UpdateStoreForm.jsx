@@ -6,24 +6,37 @@ import {
   Heading,
   Input,
   Stack,
-  VStack
+  VStack,
+  Icon
 } from '@chakra-ui/react';
 import AddressSearchBar from './AddressSearchBar';
 import { useState, useEffect } from 'react';
 import { getStore, updateStore } from '../api/stores.api';
 import { useNavigate } from 'react-router-dom';
+import { GiPositionMarker } from 'react-icons/gi';
 
 const UpdateStore = ({ storeId, refreshStores }) => {
   const [store, setStore] = useState('');
   const [name, setName] = useState(store.name);
   const [img, setImg] = useState(store.img);
-  const [address, setAddress] = useState(store.address);
+  const [address, setAddress] = useState(null);
+  const [formattedAddress, setFormattedAddress] = useState('');
 
   const fetchStore = async () => {
     if (storeId) {
       try {
         const response = await getStore(storeId);
         setStore(response.data);
+        setAddress(response.data.address);
+
+        fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.data.address.lat},${response.data.address.lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
+        )
+          .then(response => response.json())
+          .then(responseJSON => {
+            setFormattedAddress(responseJSON.results[0].formatted_address);
+            console.log(formattedAddress);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -49,6 +62,7 @@ const UpdateStore = ({ storeId, refreshStores }) => {
       const response = await updateStore(storeUpdate);
       setStore(response.data);
       refreshStores();
+      fetchStore();
     } catch (error) {
       console.log('Error updating the user', error);
     }
@@ -56,8 +70,7 @@ const UpdateStore = ({ storeId, refreshStores }) => {
 
   useEffect(() => {
     fetchStore();
-  }, [storeId, name, img, address]);
-  console.log(address);
+  }, [storeId]);
 
   return (
     <div>
@@ -99,8 +112,14 @@ const UpdateStore = ({ storeId, refreshStores }) => {
               />
             </FormControl>
             <FormControl id='address'>
-              <FormLabel>Address</FormLabel>
-              <AddressSearchBar handleAddress={handleAddress} />
+              <FormLabel>Address:</FormLabel>
+              {/* <p>
+                <Icon as={GiPositionMarker}></Icon> {formattedAddress}
+              </p> */}
+              <AddressSearchBar
+                handleAddress={handleAddress}
+                currentAddress={formattedAddress}
+              />
             </FormControl>
             <Stack
               spacing={6}

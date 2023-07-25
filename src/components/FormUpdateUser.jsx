@@ -22,10 +22,19 @@ const UpdateUser = () => {
   const [email, setEmail] = useState(user.email);
   const [img, setImg] = useState(user.img);
   const [address, setAddress] = useState(user.address);
+  const [formattedAddress, setFormattedAddress] = useState('');
 
   const fetchUser = async () => {
     const userDetails = await getUser(userId);
     setUser(userDetails.data);
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userDetails.data.address.lat},${userDetails.data.address.lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        setFormattedAddress(responseJSON.results[0].formatted_address);
+        console.log(formattedAddress);
+      });
   };
 
   const handleName = event => {
@@ -112,6 +121,7 @@ const UpdateUser = () => {
               <AddressSearchBar
                 user={user}
                 handleAddress={handleAddress}
+                currentAddress={formattedAddress}
               />
             </FormControl>
             <Stack
@@ -130,11 +140,11 @@ const UpdateUser = () => {
               </Button>
               <Button
                 type='submit'
-                bg={'blue.400'}
                 color={'white'}
                 w='full'
+                bg={'green.500'}
                 _hover={{
-                  bg: 'blue.500'
+                  bg: 'green.700'
                 }}
                 onClick={handleSubmit}
               >

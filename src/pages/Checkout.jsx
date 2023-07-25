@@ -55,12 +55,14 @@ const Checkout = ({ handleOpenClose }) => {
   };
 
   const placeOrder = async () => {
+    //update the order with the products, status and total
     const response = await updateOrder({
       _id: orderId,
       status: 'new',
       total: total
     });
-    console.log(response.data);
+
+    //update store to receive the order ID
     await updateStore({ _id: order.store._id, orders: order._id });
 
     toast.success('The store received your order');
@@ -95,7 +97,6 @@ const Checkout = ({ handleOpenClose }) => {
   };
   useEffect(() => {
     fetchOrder();
-    console.log(order);
   }, [orderId]);
   return (
     <Stack bg='#ebf2e8'>
