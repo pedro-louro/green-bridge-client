@@ -36,6 +36,7 @@ const MyStore = () => {
   const userId = localStorage.getItem('userId');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentTab, setCurrentTab] = useState('products');
+  const [fetchedStore, setFectchedStore] = useState(false);
 
   //related to user
   const fetchStore = async () => {
@@ -43,8 +44,10 @@ const MyStore = () => {
       const fetchUser = await getUser(userId);
       const response = await getStore(fetchUser.data.store);
       setMyStore(response.data);
+      setFectchedStore(true);
     } catch (error) {
       console.log('Error getting the Store');
+      setFectchedStore(true);
     }
   };
   const removeProduct = async productId => {
@@ -63,100 +66,101 @@ const MyStore = () => {
   return (
     <Stack>
       {myStore && <Heading p={6}>{myStore.name}</Heading>}
-
-      <Tabs
-        isFitted
-        variant='solid-rounded'
-        colorScheme='green'
-      >
-        <TabList mb='1em'>
-          <Tab
-            onClick={() => {
-              setCurrentTab('products');
-            }}
-          >
-            Products
-          </Tab>
-          <Tab
-            onClick={() => {
-              setCurrentTab('orders');
-            }}
-          >
-            Orders
-          </Tab>
-          <Tab
-            onClick={() => {
-              setCurrentTab('updateStore');
-            }}
-          >
-            Update Store Details
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <Box>
-              <Button
-                bg={'green.500'}
-                color={'white'}
-                _hover={{
-                  bg: 'green.700'
-                }}
-                leftIcon={<Icon as={AiOutlinePlusCircle} />}
-                onClick={onOpen}
-              >
-                Add a new Product
-              </Button>
-              <Modal
-                onClose={onClose}
-                isOpen={isOpen}
-                isCentered
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Add a Product</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <CreateProduct
-                      refreshStores={fetchStore}
-                      myStore={myStore}
-                    />
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            </Box>
-            <SimpleGrid
-              spacing={4}
-              templateColumns='repeat(3, minmax(200px, 1fr))'
+      {myStore && (
+        <Tabs
+          isFitted
+          variant='solid-rounded'
+          colorScheme='green'
+        >
+          <TabList mb='1em'>
+            <Tab
+              onClick={() => {
+                setCurrentTab('products');
+              }}
             >
-              {myStore &&
-                myStore.products.map(product => {
-                  return (
-                    <Container key={product._id}>
-                      <StoreProductCard
-                        product={product}
-                        removeProduct={removeProduct}
+              Products
+            </Tab>
+            <Tab
+              onClick={() => {
+                setCurrentTab('orders');
+              }}
+            >
+              Orders
+            </Tab>
+            <Tab
+              onClick={() => {
+                setCurrentTab('updateStore');
+              }}
+            >
+              Update Store Details
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box>
+                <Button
+                  bg={'green.500'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'green.700'
+                  }}
+                  leftIcon={<Icon as={AiOutlinePlusCircle} />}
+                  onClick={onOpen}
+                >
+                  Add a new Product
+                </Button>
+                <Modal
+                  onClose={onClose}
+                  isOpen={isOpen}
+                  isCentered
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Add a Product</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <CreateProduct
+                        refreshStores={fetchStore}
+                        myStore={myStore}
                       />
-                    </Container>
-                  );
-                })}
-            </SimpleGrid>{' '}
-          </TabPanel>
-          <TabPanel>
-            <StoreOrders storeId={myStore._id} />
-          </TabPanel>
-          <TabPanel>
-            <UpdateStore
-              storeId={myStore._id}
-              refreshStores={fetchStore}
-            />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button onClick={onClose}>Close</Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Box>
+              <SimpleGrid
+                spacing={4}
+                templateColumns='repeat(3, minmax(200px, 1fr))'
+              >
+                {myStore &&
+                  myStore.products.map(product => {
+                    return (
+                      <Container key={product._id}>
+                        <StoreProductCard
+                          product={product}
+                          removeProduct={removeProduct}
+                        />
+                      </Container>
+                    );
+                  })}
+              </SimpleGrid>{' '}
+            </TabPanel>
+            <TabPanel>
+              <StoreOrders storeId={myStore._id} />
+            </TabPanel>
+            <TabPanel>
+              <UpdateStore
+                storeId={myStore._id}
+                refreshStores={fetchStore}
+              />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      )}
 
-      {!myStore && <AddStore />}
+      {!myStore && fetchedStore && <AddStore refreshStore={fetchStore} />}
     </Stack>
   );
 };

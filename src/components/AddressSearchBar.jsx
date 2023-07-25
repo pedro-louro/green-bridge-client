@@ -62,7 +62,7 @@ const AddressSearchBar = ({ handleAddress, currentAddress }) => {
   }
 
   useEffect(() => {
-    handleAddress(coordinates);
+    coordinates && handleAddress(coordinates);
   }, [coordinates]);
   return (
     <HStack>
