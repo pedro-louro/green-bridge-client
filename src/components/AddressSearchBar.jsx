@@ -36,7 +36,9 @@ const AddressSearchBar = ({ handleAddress, currentAddress }) => {
 
     // Google Maps reverse geocoding to get readable address
     fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${
+        import.meta.env.VITE_GOOGLE_MAPS_API
+      }`
     )
       .then(response => response.json())
       .then(responseJSON => {

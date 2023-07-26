@@ -28,7 +28,11 @@ const UpdateUser = () => {
     const userDetails = await getUser(userId);
     setUser(userDetails.data);
     fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userDetails.data.address.lat},${userDetails.data.address.lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+        userDetails.data.address.lat
+      },${userDetails.data.address.lng}&key=${
+        import.meta.env.VITE_GOOGLE_MAPS_API
+      }`
     )
       .then(response => response.json())
       .then(responseJSON => {

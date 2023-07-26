@@ -12,8 +12,6 @@ import {
 import AddressSearchBar from './AddressSearchBar';
 import { useState, useEffect } from 'react';
 import { getStore, updateStore } from '../api/stores.api';
-import { useNavigate } from 'react-router-dom';
-import { GiPositionMarker } from 'react-icons/gi';
 
 const UpdateStore = ({ storeId, refreshStores }) => {
   const [store, setStore] = useState('');
@@ -30,7 +28,11 @@ const UpdateStore = ({ storeId, refreshStores }) => {
         setAddress(response.data.address);
 
         fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${response.data.address.lat},${response.data.address.lng}&key=AIzaSyBVp_Q1EgrDgWrR2h635oY6UXEphO0jrLg`
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+            response.data.address.lat
+          },${response.data.address.lng}&key=${
+            import.meta.env.VITE_GOOGLE_MAPS_API
+          }`
         )
           .then(response => response.json())
           .then(responseJSON => {
@@ -70,7 +72,7 @@ const UpdateStore = ({ storeId, refreshStores }) => {
 
   useEffect(() => {
     fetchStore();
-  }, [storeId]);
+  }, [storeId, formattedAddress]);
 
   return (
     <div>
