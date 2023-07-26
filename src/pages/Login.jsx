@@ -46,6 +46,8 @@ const Login = () => {
       //Store the login token in the local storage (function from the auth context)
 
       storeToken(response.data.authToken);
+      localStorage.setItem('userImg', response.data.img);
+
       //verify the token
       authenticateUser();
 

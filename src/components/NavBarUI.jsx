@@ -19,7 +19,6 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
-import OpenModal from './ModalUpdateUser';
 
 const links = [
   { name: 'Stores', to: '/stores' },
@@ -50,6 +49,7 @@ const NavLink = ({ children }) => (
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const userImg = localStorage.getItem('userImg');
 
   return (
     <>
@@ -102,9 +102,7 @@ const NavBar = () => {
                 >
                   <Avatar
                     size={'sm'}
-                    src={
-                      'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                    }
+                    src={userImg}
                   />
                 </MenuButton>
                 <MenuList>

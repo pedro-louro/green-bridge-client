@@ -81,7 +81,7 @@ const Stores = () => {
         pt={20}
       >
         <SimpleGrid
-          spacing={5}
+          spacing={3}
           // templateColumns='repeat(3, minmax(250px, 1fr))'
           columns={[1, null, 2, null, 3]}
           bg='#ebf2e8'
@@ -89,7 +89,7 @@ const Stores = () => {
           pr={'120px'}
           pt={'70px'}
           pb={'70px'}
-          h='100vh'
+          h='100%'
         >
           {stores &&
             stores.map(store => {

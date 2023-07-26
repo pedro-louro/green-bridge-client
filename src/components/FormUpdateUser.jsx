@@ -7,12 +7,14 @@ import {
   Input,
   Stack,
   VStack,
-  Avatar
+  Avatar,
+  Text
 } from '@chakra-ui/react';
 import AddressSearchBar from './AddressSearchBar';
 import { getUser, updateUser } from '../api/auth.api';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { uploadImage } from '../api/product.api';
 
 const UpdateUser = () => {
   const userId = localStorage.getItem('userId');
@@ -48,7 +50,7 @@ const UpdateUser = () => {
     setEmail(event.target.value);
   };
   const handleImg = event => {
-    setImg(event.target.value);
+    setImg(event.target.files[0]);
   };
   const handleAddress = coordinates => {
     setAddress(coordinates);
@@ -58,8 +60,22 @@ const UpdateUser = () => {
     event.preventDefault();
 
     try {
-      const userUpdate = { _id: userId, email, name, address, img };
+      const userUpdate = { _id: userId, email, name, address };
+      if (img) {
+        console.log(img);
+        //create new formData
+        const uploadData = new FormData();
+
+        //add image to form data
+        uploadData.append('file', img);
+
+        const ImageResponse = await uploadImage(uploadData);
+
+        userUpdate.img = ImageResponse.data.img;
+      }
       await updateUser(userUpdate);
+      localStorage.setItem('userImg', userUpdate.img);
+
       navigate('/stores');
     } catch (error) {
       console.log('Error updating the user', error);
@@ -100,11 +116,19 @@ const UpdateUser = () => {
                   size='xl'
                   src={user.img}
                 ></Avatar>
-                <Button>Change Photo</Button>
+                <Text>
+                  <b>Change Photo:</b>
+                  <input
+                    type='file'
+                    onChange={handleImg}
+                  />
+                </Text>
               </VStack>
             </FormControl>
             <FormControl id='userName'>
-              <FormLabel>User name</FormLabel>
+              <FormLabel>
+                <b>User name</b>
+              </FormLabel>
               <Input
                 defaultValue={user.name}
                 type='text'
@@ -112,7 +136,9 @@ const UpdateUser = () => {
               />
             </FormControl>
             <FormControl id='email'>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>
+                <b>Email address</b>
+              </FormLabel>
               <Input
                 defaultValue={user.email}
                 type='email'
@@ -120,7 +146,9 @@ const UpdateUser = () => {
               />
             </FormControl>
             <FormControl id='address'>
-              <FormLabel>Address</FormLabel>
+              <FormLabel>
+                <b>Postal Address</b>
+              </FormLabel>
               <AddressSearchBar
                 user={user}
                 handleAddress={handleAddress}
