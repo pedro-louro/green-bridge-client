@@ -1,9 +1,10 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import StoreCard from '../components/StoreCard';
-import { Box, Center, Stack } from '@chakra-ui/react';
+import { Box, Center, Stack, SimpleGrid, VStack } from '@chakra-ui/react';
 import AddressSearchBar from '../components/AddressSearchBar';
 import { getUser } from '../api/auth.api';
+import NewStoreCard from '../components/StoreCardV2';
 
 const Stores = () => {
   const [stores, setStores] = useState(null);
@@ -75,11 +76,20 @@ const Stores = () => {
 
   return (
     <div>
-      <Center>
-        <Stack
-          w='50%'
-          p='20px'
-          spacing='3vh'
+      <VStack
+        p={10}
+        pt={20}
+      >
+        <SimpleGrid
+          spacing={5}
+          // templateColumns='repeat(3, minmax(250px, 1fr))'
+          columns={[1, null, 2, null, 3]}
+          bg='#ebf2e8'
+          pl={'120px'}
+          pr={'120px'}
+          pt={'70px'}
+          pb={'70px'}
+          h='100vh'
         >
           {stores &&
             stores.map(store => {
@@ -88,17 +98,22 @@ const Stores = () => {
                 <Box
                   key={store._id}
                   boxShadow='lg green'
+                  w='sm'
                 >
-                  <StoreCard
+                  {/* <StoreCard
                     w='60%'
+                    store={store}
+                    distance={distance}
+                  /> */}
+                  <NewStoreCard
                     store={store}
                     distance={distance}
                   />
                 </Box>
               );
             })}
-        </Stack>
-      </Center>
+        </SimpleGrid>
+      </VStack>
       {/* <AddressSearchBar /> */}
     </div>
   );

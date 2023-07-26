@@ -55,37 +55,6 @@ const Signup = () => {
   };
 
   return (
-    // <div className='SignupPage'>
-    //   <h1>Sign Up</h1>
-
-    //   <form onSubmit={handleSubmit}>
-    //     <label>Email:</label>
-    //     <input
-    //       type='email'
-    //       name='email'
-    //       value={email}
-    //       onChange={handleEmail}
-    //     />
-
-    //     <label>Password:</label>
-    //     <input
-    //       type='password'
-    //       name='password'
-    //       value={password}
-    //       onChange={handlePassword}
-    //     />
-
-    //     <label>Name:</label>
-    //     <input
-    //       type='text'
-    //       name='name'
-    //       value={name}
-    //       onChange={handleName}
-    //     />
-
-    //     <button type='submit'>Sign Up</button>
-    //   </form>
-
     <Flex
       minH={'100vh'}
       align={'center'}
@@ -112,7 +81,7 @@ const Signup = () => {
             fontSize={'lg'}
             color={'gray.600'}
           >
-            to enjoy all of our cool features ✌️
+            and find your plants!
           </Text>
         </Stack>
         <Box
@@ -172,6 +141,7 @@ const Signup = () => {
               spacing={10}
               pt={2}
             >
+              <Text>{errorMessage}</Text>
               <Button
                 loadingText='Submitting'
                 size='lg'

@@ -110,6 +110,7 @@ const Login = () => {
                 align={'start'}
                 justify={'space-between'}
               ></Stack>
+              <Text>{errorMessage}</Text>
               <Button
                 bg={'green.500'}
                 type='submit'
