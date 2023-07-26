@@ -18,7 +18,6 @@ const NewStoreCard = ({ store, distance }) => {
       <Box
         maxW={'350px'}
         w={'full'}
-        // bg='#ebf2e8'
         bg={'white'}
         boxShadow={'2xl'}
         rounded={'md'}
@@ -56,7 +55,6 @@ const NewStoreCard = ({ store, distance }) => {
             <Button
               variant='outline'
               color={'green'}
-              // bg={'green.500'}
               _hover={{
                 bg: 'green.500',
                 color: 'white'

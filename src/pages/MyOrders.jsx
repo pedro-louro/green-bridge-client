@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getOrderByUser } from '../api/order.api';
 import { Link } from 'react-router-dom';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  VStack,
+  SimpleGrid
+} from '@chakra-ui/react';
+import OrderCard from '../components/OrderCard';
 // import useSwr from 'swr';
 
 // const fetchOrders = () => {
@@ -74,67 +83,58 @@ const MyOrders = () => {
         </TabList>
         <TabPanels p={4}>
           <TabPanel>
-            {orders &&
-              orders.map(order => {
-                return (
-                  <div key={order._id}>
-                    <h3>
-                      <u
-                        style={{ textTransform: 'capitalize', color: 'green' }}
-                      >
-                        {order.status}
-                      </u>{' '}
-                      order from {order.store.name} store
-                    </h3>
-                    <p>Order Details: </p>
-
-                    {order.products &&
-                      order.products.map(orderProduct => {
-                        return (
-                          <p key={orderProduct.product._id}>
-                            <b>{orderProduct.product.name}</b> |{' '}
-                            {orderProduct.quantity} x{' '}
-                            {orderProduct.product.price}€
-                          </p>
-                        );
-                      })}
-                    <p>
-                      <b>Total: {order.total}€</b>
-                    </p>
-                  </div>
-                );
-              })}
+            <VStack
+              p={10}
+              pt={20}
+            >
+              <SimpleGrid
+                spacing={3}
+                columns={[1, null, 2]}
+                bg='#ebf2e8'
+                pl={'120px'}
+                pr={'120px'}
+                pt={'70px'}
+                pb={'70px'}
+                h='100%'
+              >
+                {orders &&
+                  orders.map(order => {
+                    return (
+                      <OrderCard
+                        key={order._id}
+                        order={order}
+                      />
+                    );
+                  })}
+              </SimpleGrid>
+            </VStack>
           </TabPanel>
           <TabPanel>
-            {pastOrders &&
-              pastOrders.map(pastOrder => {
-                return (
-                  <div key={pastOrder._id}>
-                    <h4>
-                      <u
-                        style={{ textTransform: 'capitalize', color: 'green' }}
-                      >
-                        {pastOrder.status}
-                      </u>{' '}
-                      order from {pastOrder.store.name} store
-                    </h4>
-                    <p>Order Details: </p>
-                    {pastOrder.products &&
-                      pastOrder.products.map(orderProduct => {
-                        return (
-                          <p key={orderProduct.product._id}>
-                            <b>{orderProduct.product.name}</b> |{' '}
-                            {orderProduct.quantity} x{' '}
-                            {orderProduct.product.price}€
-                          </p>
-                        );
-                      })}
-                    <p>
-                      <b>Total: {pastOrder.total}€</b>
-                    </p>
-                  </div>
-                );
-              })}
+            <VStack
+              p={10}
+              pt={20}
+            >
+              <SimpleGrid
+                spacing={5}
+                columns={[1, null, 2]}
+                bg='#ebf2e8'
+                pl={'120px'}
+                pr={'120px'}
+                pt={'70px'}
+                pb={'70px'}
+                h='100%'
+              >
+                {pastOrders &&
+                  pastOrders.map(pastOrder => {
+                    return (
+                      <OrderCard
+                        key={pastOrder._id}
+                        order={pastOrder}
+                      />
+                    );
+                  })}
+              </SimpleGrid>
+            </VStack>
           </TabPanel>
         </TabPanels>
       </Tabs>
