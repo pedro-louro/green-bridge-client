@@ -24,7 +24,8 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Icon
+  Icon,
+  Avatar
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
 import StoreOrders from './StoreOrders';
@@ -65,7 +66,15 @@ const MyStore = () => {
 
   return (
     <Stack>
-      {myStore && <Heading p={6}>{myStore.name}</Heading>}
+      {myStore && (
+        <Heading p={6}>
+          <Avatar
+            src={myStore.img}
+            size={'lg'}
+          />{' '}
+          {myStore.name}
+        </Heading>
+      )}
       {myStore && (
         <Tabs
           isFitted

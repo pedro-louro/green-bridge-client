@@ -6,17 +6,18 @@ import {
   Heading,
   Input,
   Stack,
-  VStack,
-  Icon
+  VStack
 } from '@chakra-ui/react';
 import AddressSearchBar from './AddressSearchBar';
 import { useState, useEffect } from 'react';
 import { getStore, updateStore } from '../api/stores.api';
+import { uploadImage } from '../api/product.api';
+import { toast } from 'react-toastify';
 
 const UpdateStore = ({ storeId, refreshStores }) => {
   const [store, setStore] = useState('');
   const [name, setName] = useState(store.name);
-  const [img, setImg] = useState(store.img);
+  const [img, setImg] = useState('');
   const [address, setAddress] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState('');
 
@@ -50,7 +51,7 @@ const UpdateStore = ({ storeId, refreshStores }) => {
   };
 
   const handleImg = event => {
-    setImg(event.target.value);
+    setImg(event.target.files[0]);
   };
   const handleAddress = coordinates => {
     setAddress(coordinates);
@@ -60,8 +61,25 @@ const UpdateStore = ({ storeId, refreshStores }) => {
     event.preventDefault();
 
     try {
-      const storeUpdate = { _id: storeId, name, address, img };
-      const response = await updateStore(storeUpdate);
+      const storeUpdate = { _id: storeId, name, address };
+
+      if (img) {
+        console.log(img);
+        //create new formData
+        const uploadData = new FormData();
+
+        //add image to form data
+        uploadData.append('file', img);
+
+        const ImageResponse = await uploadImage(uploadData);
+
+        storeUpdate.img = ImageResponse.data.img;
+      }
+      const response = await toast.promise(updateStore(storeUpdate), {
+        pending: 'We are working on your request, please wait',
+        success: 'Store Details Updated',
+        error: 'Something went wrong - try again later'
+      });
       setStore(response.data);
       refreshStores();
       fetchStore();
@@ -80,7 +98,6 @@ const UpdateStore = ({ storeId, refreshStores }) => {
         <Flex
           align={'center'}
           justify={'center'}
-          // bg={useColorModeValue('gray.50', 'gray.800')}
         >
           <Stack
             spacing={4}
@@ -97,59 +114,56 @@ const UpdateStore = ({ storeId, refreshStores }) => {
                 Update Store Details
               </Heading>
             </VStack>
-            <FormControl id='storeName'></FormControl>
-            <FormControl id='storeName'>
-              <FormLabel>Store name</FormLabel>
-              <Input
-                defaultValue={store.name}
-                type='text'
-                onChange={handleName}
-              />
-            </FormControl>
-            <FormControl id='image'>
-              <FormLabel>Store Image</FormLabel>
+            <form onSubmit={handleSubmit}>
+              <FormControl id='storeName'></FormControl>
+              <FormControl id='storeName'>
+                <FormLabel>Store name</FormLabel>
+                <Input
+                  defaultValue={store.name}
+                  type='text'
+                  onChange={handleName}
+                />
+              </FormControl>
+              <FormLabel>Image</FormLabel>
               <input
                 type='file'
                 onChange={handleImg}
               />
-            </FormControl>
-            <FormControl id='address'>
-              <FormLabel>Address:</FormLabel>
-              {/* <p>
-                <Icon as={GiPositionMarker}></Icon> {formattedAddress}
-              </p> */}
-              <AddressSearchBar
-                handleAddress={handleAddress}
-                currentAddress={formattedAddress}
-              />
-            </FormControl>
-            <Stack
-              spacing={6}
-              direction={['column', 'row']}
-            >
-              <Button
-                bg={'red.400'}
-                color={'white'}
-                w='full'
-                _hover={{
-                  bg: 'red.500'
-                }}
+              <FormControl id='address'>
+                <FormLabel>Address:</FormLabel>
+
+                <AddressSearchBar
+                  handleAddress={handleAddress}
+                  currentAddress={formattedAddress}
+                />
+              </FormControl>
+              <Stack
+                spacing={6}
+                direction={['column', 'row']}
               >
-                Cancel
-              </Button>
-              <Button
-                type='submit'
-                bg={'green.500'}
-                color={'white'}
-                w='full'
-                _hover={{
-                  bg: 'green.700'
-                }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </Button>
-            </Stack>
+                <Button
+                  bg={'red.400'}
+                  color={'white'}
+                  w='full'
+                  _hover={{
+                    bg: 'red.500'
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type='submit'
+                  bg={'green.500'}
+                  color={'white'}
+                  w='full'
+                  _hover={{
+                    bg: 'green.700'
+                  }}
+                >
+                  Submit
+                </Button>
+              </Stack>
+            </form>
           </Stack>
         </Flex>
       )}
