@@ -92,7 +92,10 @@ const AddressSearchBar = ({ handleAddress, currentAddress }) => {
         onLoad={onLoad}
         onPlaceChanged={onPlaceChanged}
       >
-        <Input placeholder={addressPlaceholder} />
+        <Input
+          placeholder={addressPlaceholder}
+          bg={'white'}
+        />
       </Autocomplete>
     </HStack>
   );

@@ -82,6 +82,7 @@ const StoreOrders = ({ storeId }) => {
           pt={'70px'}
           pb={'70px'}
           h='100%'
+          w={'80%'}
         >
           {orders &&
             orders.map(order => {
@@ -123,6 +124,7 @@ const StoreOrders = ({ storeId }) => {
           pt={'70px'}
           pb={'70px'}
           h='100%'
+          w={'80%'}
         >
           {pastOrders &&
             pastOrders.map(pastOrder => {

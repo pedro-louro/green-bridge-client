@@ -3,6 +3,17 @@ import { getOrderStatus, updateOrder } from '../api/order.api';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser } from '../api/auth.api';
 import AddressSearchBar from '../components/AddressSearchBar';
+import {
+  Button,
+  SimpleGrid,
+  VStack,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel
+} from '@chakra-ui/react';
+import DriverOrderCard from './DriverOrderCard';
 
 const OrdersToDeliver = () => {
   const [orders, setOrders] = useState(null);
@@ -16,6 +27,7 @@ const OrdersToDeliver = () => {
   const fetchOrders = async () => {
     try {
       const response = await getOrderStatus('ready');
+      console.log(response.data);
       if (response.data.length) {
         setOrders(response.data);
         setNumOrders(response.data.length);
@@ -25,20 +37,6 @@ const OrdersToDeliver = () => {
     }
   };
 
-  const acceptOrder = async orderId => {
-    try {
-      const response = await updateOrder({
-        _id: orderId,
-        status: 'delivering',
-        driver: userId
-      });
-
-      setNumOrders(prevNum => prevNum - 1);
-      navigate(`/driver/orders/${orderId}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const fetchUser = async () => {
     const userDetails = await getUser(userId);
     setUser(userDetails.data);
@@ -94,32 +92,68 @@ const OrdersToDeliver = () => {
     <div>
       <h1>Orders to Deliver</h1>{' '}
       <Link to='/driver/myorders'>
-        <button>My orders</button>
+        <Button>My orders</Button>
       </Link>
-      <AddressSearchBar
-        handleAddress={handleAddress}
-        currentAddress={formattedAddress}
-      />
-      {orders &&
-        orders.map(order => {
-          return (
-            <div key={order._id}>
-              <h3>Store: {order.store.name}</h3>
-              <p>Store Address:</p>
-              <p>To Deliver Address: </p>
-              <button
-                onClick={() => {
-                  acceptOrder(order._id);
-                }}
+      <Tabs
+        isFitted
+        variant='enclosed-colored'
+        colorScheme='green'
+      >
+        <TabList mb='1em'>
+          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
+            Find orders to Deliver
+          </Tab>
+          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
+            My Driver Orders
+          </Tab>
+          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
+            Update Driver Details
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <VStack p={10}>
+              <AddressSearchBar
+                handleAddress={handleAddress}
+                currentAddress={formattedAddress}
+              />
+              <SimpleGrid
+                spacing={5}
+                columns={[1, null, 2, null, 3]}
+                bg='#ebf2e8'
+                pl={'120px'}
+                pr={'120px'}
+                pt={'70px'}
+                pb={'70px'}
+                h='100%'
+                w={'80%'}
               >
-                Accept Order
-              </button>
-            </div>
-          );
-        })}
-      {!orders && (
-        <h2>There are not orders ready for delivering at the moment.</h2>
-      )}
+                {orders &&
+                  orders.map(order => {
+                    return (
+                      <DriverOrderCard
+                        key={order._id}
+                        order={order}
+                      />
+                    );
+                  })}
+                {!orders && (
+                  <h2>
+                    There are not orders ready for delivering at the moment.
+                  </h2>
+                )}
+              </SimpleGrid>
+            </VStack>
+          </TabPanel>
+          <TabPanel>{/* <StoreOrders storeId={myStore._id} /> */}</TabPanel>
+          <TabPanel>
+            {/* <UpdateStore
+              storeId={myStore._id}
+              refreshStores={fetchStore}
+            /> */}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </div>
   );
 };

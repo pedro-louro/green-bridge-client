@@ -105,6 +105,8 @@ const UpdateStore = ({ storeId, refreshStores }) => {
             maxW={'md'}
             rounded={'xl'}
             p={6}
+            bg='#ebf2e8'
+            boxShadow={'2xl'}
           >
             <VStack>
               <Heading
@@ -115,13 +117,13 @@ const UpdateStore = ({ storeId, refreshStores }) => {
               </Heading>
             </VStack>
             <form onSubmit={handleSubmit}>
-              <FormControl id='storeName'></FormControl>
               <FormControl id='storeName'>
                 <FormLabel>Store name</FormLabel>
                 <Input
                   defaultValue={store.name}
                   type='text'
                   onChange={handleName}
+                  bg={'white'}
                 />
               </FormControl>
               <FormLabel>Image</FormLabel>

@@ -42,12 +42,6 @@ const StoreOrderCard = ({ store, order }) => {
     return product[0].img;
   };
 
-  const fetchUser = async userId => {
-    const response = await getUser(userId);
-    console.log(response.data.name);
-    return response.data.name;
-  };
-  console.log(order);
   return (
     <Center
       py={6}

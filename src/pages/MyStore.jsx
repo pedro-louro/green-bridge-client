@@ -65,115 +65,122 @@ const MyStore = () => {
   }, [currentTab]);
 
   return (
-    <Stack>
-      {myStore && (
-        <Heading p={6}>
-          <Avatar
-            src={myStore.img}
-            size={'lg'}
-          />{' '}
-          {myStore.name}
-        </Heading>
-      )}
-      {myStore && (
-        <Tabs
-          isFitted
-          variant='enclosed-colored'
-          colorScheme='green'
-        >
-          <TabList mb='1em'>
-            <Tab
-              _selected={{ color: 'white', bg: 'green.500' }}
-              onClick={() => {
-                setCurrentTab('products');
-              }}
-            >
-              Products
-            </Tab>
-            <Tab
-              _selected={{ color: 'white', bg: 'green.500' }}
-              onClick={() => {
-                setCurrentTab('orders');
-              }}
-            >
-              Orders
-            </Tab>
-            <Tab
-              _selected={{ color: 'white', bg: 'green.500' }}
-              onClick={() => {
-                setCurrentTab('updateStore');
-              }}
-            >
-              Update Store Details
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Box>
-                <Button
-                  bg={'green.500'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'green.700'
-                  }}
-                  leftIcon={<Icon as={AiOutlinePlusCircle} />}
-                  onClick={onOpen}
-                >
-                  Add a new Product
-                </Button>
-                <Modal
-                  onClose={onClose}
-                  isOpen={isOpen}
-                  isCentered
-                >
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>Add a Product</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <CreateProduct
-                        refreshStores={fetchStore}
-                        myStore={myStore}
-                      />
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button onClick={onClose}>Close</Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-              </Box>
-              <SimpleGrid
-                spacing={4}
-                templateColumns='repeat(3, minmax(200px, 1fr))'
+    <div>
+      <Stack>
+        {myStore && (
+          <Heading p={6}>
+            <Avatar
+              src={myStore.img}
+              size={'lg'}
+            />{' '}
+            {myStore.name}
+          </Heading>
+        )}
+        {myStore && (
+          <Tabs
+            isFitted
+            variant='enclosed-colored'
+            colorScheme='green'
+          >
+            <TabList mb='1em'>
+              <Tab
+                _selected={{ color: 'white', bg: 'green.500' }}
+                onClick={() => {
+                  setCurrentTab('products');
+                }}
               >
-                {myStore &&
-                  myStore.products.map(product => {
-                    return (
-                      <Container key={product._id}>
-                        <StoreProductCard
-                          product={product}
-                          removeProduct={removeProduct}
+                Products
+              </Tab>
+              <Tab
+                _selected={{ color: 'white', bg: 'green.500' }}
+                onClick={() => {
+                  setCurrentTab('orders');
+                }}
+              >
+                Orders
+              </Tab>
+              <Tab
+                _selected={{ color: 'white', bg: 'green.500' }}
+                onClick={() => {
+                  setCurrentTab('updateStore');
+                }}
+              >
+                Update Store Details
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Box>
+                  <Button
+                    bg={'green.500'}
+                    color={'white'}
+                    _hover={{
+                      bg: 'green.700'
+                    }}
+                    leftIcon={<Icon as={AiOutlinePlusCircle} />}
+                    onClick={onOpen}
+                  >
+                    Add a new Product
+                  </Button>
+                  <Modal
+                    onClose={onClose}
+                    isOpen={isOpen}
+                    isCentered
+                  >
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Add a Product</ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <CreateProduct
+                          refreshStores={fetchStore}
+                          myStore={myStore}
                         />
-                      </Container>
-                    );
-                  })}
-              </SimpleGrid>{' '}
-            </TabPanel>
-            <TabPanel>
-              <StoreOrders storeId={myStore._id} />
-            </TabPanel>
-            <TabPanel>
-              <UpdateStore
-                storeId={myStore._id}
-                refreshStores={fetchStore}
-              />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      )}
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button onClick={onClose}>Close</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
+                </Box>
+                <SimpleGrid
+                  spacing={5}
+                  columns={[1, null, 2, null, 3]}
+                  pl={'120px'}
+                  pr={'120px'}
+                  pt={'70px'}
+                  pb={'70px'}
+                  h='100%'
+                >
+                  {myStore &&
+                    myStore.products.map(product => {
+                      return (
+                        <Container key={product._id}>
+                          <StoreProductCard
+                            product={product}
+                            removeProduct={removeProduct}
+                          />
+                        </Container>
+                      );
+                    })}
+                </SimpleGrid>{' '}
+              </TabPanel>
+              <TabPanel>
+                <StoreOrders storeId={myStore._id} />
+              </TabPanel>
+              <TabPanel>
+                <UpdateStore
+                  storeId={myStore._id}
+                  refreshStores={fetchStore}
+                />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        )}
 
-      {!myStore && fetchedStore && <AddStore refreshStore={fetchStore} />}
-    </Stack>
+        {!myStore && fetchedStore && <AddStore refreshStore={fetchStore} />}
+      </Stack>
+    </div>
   );
 };
 
