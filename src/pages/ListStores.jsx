@@ -81,8 +81,7 @@ const Stores = () => {
         pt={20}
       >
         <SimpleGrid
-          spacing={3}
-          // templateColumns='repeat(3, minmax(250px, 1fr))'
+          spacing={5}
           columns={[1, null, 2, null, 3]}
           bg='#ebf2e8'
           pl={'120px'}
@@ -95,21 +94,11 @@ const Stores = () => {
             stores.map(store => {
               const distance = calcDistance(store.address, user.address);
               return (
-                <Box
+                <NewStoreCard
                   key={store._id}
-                  boxShadow='lg green'
-                  w='sm'
-                >
-                  {/* <StoreCard
-                    w='60%'
-                    store={store}
-                    distance={distance}
-                  /> */}
-                  <NewStoreCard
-                    store={store}
-                    distance={distance}
-                  />
-                </Box>
+                  store={store}
+                  distance={distance}
+                />
               );
             })}
         </SimpleGrid>
