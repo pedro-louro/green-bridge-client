@@ -1,7 +1,6 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import StoreCard from '../components/StoreCard';
-import { Box, Center, Stack, SimpleGrid, VStack } from '@chakra-ui/react';
+import { SimpleGrid, VStack } from '@chakra-ui/react';
 import AddressSearchBar from '../components/AddressSearchBar';
 import { getUser } from '../api/auth.api';
 import NewStoreCard from '../components/StoreCardV2';

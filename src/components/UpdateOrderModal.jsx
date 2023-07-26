@@ -18,7 +18,16 @@ function UpdateOrderModal({ orderDetails, updateStatus, refreshStores }) {
 
   return (
     <>
-      <Button onClick={onOpen}>Change Order Status</Button>
+      <Button
+        color={'white'}
+        bg={'green.500'}
+        _hover={{
+          bg: 'green.700'
+        }}
+        onClick={onOpen}
+      >
+        Change Order Status
+      </Button>
 
       <Modal
         isOpen={isOpen}
@@ -48,7 +57,12 @@ function UpdateOrderModal({ orderDetails, updateStatus, refreshStores }) {
               Close
             </Button>
             <Button
-              variant='ghost'
+              variant='solid'
+              color={'white'}
+              bg={'green.500'}
+              _hover={{
+                bg: 'green.700'
+              }}
               onClick={() => {
                 updateStatus(orderDetails._id, status);
                 onClose();

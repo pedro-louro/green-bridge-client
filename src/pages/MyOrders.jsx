@@ -74,12 +74,12 @@ const MyOrders = () => {
       <Tabs
         p={6}
         isFitted
-        variant='solid-rounded'
+        variant='enclosed-colored'
         colorScheme='green'
       >
         <TabList>
-          <Tab>Open Orders</Tab>
-          <Tab>Past Orders</Tab>
+          <Tab _selected={{ color: 'white', bg: 'green.500' }}>Open Orders</Tab>
+          <Tab _selected={{ color: 'white', bg: 'green.500' }}>Past Orders</Tab>
         </TabList>
         <TabPanels p={4}>
           <TabPanel>

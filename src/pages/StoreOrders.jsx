@@ -2,6 +2,9 @@ import { getStore } from '../api/stores.api';
 import { useEffect, useState } from 'react';
 import UpdateOrderModal from '../components/UpdateOrderModal';
 import { updateOrder } from '../api/order.api';
+import OrderCard from '../components/OrderCard';
+import StoreOrderCard from '../components/StoreOrderCard';
+import { Stack, VStack, SimpleGrid, Heading } from '@chakra-ui/react';
 
 const StoreOrders = ({ storeId }) => {
   // const { storeId } = useParams();
@@ -62,74 +65,77 @@ const StoreOrders = ({ storeId }) => {
   useEffect(() => {
     fetchStore();
   }, [statusChanged, storeId]);
+
   return (
     <div>
-      {orders && <h1>Open Orders</h1>}
-      {orders &&
-        orders.map(order => {
-          return (
-            <div key={order._id}>
-              <h3>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {order.status}
-                </u>{' '}
-                order
-              </h3>
+      {orders && <Heading>Open Orders</Heading>}
+      <VStack
+        p={10}
+        pt={20}
+      >
+        <SimpleGrid
+          spacing={5}
+          columns={[1, null, 2, null, 3]}
+          bg='#ebf2e8'
+          pl={'120px'}
+          pr={'120px'}
+          pt={'70px'}
+          pb={'70px'}
+          h='100%'
+        >
+          {orders &&
+            orders.map(order => {
+              return (
+                <Stack key={order._id}>
+                  <StoreOrderCard
+                    order={order}
+                    store={store}
+                  />
 
-              <UpdateOrderModal
-                orderDetails={order}
-                updateStatus={changeOrderStatus}
-                refreshStores={refreshStores}
-              />
-              <p>Order Details: </p>
-              {order.products &&
-                order.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct._id}>
-                      <b>{getProductName(orderProduct.product)}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
-                    </p>
-                  );
-                })}
-              <p>
-                <b>Total: {order.total}€</b>
-              </p>
-            </div>
-          );
-        })}
+                  <UpdateOrderModal
+                    orderDetails={order}
+                    updateStatus={changeOrderStatus}
+                    refreshStores={refreshStores}
+                  />
+                </Stack>
+              );
+            })}
+        </SimpleGrid>
+      </VStack>
+
       {!orders && (
         <div>
-          <h2>You don't have any open order! </h2>
+          <Heading>You don't have any open order! </Heading>
         </div>
       )}
       <hr />
-      {pastOrders && <h2>Past Orders</h2>}
-      {pastOrders &&
-        pastOrders.map(pastOrder => {
-          return (
-            <div key={pastOrder._id}>
-              <h4>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {pastOrder.status}
-                </u>{' '}
-                order from {pastOrder.store.name} store
-              </h4>
-              <p>Order Details: </p>
-              {pastOrder.products &&
-                pastOrder.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct._id}>
-                      <b>{getProductName(orderProduct.product)}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
-                    </p>
-                  );
-                })}
-              <p>
-                <b>Total: {pastOrder.total}€</b>
-              </p>
-            </div>
-          );
-        })}
+      {pastOrders && <Heading>Past Orders</Heading>}
+      <VStack
+        p={10}
+        pt={20}
+      >
+        <SimpleGrid
+          spacing={5}
+          columns={[1, null, 2, null, 3]}
+          bg='#ebf2e8'
+          pl={'120px'}
+          pr={'120px'}
+          pt={'70px'}
+          pb={'70px'}
+          h='100%'
+        >
+          {pastOrders &&
+            pastOrders.map(pastOrder => {
+              return (
+                <StoreOrderCard
+                  key={pastOrder._id}
+                  order={pastOrder}
+                  store={store}
+                />
+              );
+            })}
+        </SimpleGrid>
+      </VStack>
     </div>
   );
 };

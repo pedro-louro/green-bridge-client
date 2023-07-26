@@ -78,11 +78,12 @@ const MyStore = () => {
       {myStore && (
         <Tabs
           isFitted
-          variant='solid-rounded'
+          variant='enclosed-colored'
           colorScheme='green'
         >
           <TabList mb='1em'>
             <Tab
+              _selected={{ color: 'white', bg: 'green.500' }}
               onClick={() => {
                 setCurrentTab('products');
               }}
@@ -90,6 +91,7 @@ const MyStore = () => {
               Products
             </Tab>
             <Tab
+              _selected={{ color: 'white', bg: 'green.500' }}
               onClick={() => {
                 setCurrentTab('orders');
               }}
@@ -97,6 +99,7 @@ const MyStore = () => {
               Orders
             </Tab>
             <Tab
+              _selected={{ color: 'white', bg: 'green.500' }}
               onClick={() => {
                 setCurrentTab('updateStore');
               }}
