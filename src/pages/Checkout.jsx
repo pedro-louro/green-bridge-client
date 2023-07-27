@@ -172,29 +172,49 @@ const Checkout = ({ handleOpenClose }) => {
                   <p>
                     Forgot something?{' '}
                     <Link to={`/stores/${order.store._id}`}>
-                      <button onClick={handleOpenClose('close')}>
+                      <Button
+                        bg={'blue.200'}
+                        color={'black'}
+                        _hover={{
+                          bg: 'blue.500'
+                        }}
+                        size='xs'
+                        onClick={handleOpenClose('close')}
+                      >
                         Back to Store
-                      </button>{' '}
+                      </Button>{' '}
                     </Link>
                   </p>
                 </div>
               )}
 
               <div>
-                <button
+                <Button
+                  bg={'red.300'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'green.500'
+                  }}
+                  size='xs'
                   onClick={() => {
                     cancelOrder();
                   }}
                 >
                   Cancel Order
-                </button>
-                <button
+                </Button>
+                <Button
+                  bg={'green.500'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'green.700'
+                  }}
+                  size='xs'
                   onClick={() => {
                     placeOrder();
                   }}
                 >
                   Place Order
-                </button>
+                </Button>
               </div>
             </Stack>
           </CardBody>
@@ -202,27 +222,25 @@ const Checkout = ({ handleOpenClose }) => {
       )}
       {!orderId && (
         <div>
-          <h3>Your cart is empty</h3>
+          <Heading size='sm'>Your cart is empty</Heading>
           <Link
             to={'/stores/'}
             onClick={handleOpenClose('close')}
           >
-            Find you Favorite Plants Store!
+            <Button
+              bg={'blue.200'}
+              color={'black'}
+              _hover={{
+                bg: 'blue.500'
+              }}
+              size='xs'
+              onClick={handleOpenClose('close')}
+            >
+              Find your Plants!
+            </Button>{' '}
           </Link>
         </div>
       )}
-
-      {/* {products &&
-            products.map(productInCart => {
-              return (
-                <div key={productInCart._id}>
-                  <p>
-                    <b>{productInCart.product.name}</b> |{' '}
-                    {productInCart.quantity} x {productInCart.product.price}€
-                  </p>
-                </div>
-              );
-            })} */}
     </Stack>
   );
 };

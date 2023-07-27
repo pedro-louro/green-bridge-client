@@ -49,7 +49,7 @@ const Cart = () => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader bg='#ebf2e8'>
-            <Icon /> Your Cart
+            <Icon as={TiShoppingCart} /> Your Cart
           </DrawerHeader>
 
           <DrawerBody bg='#ebf2e8'>

@@ -22,7 +22,8 @@ import { GiRoad } from 'react-icons/gi';
 const DriverOrderCard = ({ order, currentLocation }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
-  const [address, setAddress] = useState('');
+  const [storeAddress, setStoreAddress] = useState('');
+  const [userAddress, setUserAddress] = useState('');
 
   const badgeColor = status => {
     if (status === 'new' || status === 'preparing') {
@@ -51,7 +52,7 @@ const DriverOrderCard = ({ order, currentLocation }) => {
     }
   };
 
-  const getAddress = async coordinates => {
+  const getAddress = async (coordinates, object) => {
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
         coordinates.lat
@@ -59,8 +60,13 @@ const DriverOrderCard = ({ order, currentLocation }) => {
     )
       .then(response => response.json())
       .then(responseJSON => {
-        setAddress(responseJSON.results[0].formatted_address);
-        console.log(address);
+        object === 'store'
+          ? setStoreAddress(
+              responseJSON.results[0].formatted_address.toString()
+            )
+          : setUserAddress(
+              responseJSON.results[0].formatted_address.toString()
+            );
       });
   };
   //Functions to calculate the distance between two coordinates
@@ -92,7 +98,8 @@ const DriverOrderCard = ({ order, currentLocation }) => {
     return Math.floor(distanceInKilometers);
   };
   useEffect(() => {
-    getAddress(order.store.address);
+    getAddress(order.store.address, 'store');
+    getAddress(order.user.address, 'user');
   }, [currentLocation]);
   return (
     <Center
@@ -138,7 +145,7 @@ const DriverOrderCard = ({ order, currentLocation }) => {
               size='sm'
               fontFamily={'body'}
             >
-              <Icon as={MdLocationOn} /> {address && address}
+              <Icon as={MdLocationOn} /> {storeAddress && storeAddress}
             </Heading>
 
             <Text
@@ -152,7 +159,7 @@ const DriverOrderCard = ({ order, currentLocation }) => {
               size='sm'
               fontFamily={'body'}
             >
-              <Icon as={MdLocationOn} /> {address && address}
+              <Icon as={MdLocationOn} /> {userAddress && userAddress}
             </Heading>
             <Text>
               <Icon as={GiRoad} />

@@ -135,6 +135,7 @@ const UpdateUser = () => {
                   defaultValue={user.name}
                   type='text'
                   onChange={handleName}
+                  bg={'white'}
                 />
               </FormControl>
               <FormControl id='email'>
@@ -145,11 +146,12 @@ const UpdateUser = () => {
                   defaultValue={user.email}
                   type='email'
                   onChange={handleEmail}
+                  bg={'white'}
                 />
               </FormControl>
               <FormControl id='address'>
                 <FormLabel>
-                  <b>Postal Address</b>
+                  <b>Delivery Address</b>
                 </FormLabel>
                 <AddressSearchBar
                   user={user}
