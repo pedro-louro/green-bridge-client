@@ -17,7 +17,6 @@ import Checkout from '../pages/Checkout';
 const Cart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
-  console.log(isOpen);
 
   const handleOpenClose = command => {
     if (command === 'close') {

@@ -83,10 +83,12 @@ const Stores = () => {
           spacing={5}
           columns={[1, null, 2, null, 3]}
           bg='#ebf2e8'
-          pl={'120px'}
-          pr={'120px'}
-          pt={'70px'}
-          pb={'70px'}
+          p={'5%'}
+          minW={'240px'}
+          // pl={'120px'}
+          // pr={'120px'}
+          // pt={'70px'}
+          // pb={'70px'}
           h='100%'
         >
           {stores &&

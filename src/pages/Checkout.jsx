@@ -33,6 +33,7 @@ const Checkout = ({ handleOpenClose }) => {
         const response = await getOrder(orderId);
         setOrder(response.data);
         setProducts(response.data.products);
+        console.log(response.data);
 
         const calcTotal = response.data.products.reduce((acc, curr) => {
           return acc + curr.quantity * curr.product.price;

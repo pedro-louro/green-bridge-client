@@ -119,12 +119,9 @@ const StoreOrders = ({ storeId }) => {
           spacing={5}
           columns={[1, null, 2, null, 3]}
           bg='#ebf2e8'
-          pl={'120px'}
-          pr={'120px'}
-          pt={'70px'}
-          pb={'70px'}
           h='100%'
-          w={'80%'}
+          p={'5%'}
+          minW={'240px'}
         >
           {pastOrders &&
             pastOrders.map(pastOrder => {

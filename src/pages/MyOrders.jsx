@@ -8,7 +8,8 @@ import {
   Tab,
   TabPanel,
   VStack,
-  SimpleGrid
+  SimpleGrid,
+  Box
 } from '@chakra-ui/react';
 import OrderCard from '../components/OrderCard';
 // import useSwr from 'swr';
@@ -71,6 +72,7 @@ const MyOrders = () => {
 
   return (
     <div>
+      <Box h={'40px'}></Box>
       <Tabs
         p={6}
         isFitted

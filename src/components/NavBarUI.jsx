@@ -52,80 +52,79 @@ const NavBar = () => {
   const userImg = localStorage.getItem('userImg');
 
   return (
-    <>
-      <Box
-        bg={useColorModeValue('green.100', 'gray.900')}
+    <Flex>
+      <Flex
+        h={16}
+        alignItems={'center'}
+        justifyContent={'space-between'}
+        as='header'
+        position='fixed'
+        w='100%'
+        bg={useColorModeValue('green.200', 'gray.900')}
         px={4}
-        // as='header'
-        // position='fixed'
-        // w='100%'
+        top={0}
+        zIndex={200}
       >
-        <Flex
-          h={16}
+        <IconButton
+          size={'md'}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={'Open Menu'}
+          display={{ md: 'none' }}
+          onClick={isOpen ? onClose : onOpen}
+        />
+        <HStack
+          spacing={8}
           alignItems={'center'}
-          justifyContent={'space-between'}
         >
-          <IconButton
-            size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack
-            spacing={8}
-            alignItems={'center'}
-          >
-            <Box>Logo</Box>
-            {isLoggedIn && (
-              <HStack
-                as={'nav'}
-                spacing={4}
-                display={{ base: 'none', md: 'flex' }}
-              >
-                {links.map(link => (
-                  <NavLink>{link}</NavLink>
-                ))}
-              </HStack>
-            )}
-          </HStack>
+          <Box>Logo</Box>
           {isLoggedIn && (
-            <Flex alignItems={'center'}>
-              <Cart />
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}
-                >
-                  <Avatar
-                    size={'sm'}
-                    src={userImg}
-                  />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>
-                    <NavLink>
-                      {{ name: 'Update User', to: '/userdetails' }}
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>Link 2</MenuItem>
-                  <MenuDivider />
-                  <MenuItem onClick={logOutUser}>Logout</MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          )}
-          {!isLoggedIn && (
-            <Flex alignItems={'center'}>
-              {authLinks.map(link => (
+            <HStack
+              as={'nav'}
+              spacing={4}
+              display={{ base: 'none', md: 'flex' }}
+            >
+              {links.map(link => (
                 <NavLink key={link.name}>{link}</NavLink>
               ))}
-            </Flex>
+            </HStack>
           )}
-        </Flex>
+        </HStack>
+        {isLoggedIn && (
+          <Flex alignItems={'center'}>
+            <Cart />
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}
+              >
+                <Avatar
+                  size={'sm'}
+                  src={userImg}
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>
+                  <NavLink>
+                    {{ name: 'Update User', to: '/userdetails' }}
+                  </NavLink>
+                </MenuItem>
+                <MenuItem>Link 2</MenuItem>
+                <MenuDivider />
+                <MenuItem onClick={logOutUser}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
+        )}
+        {!isLoggedIn && (
+          <Flex alignItems={'center'}>
+            {authLinks.map(link => (
+              <NavLink key={link.name}>{link}</NavLink>
+            ))}
+          </Flex>
+        )}
 
         {isOpen ? (
           <Box
@@ -142,8 +141,9 @@ const NavBar = () => {
             </Stack>
           </Box>
         ) : null}
-      </Box>
-    </>
+      </Flex>
+      <Box h={'30px'}></Box>
+    </Flex>
   );
 };
 

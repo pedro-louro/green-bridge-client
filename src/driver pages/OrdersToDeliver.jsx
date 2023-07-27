@@ -11,9 +11,15 @@ import {
   TabList,
   Tab,
   TabPanels,
-  TabPanel
+  TabPanel,
+  HStack,
+  Heading,
+  Icon,
+  Box
 } from '@chakra-ui/react';
 import DriverOrderCard from './DriverOrderCard';
+import { MdLocationOn } from 'react-icons/md';
+import DriverOrders from './DriverOrders';
 
 const OrdersToDeliver = () => {
   const [orders, setOrders] = useState(null);
@@ -90,10 +96,8 @@ const OrdersToDeliver = () => {
 
   return (
     <div>
-      <h1>Orders to Deliver</h1>{' '}
-      <Link to='/driver/myorders'>
-        <Button>My orders</Button>
-      </Link>
+      <Box h={'50px'}></Box>
+
       <Tabs
         isFitted
         variant='enclosed-colored'
@@ -106,13 +110,17 @@ const OrdersToDeliver = () => {
           <Tab _selected={{ color: 'white', bg: 'green.500' }}>
             My Driver Orders
           </Tab>
-          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
-            Update Driver Details
-          </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <VStack p={10}>
+            <VStack
+              p={10}
+              pt={20}
+            >
+              <Heading size={'md'}>
+                <Icon as={MdLocationOn} />
+                Find orders Nearby
+              </Heading>
               <AddressSearchBar
                 handleAddress={handleAddress}
                 currentAddress={formattedAddress}
@@ -121,12 +129,9 @@ const OrdersToDeliver = () => {
                 spacing={5}
                 columns={[1, null, 2, null, 3]}
                 bg='#ebf2e8'
-                pl={'120px'}
-                pr={'120px'}
-                pt={'70px'}
-                pb={'70px'}
+                p={'5%'}
+                minW={'240px'}
                 h='100%'
-                w={'80%'}
               >
                 {orders &&
                   orders.map(order => {
@@ -134,6 +139,7 @@ const OrdersToDeliver = () => {
                       <DriverOrderCard
                         key={order._id}
                         order={order}
+                        currentLocation={address}
                       />
                     );
                   })}
@@ -145,13 +151,7 @@ const OrdersToDeliver = () => {
               </SimpleGrid>
             </VStack>
           </TabPanel>
-          <TabPanel>{/* <StoreOrders storeId={myStore._id} /> */}</TabPanel>
-          <TabPanel>
-            {/* <UpdateStore
-              storeId={myStore._id}
-              refreshStores={fetchStore}
-            /> */}
-          </TabPanel>
+          <DriverOrders />
         </TabPanels>
       </Tabs>
     </div>

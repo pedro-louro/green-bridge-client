@@ -48,8 +48,8 @@ const StoreOrderCard = ({ store, order }) => {
       p={2}
     >
       <Box
-        maxW={'450px'}
-        minw={'300px'}
+        maxW={'350px'}
+        minW={'240px'}
         w={'full'}
         bg={'white'}
         boxShadow={'2xl'}

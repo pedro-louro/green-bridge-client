@@ -14,9 +14,11 @@ const NewStoreCard = ({ store, distance }) => {
     <Center
       py={6}
       p={2}
+      minW={'240px'}
     >
       <Box
-        maxW={'350px'}
+        // maxW={'350px'}
+        minW={'240px'}
         w={'full'}
         bg={'white'}
         boxShadow={'2xl'}

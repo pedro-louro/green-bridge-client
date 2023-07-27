@@ -66,6 +66,8 @@ const MyStore = () => {
 
   return (
     <div>
+      <Box h={'40px'}></Box>
+
       <Stack>
         {myStore && (
           <Heading p={6}>

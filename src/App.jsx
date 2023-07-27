@@ -10,7 +10,7 @@ import StoreDetails from './pages/StoreDetails';
 import Checkout from './pages/Checkout';
 import MyOrders from './pages/MyOrders';
 import StoreOrders from './pages/StoreOrders';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Container } from '@chakra-ui/react';
 import OrdersToDeliver from './driver pages/OrdersToDeliver';
 import OrderDetails from './driver pages/OrderDetails';
 import DriverOrders from './driver pages/DriverOrders';
@@ -25,7 +25,6 @@ function App() {
       <ChakraProvider>
         <NavBar />
         <ToastContainer />
-
         <Routes>
           <Route
             path='/login'

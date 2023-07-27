@@ -22,12 +22,10 @@ import { useEffect, useState } from 'react';
 import { MdLocationOn } from 'react-icons/md';
 import { GiRoad } from 'react-icons/gi';
 
-const DriverOrderCard = ({ order }) => {
+const DriverOrderCard = ({ order, currentLocation }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
   const [address, setAddress] = useState('');
-
-  const [user, setUser] = useState(null);
 
   const badgeColor = status => {
     if (status === 'new' || status === 'preparing') {
@@ -98,21 +96,20 @@ const DriverOrderCard = ({ order }) => {
   };
   useEffect(() => {
     getAddress(order.store.address);
-  });
+  }, [currentLocation]);
   return (
     <Center
       py={6}
       p={2}
     >
       <Box
-        maxW={'450px'}
-        minw={'300px'}
+        maxW={'400px'}
+        minW={'240px'}
         w={'full'}
         bg={'white'}
         boxShadow={'2xl'}
         rounded={'md'}
         p={6}
-        overflow={'hidden'}
       >
         <Stack>
           <Badge
@@ -123,6 +120,12 @@ const DriverOrderCard = ({ order }) => {
           >
             {order.status}
           </Badge>
+
+          {currentLocation && (
+            <Text>
+              {calcDistance(order.store.address, currentLocation)} KM from you
+            </Text>
+          )}
           <VStack
             pt={1}
             pb={2}
@@ -131,7 +134,21 @@ const DriverOrderCard = ({ order }) => {
               color={'grey'}
               size='sm'
             >
-              From {order.store.name} Store
+              <b>From</b> {order.store.name} Store
+            </Text>
+            <Heading
+              color={'green'}
+              size='sm'
+              fontFamily={'body'}
+            >
+              <Icon as={MdLocationOn} /> {address && address}
+            </Heading>
+
+            <Text
+              color={'grey'}
+              size='sm'
+            >
+              <b>To</b> {order.user.name}
             </Text>
             <Heading
               color={'green'}
@@ -145,20 +162,6 @@ const DriverOrderCard = ({ order }) => {
               {'  '}
               {calcDistance(order.store.address, order.user.address)}KM
             </Text>
-
-            <Text
-              color={'grey'}
-              size='sm'
-            >
-              To {order.user.name}
-            </Text>
-            <Heading
-              color={'green'}
-              size='sm'
-              fontFamily={'body'}
-            >
-              <Icon as={MdLocationOn} /> {address && address}
-            </Heading>
           </VStack>
 
           <Stack
