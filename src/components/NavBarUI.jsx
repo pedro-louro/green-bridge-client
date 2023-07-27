@@ -52,18 +52,17 @@ const NavBar = () => {
   const userImg = localStorage.getItem('userImg');
 
   return (
-    <Flex>
+    <Box
+      bg={useColorModeValue('green.200', 'gray.900')}
+      px={4}
+      position='fixed'
+      w='100%'
+      zIndex={200}
+    >
       <Flex
         h={16}
         alignItems={'center'}
         justifyContent={'space-between'}
-        as='header'
-        position='fixed'
-        w='100%'
-        bg={useColorModeValue('green.200', 'gray.900')}
-        px={4}
-        top={0}
-        zIndex={200}
       >
         <IconButton
           size={'md'}
@@ -84,7 +83,7 @@ const NavBar = () => {
               display={{ base: 'none', md: 'flex' }}
             >
               {links.map(link => (
-                <NavLink key={link.name}>{link}</NavLink>
+                <NavLink key={link}>{link}</NavLink>
               ))}
             </HStack>
           )}
@@ -111,7 +110,6 @@ const NavBar = () => {
                     {{ name: 'Update User', to: '/userdetails' }}
                   </NavLink>
                 </MenuItem>
-                <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={logOutUser}>Logout</MenuItem>
               </MenuList>
@@ -142,8 +140,7 @@ const NavBar = () => {
           </Box>
         ) : null}
       </Flex>
-      <Box h={'30px'}></Box>
-    </Flex>
+    </Box>
   );
 };
 
