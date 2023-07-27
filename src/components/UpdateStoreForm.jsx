@@ -100,18 +100,19 @@ const UpdateStore = ({ storeId, refreshStores }) => {
           justify={'center'}
         >
           <Stack
-            spacing={4}
+            // spacing={4}
             w={'full'}
-            maxW={'md'}
+            maxW={'xl'}
             rounded={'xl'}
-            p={6}
-            bg='#ebf2e8'
-            boxShadow={'2xl'}
+            p={20}
+            bg='green.50'
+            // boxShadow={'2xl'}
           >
             <VStack>
               <Heading
                 lineHeight={1.1}
                 fontSize={{ base: '2xl', sm: '3xl' }}
+                pb={7}
               >
                 Update Store Details
               </Heading>
@@ -126,12 +127,17 @@ const UpdateStore = ({ storeId, refreshStores }) => {
                   bg={'white'}
                 />
               </FormControl>
-              <FormLabel>Image</FormLabel>
-              <input
-                type='file'
-                onChange={handleImg}
-              />
-              <FormControl id='address'>
+              <FormControl pb={7}>
+                <FormLabel>Image</FormLabel>
+                <input
+                  type='file'
+                  onChange={handleImg}
+                />
+              </FormControl>
+              <FormControl
+                id='address'
+                pb={7}
+              >
                 <FormLabel>Address:</FormLabel>
 
                 <AddressSearchBar

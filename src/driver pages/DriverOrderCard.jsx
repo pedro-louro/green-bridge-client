@@ -1,7 +1,4 @@
 import {
-  Card,
-  CardHeader,
-  CardBody,
   Heading,
   Stack,
   Text,

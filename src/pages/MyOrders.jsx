@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getOrderByUser } from '../api/order.api';
-import { Link } from 'react-router-dom';
 import {
   Tabs,
   TabList,
@@ -9,34 +8,18 @@ import {
   TabPanel,
   VStack,
   SimpleGrid,
-  Box
+  Box,
+  Link,
+  Heading,
+  Icon
 } from '@chakra-ui/react';
 import OrderCard from '../components/OrderCard';
-// import useSwr from 'swr';
-
-// const fetchOrders = () => {
-//   fetch(`http://localhost:5005/api/orders/user/${userId}`, {
-//     headers: {
-//       'Content-type': 'application/json',
-//       Authorization: `Bearer ${localStorage.getItem('authToken')}`
-//     }
-//   }).then(res => res.json());
-// };
+import { PiPottedPlant } from 'react-icons/pi';
 
 const MyOrders = () => {
   const userId = localStorage.getItem('userId');
   const [pastOrders, setPastOrders] = useState([]);
   const [orders, setOrders] = useState([]);
-
-  /* const { data, isLoading, error } = useSwr(fetchOrders);
-  console.log(data);
-  if (isLoading) {
-    return <>Loading...</>;
-  }
-
-  if (error) {
-    return <>Error :(</>;
-  } */
 
   const fetchUserOrders = async () => {
     try {
@@ -68,11 +51,10 @@ const MyOrders = () => {
   useEffect(() => {
     fetchUserOrders();
   }, []);
-  console.log(orders);
 
   return (
     <div>
-      <Box h={'40px'}></Box>
+      <Box h={'50px'}></Box>
       <Tabs
         p={6}
         isFitted
@@ -85,67 +67,89 @@ const MyOrders = () => {
         </TabList>
         <TabPanels p={4}>
           <TabPanel>
-            <VStack
-              p={10}
-              pt={20}
-            >
-              <SimpleGrid
-                spacing={3}
-                columns={[1, null, 2]}
-                bg='#ebf2e8'
-                pl={'120px'}
-                pr={'120px'}
-                pt={'70px'}
-                pb={'70px'}
-                h='100%'
+            {!orders && (
+              <VStack>
+                <Heading
+                  size='lg'
+                  mb={5}
+                >
+                  You don't have any open orders!{' '}
+                </Heading>
+                <Link
+                  to={'/stores/'}
+                  color='white'
+                  size='lg'
+                  bg='green.700'
+                  p={3}
+                  rounded={'xl'}
+                >
+                  <Icon
+                    as={PiPottedPlant}
+                    size='md'
+                  />
+                  {'  '}
+                  Find you Favorite Plants Store here!
+                </Link>
+              </VStack>
+            )}
+            {orders && (
+              <VStack
+                p={10}
+                pt={20}
               >
-                {orders &&
-                  orders.map(order => {
-                    return (
-                      <OrderCard
-                        key={order._id}
-                        order={order}
-                      />
-                    );
-                  })}
-              </SimpleGrid>
-            </VStack>
+                <SimpleGrid
+                  spacing={3}
+                  columns={[1, null, 2]}
+                  bg='#ebf2e8'
+                  p={'5%'}
+                  minW={'240px'}
+                  h='100%'
+                >
+                  {orders &&
+                    orders.map(order => {
+                      return (
+                        <OrderCard
+                          key={order._id}
+                          order={order}
+                        />
+                      );
+                    })}
+                </SimpleGrid>
+              </VStack>
+            )}
           </TabPanel>
+
           <TabPanel>
-            <VStack
-              p={10}
-              pt={20}
-            >
-              <SimpleGrid
-                spacing={5}
-                columns={[1, null, 2]}
-                bg='#ebf2e8'
-                pl={'120px'}
-                pr={'120px'}
-                pt={'70px'}
-                pb={'70px'}
-                h='100%'
+            {pastOrders && (
+              <VStack
+                p={10}
+                pt={20}
               >
-                {pastOrders &&
-                  pastOrders.map(pastOrder => {
-                    return (
-                      <OrderCard
-                        key={pastOrder._id}
-                        order={pastOrder}
-                      />
-                    );
-                  })}
-              </SimpleGrid>
-            </VStack>
+                <SimpleGrid
+                  spacing={5}
+                  columns={[1, null, 2]}
+                  bg='#ebf2e8'
+                  pl={'120px'}
+                  pr={'120px'}
+                  pt={'70px'}
+                  pb={'70px'}
+                  h='100%'
+                >
+                  {pastOrders &&
+                    pastOrders.map(pastOrder => {
+                      return (
+                        <OrderCard
+                          key={pastOrder._id}
+                          order={pastOrder}
+                        />
+                      );
+                    })}
+                </SimpleGrid>
+              </VStack>
+            )}
           </TabPanel>
         </TabPanels>
       </Tabs>
-      {!orders && (
-        <div>
-          <h2>You don't have any open orders! </h2>
-          <Link to={'/stores/'}>Find you Favorite Plants Store!</Link>
-        </div>
-      )}
     </div>
   );
 };

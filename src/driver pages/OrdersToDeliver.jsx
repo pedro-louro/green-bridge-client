@@ -96,8 +96,7 @@ const OrdersToDeliver = () => {
 
   return (
     <div>
-      <Box h={'50px'}></Box>
-
+      <Box h={'80px'}></Box>
       <Tabs
         isFitted
         variant='enclosed-colored'
@@ -125,33 +124,42 @@ const OrdersToDeliver = () => {
                 handleAddress={handleAddress}
                 currentAddress={formattedAddress}
               />
-              <SimpleGrid
-                spacing={5}
-                columns={[1, null, 2, null, 3]}
-                bg='#ebf2e8'
-                p={'5%'}
-                minW={'240px'}
-                h='100%'
-              >
-                {orders &&
-                  orders.map(order => {
-                    return (
-                      <DriverOrderCard
-                        key={order._id}
-                        order={order}
-                        currentLocation={address}
-                      />
-                    );
-                  })}
-                {!orders && (
-                  <h2>
-                    There are not orders ready for delivering at the moment.
-                  </h2>
-                )}
-              </SimpleGrid>
+              {!orders && (
+                <Heading size='md'>
+                  There are no orders ready to be delivered at the moment.
+                </Heading>
+              )}
+              {orders && (
+                <SimpleGrid
+                  spacing={5}
+                  columns={[1, null, 2, null, 3]}
+                  bg='#ebf2e8'
+                  p={'5%'}
+                  minW={'240px'}
+                  h='100%'
+                >
+                  {orders &&
+                    orders.map(order => {
+                      return (
+                        <DriverOrderCard
+                          key={order._id}
+                          order={order}
+                          currentLocation={address}
+                        />
+                      );
+                    })}
+                </SimpleGrid>
+              )}
             </VStack>
           </TabPanel>
-          <DriverOrders />
+          <TabPanel>
+            <VStack
+              p={10}
+              pt={20}
+            >
+              <DriverOrders />
+            </VStack>
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </div>

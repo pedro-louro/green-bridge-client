@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const NewStoreCard = ({ store, distance }) => {
+const StoreCard = ({ store, distance }) => {
   return (
     <Center
       py={6}
@@ -17,7 +17,6 @@ const NewStoreCard = ({ store, distance }) => {
       minW={'240px'}
     >
       <Box
-        // maxW={'350px'}
         minW={'240px'}
         w={'full'}
         bg={'white'}
@@ -70,4 +69,4 @@ const NewStoreCard = ({ store, distance }) => {
     </Center>
   );
 };
-export default NewStoreCard;
+export default StoreCard;

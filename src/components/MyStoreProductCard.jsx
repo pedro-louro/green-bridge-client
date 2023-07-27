@@ -59,13 +59,6 @@ const StoreProductCard = ({ product, removeProduct }) => {
           pt={10}
           align={'center'}
         >
-          <Text
-            color={'gray.500'}
-            fontSize={'sm'}
-            textTransform={'uppercase'}
-          >
-            Brand
-          </Text>
           <Heading
             fontSize={'2xl'}
             fontFamily={'body'}

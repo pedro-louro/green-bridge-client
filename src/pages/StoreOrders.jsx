@@ -4,7 +4,15 @@ import UpdateOrderModal from '../components/UpdateOrderModal';
 import { updateOrder } from '../api/order.api';
 import OrderCard from '../components/OrderCard';
 import StoreOrderCard from '../components/StoreOrderCard';
-import { Stack, VStack, SimpleGrid, Heading } from '@chakra-ui/react';
+import {
+  Stack,
+  VStack,
+  SimpleGrid,
+  Heading,
+  Box,
+  Divider,
+  AbsoluteCenter
+} from '@chakra-ui/react';
 
 const StoreOrders = ({ storeId }) => {
   // const { storeId } = useParams();
@@ -68,49 +76,64 @@ const StoreOrders = ({ storeId }) => {
 
   return (
     <div>
-      {orders && <Heading>Open Orders</Heading>}
-      <VStack
-        p={10}
-        pt={20}
-      >
-        <SimpleGrid
-          spacing={5}
-          columns={[1, null, 2, null, 3]}
-          bg='#ebf2e8'
-          pl={'120px'}
-          pr={'120px'}
-          pt={'70px'}
-          pb={'70px'}
-          h='100%'
-          w={'80%'}
-        >
-          {orders &&
-            orders.map(order => {
-              return (
-                <Stack key={order._id}>
-                  <StoreOrderCard
-                    order={order}
-                    store={store}
-                  />
-
-                  <UpdateOrderModal
-                    orderDetails={order}
-                    updateStatus={changeOrderStatus}
-                    refreshStores={refreshStores}
-                  />
-                </Stack>
-              );
-            })}
-        </SimpleGrid>
-      </VStack>
-
       {!orders && (
         <div>
-          <Heading>You don't have any open order! </Heading>
+          <Heading size='lg'>You don't have any open order! </Heading>
         </div>
       )}
-      <hr />
-      {pastOrders && <Heading>Past Orders</Heading>}
+      {orders && (
+        <VStack
+          p={10}
+          pt={20}
+        >
+          <Heading size='lg'>Open Orders</Heading>
+          <SimpleGrid
+            spacing={5}
+            columns={[1, null, 2, null, 3]}
+            bg='#ebf2e8'
+            pl={'120px'}
+            pr={'120px'}
+            pt={'70px'}
+            pb={'70px'}
+            h='100%'
+            w={'80%'}
+          >
+            {orders &&
+              orders.map(order => {
+                return (
+                  <Stack key={order._id}>
+                    <StoreOrderCard
+                      order={order}
+                      store={store}
+                    />
+
+                    <UpdateOrderModal
+                      orderDetails={order}
+                      updateStatus={changeOrderStatus}
+                      refreshStores={refreshStores}
+                    />
+                  </Stack>
+                );
+              })}
+          </SimpleGrid>
+        </VStack>
+      )}
+
+      {pastOrders && (
+        <Box
+          position='relative'
+          p={20}
+        >
+          <Divider w={'100vw'} />
+          <AbsoluteCenter
+            bg='white'
+            px='4'
+            fontSize={'3xl'}
+          >
+            Past Orders
+          </AbsoluteCenter>
+        </Box>
+      )}
       <VStack
         p={10}
         pt={20}

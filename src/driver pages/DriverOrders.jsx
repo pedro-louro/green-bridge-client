@@ -1,5 +1,22 @@
 import { useEffect, useState } from 'react';
 import { getOrderByDriver } from '../api/order.api';
+import DriverOrderCard from './DriverOrderCard';
+import {
+  Center,
+  Stack,
+  Badge,
+  VStack,
+  Text,
+  StackDivider,
+  Image,
+  Heading,
+  Box,
+  HStack,
+  Icon,
+  Divider,
+  AbsoluteCenter
+} from '@chakra-ui/react';
+import { HiLink } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 
 const DriverOrders = () => {
@@ -33,71 +50,231 @@ const DriverOrders = () => {
   useEffect(() => {
     fetchDriverOrders();
   }, []);
-  console.log(orders);
   return (
     <div>
-      <h1>Driver Orders</h1>
-      {orders && <h1>Open Orders</h1>}
+      {orders && <Heading size='md'>Open Orders</Heading>}
       {orders &&
         orders.map(order => {
           return (
-            <div key={order._id}>
-              <Link to={`/driver/orders/${order._id}`}>
-                <h3>
-                  <u style={{ textTransform: 'capitalize', color: 'green' }}>
+            <Center
+              py={6}
+              p={2}
+              key={order._id}
+            >
+              <Box
+                maxW={'400px'}
+                minW={'240px'}
+                w={'full'}
+                bg={'white'}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                p={6}
+              >
+                <Stack>
+                  <Badge
+                    size='xs'
+                    textTransform='uppercase'
+                    colorScheme={'green'}
+                    alignSelf={'center'}
+                  >
                     {order.status}
-                  </u>{' '}
-                  order for {order.user.name}
-                </h3>
-              </Link>
+                  </Badge>
 
-              <p>Order Details: </p>
-              {order.products &&
-                order.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct._id}>
-                      <b>{orderProduct.product.name}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
-                    </p>
-                  );
-                })}
-              <p>
-                <b>Total: {order.total}€</b>
-              </p>
-            </div>
+                  <VStack
+                    pt={1}
+                    pb={2}
+                  >
+                    <Text
+                      color={'grey'}
+                      size='sm'
+                    >
+                      <b>From</b> {order.store.name} Store
+                    </Text>
+
+                    <Text
+                      color={'grey'}
+                      size='sm'
+                    >
+                      <b>To</b> {order.user.name}
+                    </Text>
+                  </VStack>
+
+                  <Stack
+                    divider={<StackDivider />}
+                    spacing='4'
+                    pt={2}
+                  >
+                    <Box>
+                      <Heading
+                        size='md'
+                        pb={2}
+                      >
+                        <Link to={`/driver/orders/${order._id}`}>
+                          <Icon as={HiLink} />
+                          Order Details
+                        </Link>{' '}
+                      </Heading>
+
+                      {order.products &&
+                        order.products.map(orderProduct => {
+                          return (
+                            <HStack
+                              key={orderProduct.product._id}
+                              pt='4'
+                            >
+                              <Image
+                                boxSize='30px'
+                                src={orderProduct.product.img}
+                              />
+                              <Text fontSize='md'>
+                                {orderProduct.product.name} |{' '}
+                                {orderProduct.quantity} x{' '}
+                                {orderProduct.product.price}€
+                              </Text>
+                            </HStack>
+                          );
+                        })}
+                    </Box>
+                    <Box>
+                      <Heading
+                        size='xs'
+                        textTransform='uppercase'
+                      >
+                        Total
+                      </Heading>
+                      <Text
+                        pt='2'
+                        fontSize='md'
+                      >
+                        {order.total}€
+                      </Text>
+                    </Box>
+                  </Stack>
+                  <Text>
+                    Order ID <i>{order._id.slice(-4)}</i>
+                  </Text>
+                </Stack>
+              </Box>
+            </Center>
           );
         })}
       {!orders && (
-        <div>
-          <h2>You don't have any open order! </h2>
-        </div>
+        <Box pb={7}>
+          <Heading size='md'>You don't have any open orders! </Heading>
+        </Box>
       )}
-      <hr />
-      {pastOrders && <h2>Past Orders</h2>}
+      <Box
+        position='relative'
+        padding='10'
+      >
+        <Divider w={'100vw'} />
+        <AbsoluteCenter
+          bg='white'
+          px='4'
+          fontSize={'3xl'}
+        >
+          Past Orders
+        </AbsoluteCenter>
+      </Box>
       {pastOrders &&
         pastOrders.map(pastOrder => {
           return (
-            <div key={pastOrder._id}>
-              <h4>
-                <u style={{ textTransform: 'capitalize', color: 'green' }}>
-                  {pastOrder.status}
-                </u>{' '}
-                order from {pastOrder.store.name} store
-              </h4>
-              <p>Order Details: </p>
-              {pastOrder.products &&
-                pastOrder.products.map(orderProduct => {
-                  return (
-                    <p key={orderProduct._id}>
-                      <b>{orderProduct.product.name}</b> |{' '}
-                      {orderProduct.quantity} x {orderProduct.product.price}€
-                    </p>
-                  );
-                })}
-              <p>
-                <b>Total: {pastOrder.total}€</b>
-              </p>
-            </div>
+            <Center
+              py={6}
+              p={2}
+              key={pastOrder._id}
+            >
+              <Box
+                maxW={'400px'}
+                minW={'240px'}
+                w={'full'}
+                bg={'white'}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                p={6}
+              >
+                <Stack>
+                  <Badge
+                    size='xs'
+                    textTransform='uppercase'
+                    colorScheme={'green'}
+                    alignSelf={'center'}
+                  >
+                    {pastOrder.status}
+                  </Badge>
+
+                  <VStack
+                    pt={1}
+                    pb={2}
+                  >
+                    <Text
+                      color={'grey'}
+                      size='sm'
+                    >
+                      <b>From</b> {pastOrder.store.name} Store
+                    </Text>
+
+                    <Text
+                      color={'grey'}
+                      size='sm'
+                    >
+                      <b>To</b> {pastOrder.user.name}
+                    </Text>
+                  </VStack>
+
+                  <Stack
+                    divider={<StackDivider />}
+                    spacing='4'
+                    pt={2}
+                  >
+                    <Box>
+                      <Heading
+                        size='md'
+                        pb={2}
+                      >
+                        Order Details
+                      </Heading>
+
+                      {pastOrder.products &&
+                        pastOrder.products.map(pastOrder => {
+                          return (
+                            <HStack
+                              key={pastOrder.product._id}
+                              pt='4'
+                            >
+                              <Image
+                                boxSize='30px'
+                                src={pastOrder.product.img}
+                              />
+                              <Text fontSize='md'>
+                                {pastOrder.product.name} | {pastOrder.quantity}{' '}
+                                x {pastOrder.product.price}€
+                              </Text>
+                            </HStack>
+                          );
+                        })}
+                    </Box>
+                    <Box>
+                      <Heading
+                        size='xs'
+                        textTransform='uppercase'
+                      >
+                        Total
+                      </Heading>
+                      <Text
+                        pt='2'
+                        fontSize='md'
+                      >
+                        {pastOrder.total}€
+                      </Text>
+                    </Box>
+                  </Stack>
+                  <Text>
+                    Order ID <i>{pastOrder._id.slice(-4)}</i>
+                  </Text>
+                </Stack>
+              </Box>
+            </Center>
           );
         })}
     </div>

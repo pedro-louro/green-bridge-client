@@ -8,7 +8,8 @@ import {
   Stack,
   VStack,
   Avatar,
-  Text
+  Text,
+  AbsoluteCenter
 } from '@chakra-ui/react';
 import AddressSearchBar from './AddressSearchBar';
 import { getUser, updateUser } from '../api/auth.api';
@@ -92,97 +93,99 @@ const UpdateUser = () => {
         <Flex
           align={'center'}
           justify={'center'}
-          // bg={useColorModeValue('gray.50', 'gray.800')}
         >
-          <Stack
-            spacing={4}
-            w={'full'}
-            maxW={'md'}
-            rounded={'xl'}
-            // boxShadow={'lg'}
-            p={6}
-          >
-            <VStack>
-              <Heading
-                lineHeight={1.1}
-                fontSize={{ base: '2xl', sm: '3xl' }}
-              >
-                Update User Profile
-              </Heading>
-            </VStack>
-            <FormControl id='userName'>
-              <VStack spacing={6}>
-                <Avatar
-                  size='xl'
-                  src={user.img}
-                ></Avatar>
-                <Text>
-                  <b>Change Photo:</b>
-                  <input
-                    type='file'
-                    onChange={handleImg}
-                  />
-                </Text>
-              </VStack>
-            </FormControl>
-            <FormControl id='userName'>
-              <FormLabel>
-                <b>User name</b>
-              </FormLabel>
-              <Input
-                defaultValue={user.name}
-                type='text'
-                onChange={handleName}
-              />
-            </FormControl>
-            <FormControl id='email'>
-              <FormLabel>
-                <b>Email address</b>
-              </FormLabel>
-              <Input
-                defaultValue={user.email}
-                type='email'
-                onChange={handleEmail}
-              />
-            </FormControl>
-            <FormControl id='address'>
-              <FormLabel>
-                <b>Postal Address</b>
-              </FormLabel>
-              <AddressSearchBar
-                user={user}
-                handleAddress={handleAddress}
-                currentAddress={formattedAddress}
-              />
-            </FormControl>
+          <AbsoluteCenter>
             <Stack
-              spacing={6}
-              direction={['column', 'row']}
+              spacing={4}
+              w={'full'}
+              maxW={'xl'}
+              rounded={'xl'}
+              // boxShadow={'lg'}
+              p={20}
+              bg='green.50'
             >
-              <Button
-                bg={'red.400'}
-                color={'white'}
-                w='full'
-                _hover={{
-                  bg: 'red.500'
-                }}
+              <VStack>
+                <Heading
+                  lineHeight={1.1}
+                  fontSize={{ base: '2xl', sm: '3xl' }}
+                >
+                  Update User Profile
+                </Heading>
+              </VStack>
+              <FormControl id='userName'>
+                <VStack spacing={6}>
+                  <Avatar
+                    size='xl'
+                    src={user.img}
+                  ></Avatar>
+                  <Text>
+                    <b>Change Photo:</b>
+                    <input
+                      type='file'
+                      onChange={handleImg}
+                    />
+                  </Text>
+                </VStack>
+              </FormControl>
+              <FormControl id='userName'>
+                <FormLabel>
+                  <b>User name</b>
+                </FormLabel>
+                <Input
+                  defaultValue={user.name}
+                  type='text'
+                  onChange={handleName}
+                />
+              </FormControl>
+              <FormControl id='email'>
+                <FormLabel>
+                  <b>Email address</b>
+                </FormLabel>
+                <Input
+                  defaultValue={user.email}
+                  type='email'
+                  onChange={handleEmail}
+                />
+              </FormControl>
+              <FormControl id='address'>
+                <FormLabel>
+                  <b>Postal Address</b>
+                </FormLabel>
+                <AddressSearchBar
+                  user={user}
+                  handleAddress={handleAddress}
+                  currentAddress={formattedAddress}
+                />
+              </FormControl>
+              <Stack
+                spacing={6}
+                direction={['column', 'row']}
               >
-                Cancel
-              </Button>
-              <Button
-                type='submit'
-                color={'white'}
-                w='full'
-                bg={'green.500'}
-                _hover={{
-                  bg: 'green.700'
-                }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </Button>
+                <Button
+                  bg={'red.400'}
+                  color={'white'}
+                  w='full'
+                  _hover={{
+                    bg: 'red.500'
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type='submit'
+                  color={'white'}
+                  w='full'
+                  bg={'green.500'}
+                  _hover={{
+                    bg: 'green.700'
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </Stack>
             </Stack>
-          </Stack>
+          </AbsoluteCenter>
         </Flex>
       )}
     </div>

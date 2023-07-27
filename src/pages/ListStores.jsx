@@ -2,7 +2,7 @@ import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import { SimpleGrid, VStack } from '@chakra-ui/react';
 import { getUser } from '../api/auth.api';
-import NewStoreCard from '../components/StoreCardV2';
+import StoreCard from '../components/StoreCard';
 
 const Stores = () => {
   const [stores, setStores] = useState(null);
@@ -83,7 +83,7 @@ const Stores = () => {
             stores.map(store => {
               const distance = calcDistance(store.address, user.address);
               return (
-                <NewStoreCard
+                <StoreCard
                   key={store._id}
                   store={store}
                   distance={distance}

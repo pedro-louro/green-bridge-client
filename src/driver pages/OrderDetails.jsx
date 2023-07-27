@@ -1,16 +1,39 @@
 import { Link, useParams } from 'react-router-dom';
 import { getOrder, updateOrder } from '../api/order.api';
 import { useEffect, useState } from 'react';
+import {
+  Box,
+  Heading,
+  Stack,
+  Text,
+  StackDivider,
+  Badge,
+  Image,
+  HStack,
+  Center,
+  VStack,
+  Button,
+  Icon
+} from '@chakra-ui/react';
+import { MdLocationOn } from 'react-icons/md';
+import { GiRoad } from 'react-icons/gi';
 
 const OrderDetails = () => {
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [isDelivered, setIsDelivered] = useState(false);
+  const [storeAddress, setStoreAddress] = useState('');
+  const [userAddress, setUserAddress] = useState('');
+  const [orderFetched, setOrderFetched] = useState(false);
 
   const fetchOrder = async () => {
     const response = await getOrder(orderId);
     setOrder(response.data);
+    order && getAddress(order.store.address, 'store');
+    order && getAddress(order.user.address, 'user');
+    setOrderFetched(true);
   };
+
   const orderDelivered = async () => {
     try {
       const response = await updateOrder({
@@ -22,38 +45,187 @@ const OrderDetails = () => {
       console.log(error);
     }
   };
+  const getAddress = async (coordinates, object) => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+        coordinates.lat
+      },${coordinates.lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API}`
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        object === 'store'
+          ? setStoreAddress(
+              responseJSON.results[0].formatted_address.toString()
+            )
+          : setUserAddress(
+              responseJSON.results[0].formatted_address.toString()
+            );
+      });
+  };
+  //Functions to calculate the distance between two coordinates
+
+  // Convert from degrees to radians
+  const degreesToRadians = degrees => {
+    const radians = (degrees * Math.PI) / 180;
+    return radians;
+  };
+
+  // Function takes two objects, that contain coordinates to a starting and destination location.
+  const calcDistance = (startingCoords, destinationCoords) => {
+    const startingLat = degreesToRadians(startingCoords.lat);
+    const startingLong = degreesToRadians(startingCoords.lng);
+    const destinationLat = degreesToRadians(destinationCoords.lat);
+    const destinationLong = degreesToRadians(destinationCoords.lng);
+
+    // Radius of the Earth in kilometers
+    const radius = 6571;
+
+    // Haversine equation
+    const distanceInKilometers =
+      Math.acos(
+        Math.sin(startingLat) * Math.sin(destinationLat) +
+          Math.cos(startingLat) *
+            Math.cos(destinationLat) *
+            Math.cos(startingLong - destinationLong)
+      ) * radius;
+    return Math.floor(distanceInKilometers);
+  };
 
   useEffect(() => {
     fetchOrder();
-  }, [isDelivered]);
+  }, [isDelivered, orderFetched]);
 
   return (
     <div>
+      <Box h={'80px'}></Box>
       <h1>Order details</h1>
       {order && (
-        <div key={order._id}>
-          <p>From: {order.store.name} Store | Address: ....</p>
-          <p>To Deliver to: {order.user.name} | Address: ....</p>
-          {order.products &&
-            order.products.map(orderProduct => {
-              return (
-                <p key={orderProduct.product._id}>
-                  <b>{orderProduct.product.name}</b> | {orderProduct.quantity} x{' '}
-                  {orderProduct.product.price}€
-                </p>
-              );
-            })}
-          <p>
-            <b>Total: {order.total}€</b>
-          </p>
-          <button
-            onClick={() => {
-              orderDelivered();
-            }}
+        <Center
+          py={6}
+          p={2}
+        >
+          <Box
+            maxW={'400px'}
+            minW={'240px'}
+            w={'full'}
+            bg={'white'}
+            boxShadow={'2xl'}
+            rounded={'md'}
+            p={6}
           >
-            Delivered
-          </button>
-        </div>
+            <Stack>
+              <Badge
+                size='xs'
+                textTransform='uppercase'
+                colorScheme={'green'}
+                alignSelf={'center'}
+              >
+                {order.status}
+              </Badge>
+
+              <VStack
+                pt={1}
+                pb={2}
+              >
+                <Text
+                  color={'grey'}
+                  size='sm'
+                >
+                  <b>From</b> {order.store.name} Store
+                </Text>
+                <Heading
+                  color={'green'}
+                  size='sm'
+                  fontFamily={'body'}
+                >
+                  <Icon as={MdLocationOn} /> {storeAddress}
+                </Heading>
+
+                <Text
+                  color={'grey'}
+                  size='sm'
+                >
+                  <b>To</b> {order.user.name}
+                </Text>
+                <Heading
+                  color={'green'}
+                  size='sm'
+                  fontFamily={'body'}
+                >
+                  <Icon as={MdLocationOn} /> {userAddress}
+                </Heading>
+                <Text>
+                  <Icon as={GiRoad} />
+                  {'  '}
+                  {calcDistance(order.store.address, order.user.address)}KM
+                </Text>
+              </VStack>
+              <Stack
+                divider={<StackDivider />}
+                spacing='4'
+                pt={2}
+              >
+                <Box>
+                  <Heading
+                    size='md'
+                    pb={2}
+                  >
+                    Order Details
+                  </Heading>
+
+                  {order.products &&
+                    order.products.map(orderProduct => {
+                      return (
+                        <HStack
+                          key={orderProduct.product._id}
+                          pt='4'
+                        >
+                          <Image
+                            boxSize='30px'
+                            src={orderProduct.product.img}
+                          />
+                          <Text fontSize='md'>
+                            {orderProduct.product.name} |{' '}
+                            {orderProduct.quantity} x{' '}
+                            {orderProduct.product.price}€
+                          </Text>
+                        </HStack>
+                      );
+                    })}
+                </Box>
+                <Box>
+                  <Heading
+                    size='xs'
+                    textTransform='uppercase'
+                  >
+                    Total
+                  </Heading>
+                  <Text
+                    pt='2'
+                    fontSize='md'
+                  >
+                    {order.total}€
+                  </Text>
+                </Box>
+              </Stack>
+              <Button
+                color={'white'}
+                bg={'green.500'}
+                _hover={{
+                  bg: 'green.700'
+                }}
+                onClick={() => {
+                  orderDelivered();
+                }}
+              >
+                Deliver Order
+              </Button>
+              <Text>
+                Order ID <i>{order._id.slice(-4)}</i>
+              </Text>
+            </Stack>
+          </Box>
+        </Center>
       )}
       {isDelivered && (
         <div>
