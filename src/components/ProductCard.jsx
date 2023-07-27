@@ -10,37 +10,38 @@ import {
 import { FiShoppingCart } from 'react-icons/fi';
 
 const ProductCard = ({ product, handleOrder }) => {
-  // const data = {
-  //   isNew: true,
-  //   imageURL:
-  //     'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-  //   name: 'Wayfarer Classic',
-  //   price: 4.5,
-  //   rating: 4.2,
-  //   numReviews: 34
-  // };
   return (
     <Flex
-      p={50}
+      maxHeight='xs'
+      minW={'240px'}
       w='full'
       alignItems='center'
       justifyContent='center'
+      pt={5}
     >
       <Box
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={'white'}
         maxW='sm'
+        minW={'240px'}
+        maxHeight='xs'
         borderWidth='1px'
         rounded='lg'
         shadow='lg'
         position='relative'
+        alignSelf={'center'}
       >
         <Image
           src={product.img}
           alt={`Picture of ${product.name}`}
           roundedTop='lg'
+          objectFit='cover'
+          alignSelf={'center'}
         />
 
-        <Box p='6'>
+        <Box
+          p='6'
+          bg='#ebf2e8'
+        >
           <Box
             d='flex'
             alignItems='baseline'
@@ -71,6 +72,10 @@ const ProductCard = ({ product, handleOrder }) => {
                   handleOrder(product);
                 }}
                 display={'flex'}
+                bg={'blue.200'}
+                _hover={{
+                  bg: 'green.500'
+                }}
               >
                 <Icon
                   as={FiShoppingCart}
@@ -86,10 +91,6 @@ const ProductCard = ({ product, handleOrder }) => {
             justifyContent='space-between'
             alignContent='center'
           >
-            {/* <Rating
-              rating={data.rating}
-              numReviews={data.numReviews}
-            /> */}
             <Box
               fontSize='2xl'
               color={useColorModeValue('gray.800', 'white')}

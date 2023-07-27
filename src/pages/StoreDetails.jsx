@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getStore } from '../api/stores.api';
 import { addOrder, getOrder, updateOrder } from '../api/order.api';
 import ProductCard from '../components/ProductCard';
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, Heading, Avatar, Box } from '@chakra-ui/react';
 
 const StoreDetails = () => {
   const [store, setStore] = useState(null);
@@ -45,15 +45,10 @@ const StoreDetails = () => {
           current => current.product._id === product._id
         );
         let productToAdd = {};
-        console.log('Exists');
-        console.log(productExists);
 
         if (productExists.length) {
           productToAdd.product = productExists[0].product._id;
           productToAdd.quantity = productExists[0].quantity + 1;
-
-          console.log('To add');
-          console.log(productToAdd);
         } else {
           productToAdd.product = product._id;
           productToAdd.quantity = 1;
@@ -77,10 +72,23 @@ const StoreDetails = () => {
 
   return (
     <div>
-      {store && <h2>{store.name}</h2>}
+      <Box h={'50px'}></Box>
+
+      {store && (
+        <Heading p={6}>
+          <Avatar
+            src={store.img}
+            size={'lg'}
+          />{' '}
+          {store.name}
+        </Heading>
+      )}
       <SimpleGrid
         spacing={4}
-        templateColumns='repeat(3, minmax(200px, 1fr))'
+        columns={[1, null, 2, null, 3]}
+        p={'5%'}
+        minW={'240px'}
+        h='100%'
       >
         {store &&
           store.products.map(product => {

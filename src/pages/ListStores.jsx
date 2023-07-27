@@ -1,7 +1,6 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import { SimpleGrid, VStack } from '@chakra-ui/react';
-import AddressSearchBar from '../components/AddressSearchBar';
 import { getUser } from '../api/auth.api';
 import NewStoreCard from '../components/StoreCardV2';
 
@@ -53,19 +52,12 @@ const Stores = () => {
     return Math.floor(distanceInKilometers);
   };
 
-  // const sortDistance = () => {
-  //   stores.sort(
-  //     (a, b) =>
-  //       calcDistance(a.address, user.address) -
-  //       calcDistance(b.address, user.address)
-  //   );
-  // };
-
   useEffect(() => {
     fetchUser();
     getStores();
   }, []);
-  if (stores && user) {
+
+  if (stores) {
     stores.sort(
       (a, b) =>
         calcDistance(a.address, user.address) -
@@ -85,10 +77,6 @@ const Stores = () => {
           bg='#ebf2e8'
           p={'5%'}
           minW={'240px'}
-          // pl={'120px'}
-          // pr={'120px'}
-          // pt={'70px'}
-          // pb={'70px'}
           h='100%'
         >
           {stores &&
@@ -104,7 +92,6 @@ const Stores = () => {
             })}
         </SimpleGrid>
       </VStack>
-      {/* <AddressSearchBar /> */}
     </div>
   );
 };

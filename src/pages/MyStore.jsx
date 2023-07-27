@@ -66,7 +66,7 @@ const MyStore = () => {
 
   return (
     <div>
-      <Box h={'40px'}></Box>
+      <Box h={'50px'}></Box>
 
       <Stack>
         {myStore && (
@@ -112,7 +112,7 @@ const MyStore = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Box>
+                <Box pb={5}>
                   <Button
                     bg={'green.500'}
                     color={'white'}
@@ -146,12 +146,11 @@ const MyStore = () => {
                   </Modal>
                 </Box>
                 <SimpleGrid
-                  spacing={5}
+                  spacing={3}
                   columns={[1, null, 2, null, 3]}
-                  pl={'120px'}
-                  pr={'120px'}
-                  pt={'70px'}
-                  pb={'70px'}
+                  bg='#ebf2e8'
+                  p={'5%'}
+                  minW={'240px'}
                   h='100%'
                 >
                   {myStore &&

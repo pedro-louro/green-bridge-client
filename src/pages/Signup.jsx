@@ -18,6 +18,7 @@ import {
   Link
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import AddressSearchBar from '../components/AddressSearchBar';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -25,6 +26,8 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [showPassword, setShowPassword] = useState(false);
+  const [address, setAddress] = useState('');
+  const [formattedAddress, setFormattedAddress] = useState('');
 
   const navigate = useNavigate();
 
@@ -35,6 +38,9 @@ const Signup = () => {
   const handlePassword = e => {
     setPassword(e.target.value);
   };
+  const handleAddress = coordinates => {
+    setAddress(coordinates);
+  };
 
   const handleName = e => {
     setName(e.target.value);
@@ -44,7 +50,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const user = { email, password, name };
+      const user = { email, password, name, address };
       await signup(user);
       navigate('/login');
     } catch (error) {
@@ -136,6 +142,14 @@ const Signup = () => {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Address</FormLabel>
+              <AddressSearchBar
+                handleAddress={handleAddress}
+                currentAddress={formattedAddress}
+              />
             </FormControl>
             <Stack
               spacing={10}
