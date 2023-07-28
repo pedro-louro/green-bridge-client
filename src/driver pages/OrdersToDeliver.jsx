@@ -171,6 +171,7 @@ const OrdersToDeliver = () => {
                   h='100%'
                 >
                   {orders &&
+                    ordersFetched &&
                     orders.map(order => {
                       return (
                         <DriverOrderCard
