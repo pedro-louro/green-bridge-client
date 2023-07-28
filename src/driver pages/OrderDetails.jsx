@@ -208,20 +208,19 @@ const OrderDetails = () => {
                       );
                     })}
                 </Box>
-                <Box>
-                  <Heading
-                    size='xs'
+                <HStack>
+                  <Text>
+                    <b>Delivery:</b> {order.shipping}€
+                  </Text>
+                </HStack>
+                <HStack>
+                  <Text
+                    fontWeight='bold'
                     textTransform='uppercase'
                   >
-                    Total
-                  </Heading>
-                  <Text
-                    pt='2'
-                    fontSize='md'
-                  >
-                    {order.total}€
+                    Total: {order.total}€
                   </Text>
-                </Box>
+                </HStack>
               </Stack>
               <Center>
                 <Button

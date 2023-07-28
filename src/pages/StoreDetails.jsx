@@ -11,10 +11,12 @@ import {
   VStack,
   Text,
   Icon,
-  HStack
+  HStack,
+  calc
 } from '@chakra-ui/react';
 import { MdLocationOn } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { getUser } from '../api/auth.api';
 
 const StoreDetails = () => {
   const [store, setStore] = useState(null);
@@ -23,6 +25,7 @@ const StoreDetails = () => {
   const userId = localStorage.getItem('userId');
   const orderId = localStorage.getItem('orderId');
   const [storeAddress, setStoreAddress] = useState('');
+  const [user, setUser] = useState('');
 
   const fetchStore = async storeId => {
     try {
@@ -33,15 +36,38 @@ const StoreDetails = () => {
       console.log('Something went wrong fetching the Store', error);
     }
   };
+  const fetchUser = async () => {
+    const response = await getUser(userId);
+    setUser(response.data);
+  };
 
   const handleOrder = async product => {
+    const distance = calcDistance(store.address, user.address);
+    let shipping = 0;
+
+    // Calculate the shipping cost
+    if (distance < 11) {
+      shipping = 1;
+    } else if (distance >= 11 && distance < 21) {
+      shipping = 2;
+    } else if (distance >= 21 && distance < 31) {
+      shipping = 4;
+    } else if (distance >= 31 && distance < 41) {
+      shipping = 5;
+    } else if (distance >= 41 && distance < 51) {
+      shipping = 7;
+    } else {
+      shipping = 10;
+    }
+
     if (!orderId) {
       try {
         const response = await addOrder({
           products: { product: product._id, quantity: 1 },
           status: 'cart',
           user: userId,
-          store: storeId
+          store: storeId,
+          shipping: shipping
         });
         localStorage.setItem('orderId', response.data._id);
         toast.success('Product added to cart!', {
@@ -94,7 +120,36 @@ const StoreDetails = () => {
       }
     }
   };
+  //Functions to calculate the distance between two coordinates
 
+  // Convert from degrees to radians
+  const degreesToRadians = degrees => {
+    const radians = (degrees * Math.PI) / 180;
+    return radians;
+  };
+
+  // Function takes two objects, that contain coordinates to a starting and destination location.
+  const calcDistance = (startingCoords, destinationCoords) => {
+    const startingLat = degreesToRadians(startingCoords.lat);
+    const startingLong = degreesToRadians(startingCoords.lng);
+    const destinationLat = degreesToRadians(destinationCoords.lat);
+    const destinationLong = degreesToRadians(destinationCoords.lng);
+
+    // Radius of the Earth in kilometers
+    const radius = 6571;
+
+    // Haversine equation
+    const distanceInKilometers =
+      Math.acos(
+        Math.sin(startingLat) * Math.sin(destinationLat) +
+          Math.cos(startingLat) *
+            Math.cos(destinationLat) *
+            Math.cos(startingLong - destinationLong)
+      ) * radius;
+    return Math.floor(distanceInKilometers);
+  };
+
+  //Get Human readable address
   const getAddress = async coordinates => {
     fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
@@ -109,6 +164,7 @@ const StoreDetails = () => {
 
   useEffect(() => {
     fetchStore(storeId);
+    fetchUser();
   }, []);
 
   return (

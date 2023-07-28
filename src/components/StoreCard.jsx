@@ -5,11 +5,14 @@ import {
   Text,
   Stack,
   Image,
-  Button
+  Button,
+  Icon,
+  HStack
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { MdDeliveryDining } from 'react-icons/md';
 
-const StoreCard = ({ store, distance }) => {
+const StoreCard = ({ store, distance, shipping }) => {
   return (
     <Center
       py={6}
@@ -51,7 +54,16 @@ const StoreCard = ({ store, distance }) => {
           >
             {store.name}
           </Heading>
-          <Text color={'gray.500'}>{distance}Km from you</Text>
+          <HStack alignSelf={'center'}>
+            <Icon
+              as={MdDeliveryDining}
+              color={'#00923A'}
+              boxSize={6}
+            />
+            <Text color={'gray.700'}>{shipping}€</Text>
+          </HStack>
+          <Text color={'gray.700'}>{distance}Km from you</Text>
+
           <Link to={`/stores/${store._id}`}>
             <Button
               variant='outline'

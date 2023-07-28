@@ -33,12 +33,11 @@ const Checkout = ({ handleOpenClose }) => {
         const response = await getOrder(orderId);
         setOrder(response.data);
         setProducts(response.data.products);
-        console.log(response.data);
 
         const calcTotal = response.data.products.reduce((acc, curr) => {
           return acc + curr.quantity * curr.product.price;
         }, 0);
-        setTotal(calcTotal);
+        setTotal(calcTotal + response.data.shipping);
       } catch (error) {
         console.log(error);
       }
@@ -164,6 +163,7 @@ const Checkout = ({ handleOpenClose }) => {
                     </Box>
                   );
                 })}
+              {order && <p>Delivery Cost: {order.shipping}€</p>}
               <p>
                 <b>Total: {total}€</b>
               </p>

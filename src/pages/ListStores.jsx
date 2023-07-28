@@ -7,7 +7,8 @@ import {
   Text,
   Icon,
   Spinner,
-  AbsoluteCenter
+  AbsoluteCenter,
+  Divider
 } from '@chakra-ui/react';
 
 import { getUser } from '../api/auth.api';
@@ -77,6 +78,26 @@ const Stores = () => {
       });
   };
 
+  const deliveryCost = distance => {
+    let shipping = 0;
+
+    // Calculate the shipping cost
+    if (distance < 11) {
+      shipping = 1;
+    } else if (distance >= 11 && distance < 21) {
+      shipping = 2;
+    } else if (distance >= 21 && distance < 31) {
+      shipping = 4;
+    } else if (distance >= 31 && distance < 41) {
+      shipping = 5;
+    } else if (distance >= 41 && distance < 51) {
+      shipping = 7;
+    } else {
+      shipping = 10;
+    }
+    return shipping;
+  };
+
   useEffect(() => {
     fetchUser();
     getStores();
@@ -93,10 +114,23 @@ const Stores = () => {
   return (
     <div>
       <Box h='50px'></Box>
+      <Box
+        position='relative'
+        p={10}
+      >
+        <Divider w={'100vw'} />
+        <AbsoluteCenter
+          bg='white'
+          px='4'
+          fontSize={'3xl'}
+        >
+          Stores List
+        </AbsoluteCenter>
+      </Box>
 
       <VStack
         p={10}
-        pt={20}
+        // pt={20}
       >
         <Box pb={10}>
           <Text color={'gray.800'}>
@@ -135,11 +169,13 @@ const Stores = () => {
             {stores &&
               stores.map(store => {
                 const distance = calcDistance(store.address, user.address);
+                const shipping = deliveryCost(distance);
                 return (
                   <StoreCard
                     key={store._id}
                     store={store}
                     distance={distance}
+                    shipping={shipping}
                   />
                 );
               })}

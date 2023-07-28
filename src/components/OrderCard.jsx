@@ -96,20 +96,17 @@ const OrderCard = ({ order }) => {
                   );
                 })}
             </Box>
-            <Box>
-              <Heading
-                size='xs'
-                textTransform='uppercase'
-              >
-                Total
-              </Heading>
-              <Text
-                pt='2'
-                fontSize='md'
-              >
-                {order.total}€
+            <HStack>
+              <Text>
+                <b>Delivery:</b> {order.shipping}€
               </Text>
-            </Box>
+            </HStack>
+            <Text
+              fontWeight='bold'
+              textTransform='uppercase'
+            >
+              Total: {order.total}€
+            </Text>
           </Stack>
         </Stack>
       </Box>

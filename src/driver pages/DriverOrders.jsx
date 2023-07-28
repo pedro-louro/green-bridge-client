@@ -179,20 +179,19 @@ const DriverOrders = () => {
                                 );
                               })}
                           </Box>
-                          <Box>
-                            <Heading
-                              size='xs'
+                          <HStack>
+                            <Text>
+                              <b>Delivery:</b> {order.shipping}€
+                            </Text>
+                          </HStack>
+                          <HStack>
+                            <Text
+                              fontWeight='bold'
                               textTransform='uppercase'
                             >
-                              Total
-                            </Heading>
-                            <Text
-                              pt='2'
-                              fontSize='md'
-                            >
-                              {order.total}€
+                              Total: {order.total}€
                             </Text>
-                          </Box>
+                          </HStack>
                         </Stack>
                         <Text>
                           Order ID <i>{order._id.slice(-4)}</i>
@@ -317,20 +316,19 @@ const DriverOrders = () => {
                                 );
                               })}
                           </Box>
-                          <Box>
-                            <Heading
-                              size='xs'
+                          <HStack>
+                            <Text>
+                              <b>Delivery:</b> {pastOrder.shipping}€
+                            </Text>
+                          </HStack>
+                          <HStack>
+                            <Text
+                              fontWeight='bold'
                               textTransform='uppercase'
                             >
-                              Total
-                            </Heading>
-                            <Text
-                              pt='2'
-                              fontSize='md'
-                            >
-                              {pastOrder.total}€
+                              Total: {pastOrder.total}€
                             </Text>
-                          </Box>
+                          </HStack>
                         </Stack>
                         <Text>
                           Order ID <i>{pastOrder._id.slice(-4)}</i>
