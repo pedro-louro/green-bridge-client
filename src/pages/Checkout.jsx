@@ -221,11 +221,18 @@ const Checkout = ({ handleOpenClose }) => {
         </Card>
       )}
       {!orderId && (
-        <div>
-          <Heading size='sm'>Your cart is empty</Heading>
+        <Box bg='#f2efda'>
+          <Heading
+            bg='#f2efda'
+            size='sm'
+            pb={4}
+          >
+            Your cart is empty
+          </Heading>
           <Link
             to={'/stores/'}
             onClick={handleOpenClose('close')}
+            bg='#f2efda'
           >
             <Button
               bg={'blue.200'}
@@ -237,9 +244,9 @@ const Checkout = ({ handleOpenClose }) => {
               onClick={handleOpenClose('close')}
             >
               Find your Plants!
-            </Button>{' '}
+            </Button>
           </Link>
-        </div>
+        </Box>
       )}
     </Stack>
   );

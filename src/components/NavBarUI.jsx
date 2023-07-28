@@ -21,10 +21,10 @@ import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
 
 const links = [
-  { name: 'Stores', to: '/stores' },
+  { name: 'For Plants Lovers', to: '/stores' },
   { name: 'My Orders', to: '/myorders' },
-  { name: 'My Store', to: '/mystore' },
-  { name: 'Driver', to: '/driver/orders' }
+  { name: 'For Sellers', to: '/mystore' },
+  { name: 'For Drivers', to: '/driver/orders' }
 ];
 const authLinks = [
   { name: 'Signup', to: '/signup' },
@@ -53,11 +53,14 @@ const NavBar = () => {
 
   return (
     <Box
-      bg={useColorModeValue('green.200', 'gray.900')}
+      bg={useColorModeValue('green.600', 'gray.900')}
       px={4}
       position='fixed'
       w='100%'
       zIndex={200}
+      textColor={'white'}
+      fontSize='lg'
+      fontWeight={'semibold'}
     >
       <Flex
         h={16}
@@ -105,13 +108,18 @@ const NavBar = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>
+                <MenuItem color={'black'}>
                   <NavLink>
                     {{ name: 'Update User', to: '/userdetails' }}
                   </NavLink>
                 </MenuItem>
                 <MenuDivider />
-                <MenuItem onClick={logOutUser}>Logout</MenuItem>
+                <MenuItem
+                  color={'black'}
+                  onClick={logOutUser}
+                >
+                  Logout
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>

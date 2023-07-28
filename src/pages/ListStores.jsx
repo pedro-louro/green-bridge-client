@@ -1,17 +1,22 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import { SimpleGrid, VStack } from '@chakra-ui/react';
+import { SimpleGrid, VStack, Box, Text, Icon } from '@chakra-ui/react';
+
 import { getUser } from '../api/auth.api';
 import StoreCard from '../components/StoreCard';
+import { MdLocationOn } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const Stores = () => {
   const [stores, setStores] = useState(null);
   const [user, setUser] = useState(null);
   const userId = localStorage.getItem('userId');
+  const [userAddress, setUserAddress] = useState('');
 
   const fetchUser = async () => {
     const userDetails = await getUser(userId);
     setUser(userDetails.data);
+    getAddress(userDetails.data.address);
   };
 
   const getStores = async () => {
@@ -52,6 +57,18 @@ const Stores = () => {
     return Math.floor(distanceInKilometers);
   };
 
+  const getAddress = async coordinates => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+        coordinates.lat
+      },${coordinates.lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API}`
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        setUserAddress(responseJSON.results[0].formatted_address.toString());
+      });
+  };
+
   useEffect(() => {
     fetchUser();
     getStores();
@@ -67,15 +84,29 @@ const Stores = () => {
 
   return (
     <div>
+      <Box h='50px'></Box>
       <VStack
         p={10}
         pt={20}
       >
+        <Box pb={10}>
+          <Text color={'gray.800'}>
+            Delivering To: <Icon as={MdLocationOn} /> {userAddress}
+          </Text>
+          <Link
+            to='/userdetails'
+            color={'gray.700'}
+          >
+            <u>Change Delivery Address</u>
+          </Link>
+        </Box>
         <SimpleGrid
           spacing={5}
           columns={[1, null, 2, null, 3]}
-          bg='#ebf2e8'
+          bg='#f2efda'
           p={'5%'}
+          pl={'10%'}
+          pr={'10%'}
           minW={'240px'}
           h='100%'
         >

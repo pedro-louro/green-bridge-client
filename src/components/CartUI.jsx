@@ -30,7 +30,10 @@ const Cart = () => {
     <>
       <Button
         ref={btnRef}
-        colorScheme='teal'
+        bg='#F2B13A'
+        _hover={{
+          bg: '#fcfadb'
+        }}
         onClick={onOpen}
         variant={'solid'}
         size={'sm'}
@@ -48,15 +51,15 @@ const Cart = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader bg='#ebf2e8'>
+          <DrawerHeader bg='#f2efda'>
             <Icon as={TiShoppingCart} /> Your Cart
           </DrawerHeader>
 
-          <DrawerBody bg='#ebf2e8'>
+          <DrawerBody bg='#f2efda'>
             <Checkout handleOpenClose={handleOpenClose} />
           </DrawerBody>
 
-          <DrawerFooter bg='#ebf2e8'>
+          <DrawerFooter bg='#f2efda'>
             <Button
               variant='solid-rounded'
               mr={3}
