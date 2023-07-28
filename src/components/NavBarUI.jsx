@@ -19,6 +19,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
 import ProfileAvatar from './ProfileAvatar';
+import { useNavigate } from 'react-router-dom';
 
 const links = [
   { name: 'For Plants Lovers', to: '/stores' },
@@ -49,6 +50,7 @@ const NavLink = ({ children }) => (
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -100,12 +102,16 @@ const NavBar = () => {
           spacing={8}
           alignItems={'center'}
         >
-          <Avatar
-            src={
-              'https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690506422/green-bridge/logo_lcqxhl.png'
-            }
-            size={'lg'}
-          />
+          {/* App Logo */}
+          <a href='/'>
+            <Avatar
+              src={
+                'https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690506422/green-bridge/logo_lcqxhl.png'
+              }
+              size={'lg'}
+            />
+          </a>
+
           {isLoggedIn && (
             <HStack
               as={'nav'}
