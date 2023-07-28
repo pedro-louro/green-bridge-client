@@ -105,8 +105,7 @@ const UpdateStore = ({ storeId, refreshStores }) => {
             maxW={'xl'}
             rounded={'xl'}
             p={20}
-            bg='green.50'
-            // boxShadow={'2xl'}
+            bg='#f2efda'
           >
             <VStack>
               <Heading

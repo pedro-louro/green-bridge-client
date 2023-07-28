@@ -25,7 +25,9 @@ import {
   TabPanels,
   TabPanel,
   Icon,
-  Avatar
+  Avatar,
+  HStack,
+  VStack
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
 import StoreOrders from './StoreOrders';
@@ -70,13 +72,18 @@ const MyStore = () => {
 
       <Stack>
         {myStore && (
-          <Heading p={6}>
-            <Avatar
-              src={myStore.img}
-              size={'lg'}
-            />{' '}
-            {myStore.name}
-          </Heading>
+          <VStack>
+            <HStack
+              pt={8}
+              pb={2}
+            >
+              <Avatar
+                src={myStore.img}
+                size={'lg'}
+              />
+              <Heading p={6}>{myStore.name}</Heading>
+            </HStack>
+          </VStack>
         )}
         {myStore && (
           <Tabs
@@ -86,7 +93,7 @@ const MyStore = () => {
           >
             <TabList mb='1em'>
               <Tab
-                _selected={{ color: 'white', bg: 'green.500' }}
+                _selected={{ color: 'black', bg: '#F2B13A' }}
                 onClick={() => {
                   setCurrentTab('products');
                 }}
@@ -94,7 +101,7 @@ const MyStore = () => {
                 Products
               </Tab>
               <Tab
-                _selected={{ color: 'white', bg: 'green.500' }}
+                _selected={{ color: 'black', bg: '#F2B13A' }}
                 onClick={() => {
                   setCurrentTab('orders');
                 }}
@@ -102,7 +109,7 @@ const MyStore = () => {
                 Orders
               </Tab>
               <Tab
-                _selected={{ color: 'white', bg: 'green.500' }}
+                _selected={{ color: 'black', bg: '#F2B13A' }}
                 onClick={() => {
                   setCurrentTab('updateStore');
                 }}
@@ -145,10 +152,11 @@ const MyStore = () => {
                     </ModalContent>
                   </Modal>
                 </Box>
+
                 <SimpleGrid
                   spacing={3}
                   columns={[1, null, 2, null, 3]}
-                  bg='#ebf2e8'
+                  bg='#f2efda'
                   p={'5%'}
                   minW={'240px'}
                   h='100%'
@@ -164,7 +172,7 @@ const MyStore = () => {
                         </Container>
                       );
                     })}
-                </SimpleGrid>{' '}
+                </SimpleGrid>
               </TabPanel>
               <TabPanel>
                 <StoreOrders storeId={myStore._id} />

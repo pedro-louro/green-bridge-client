@@ -100,9 +100,8 @@ const UpdateUser = () => {
               w={'full'}
               maxW={'xl'}
               rounded={'xl'}
-              // boxShadow={'lg'}
               p={20}
-              bg='green.50'
+              bg='#f2efda'
             >
               <VStack>
                 <Heading

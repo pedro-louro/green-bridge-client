@@ -69,13 +69,36 @@ const NavBar = () => {
         alignItems={'center'}
         justifyContent={'space-between'}
       >
-        <IconButton
-          size={'md'}
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label={'Open Menu'}
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-        />
+        <Menu>
+          <MenuButton
+            size={'sm'}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label={'Open Menu'}
+            display={{ md: 'none' }}
+            as={IconButton}
+            onClick={isOpen ? onClose : onOpen}
+          />
+          {isOpen ? (
+            <MenuList
+              pb={4}
+              display={{ md: 'none' }}
+              bg='#f2efda'
+              w='full'
+              size='sm'
+              p={2}
+            >
+              {links.map(link => (
+                <MenuItem
+                  key={link}
+                  color={'black'}
+                  bg='#f2efda'
+                >
+                  <NavLink size='xs'>{link}</NavLink>
+                </MenuItem>
+              ))}
+            </MenuList>
+          ) : null}
+        </Menu>
         <HStack
           spacing={8}
           alignItems={'center'}
@@ -139,22 +162,6 @@ const NavBar = () => {
             ))}
           </Flex>
         )}
-
-        {isOpen ? (
-          <Box
-            pb={4}
-            display={{ md: 'none' }}
-          >
-            <Stack
-              as={'nav'}
-              spacing={4}
-            >
-              {links.map(link => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
       </Flex>
     </Box>
   );
