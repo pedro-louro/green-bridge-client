@@ -17,6 +17,7 @@ import DriverOrders from './driver pages/DriverOrders';
 import UserDetails from './pages/UserDetails';
 import IsPrivate from './components/IsPrivate';
 import IsAnon from './components/IsAnon';
+import HomePage from './pages/HomePage';
 // import Navbar from './components/Navbar';
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         <NavBar />
         <ToastContainer />
         <Routes>
+          <Route
+            path='/'
+            element={<HomePage />}
+          />
           <Route
             path='/login'
             element={

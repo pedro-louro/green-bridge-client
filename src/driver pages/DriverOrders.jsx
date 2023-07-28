@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getOrderByDriver } from '../api/order.api';
-import DriverOrderCard from './DriverOrderCard';
 import {
   Center,
   Stack,
@@ -53,7 +52,7 @@ const DriverOrders = () => {
 
   useEffect(() => {
     fetchDriverOrders();
-  }, []);
+  }, [ordersFetched]);
   return (
     <div>
       {!ordersFetched && (
@@ -95,6 +94,7 @@ const DriverOrders = () => {
             h='100%'
           >
             {orders &&
+              ordersFetched &&
               orders.map(order => {
                 return (
                   <Center
@@ -156,7 +156,8 @@ const DriverOrders = () => {
                               </Link>{' '}
                             </Heading>
 
-                            {order.products &&
+                            {ordersFetched &&
+                              order.products &&
                               order.products.map(orderProduct => {
                                 return (
                                   <HStack

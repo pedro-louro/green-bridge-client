@@ -99,11 +99,20 @@ const StoreOrders = ({ storeId }) => {
         </div>
       )}
       {orders && storeFetched && (
-        <VStack
-          p={10}
-          pt={20}
-        >
-          <Heading size='lg'>Open Orders</Heading>
+        <VStack>
+          <Box
+            position='relative'
+            p={20}
+          >
+            <Divider w={'100vw'} />
+            <AbsoluteCenter
+              bg='white'
+              px='4'
+              fontSize={'3xl'}
+            >
+              Open Orders
+            </AbsoluteCenter>
+          </Box>
           <SimpleGrid
             spacing={5}
             columns={[1, null, 2, null, 3]}
@@ -138,7 +147,7 @@ const StoreOrders = ({ storeId }) => {
       {pastOrders && storeFetched && (
         <Box
           position='relative'
-          p={20}
+          p={10}
         >
           <Divider w={'100vw'} />
           <AbsoluteCenter
@@ -152,7 +161,7 @@ const StoreOrders = ({ storeId }) => {
       )}
       <VStack
         p={10}
-        pt={20}
+        pt={10}
       >
         <SimpleGrid
           spacing={3}
