@@ -89,7 +89,7 @@ const NavBar = () => {
             >
               {links.map(link => (
                 <MenuItem
-                  key={link}
+                  key={link.name}
                   color={'black'}
                   bg='#f2efda'
                 >
@@ -117,7 +117,7 @@ const NavBar = () => {
               display={{ base: 'none', md: 'flex' }}
             >
               {links.map(link => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link.name}>{link}</NavLink>
               ))}
             </HStack>
           )}

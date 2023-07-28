@@ -32,7 +32,6 @@ const OrdersToDeliver = () => {
   const fetchOrders = async () => {
     try {
       const response = await getOrderStatus('ready');
-      console.log(response.data);
       if (response.data.length) {
         setOrders(response.data);
         setNumOrders(response.data.length);
@@ -83,7 +82,7 @@ const OrdersToDeliver = () => {
   useEffect(() => {
     fetchOrders();
     fetchUser();
-  }, [numOrders]);
+  }, []);
 
   // Sort orders to get closests first
   if (orders && address) {

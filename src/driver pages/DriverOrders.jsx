@@ -24,11 +24,12 @@ const DriverOrders = () => {
   const userId = localStorage.getItem('userId');
   const [orders, setOrders] = useState([]);
   const [pastOrders, setPastOrders] = useState([]);
-  const [ordersFetched, setOrdersFetched] = useState(false);
+  const [ordersFetched, setOrdersFetched] = useState('false');
 
   const fetchDriverOrders = async () => {
     try {
       const response = await getOrderByDriver(userId);
+      console.log('driver orders');
       console.log(response.data);
 
       const activeOrders = response.data.filter(
@@ -39,6 +40,7 @@ const DriverOrders = () => {
       } else {
         setOrders(null);
       }
+
       // To render past orders
       const nonActiveOrders = response.data.filter(
         order => order.status === 'delivered'
