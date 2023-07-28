@@ -13,9 +13,10 @@ import {
 } from '@chakra-ui/react';
 import AddressSearchBar from './AddressSearchBar';
 import { getUser, updateUser } from '../api/auth.api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uploadImage } from '../api/product.api';
+import { AuthContext } from '../context/auth.context';
 
 const UpdateUser = () => {
   const userId = localStorage.getItem('userId');
@@ -26,6 +27,7 @@ const UpdateUser = () => {
   const [img, setImg] = useState(user.img);
   const [address, setAddress] = useState(user.address);
   const [formattedAddress, setFormattedAddress] = useState('');
+  const { authenticateUser } = useContext(AuthContext);
 
   const fetchUser = async () => {
     const userDetails = await getUser(userId);
@@ -63,7 +65,6 @@ const UpdateUser = () => {
     try {
       const userUpdate = { _id: userId, email, name, address };
       if (img) {
-        console.log(img);
         //create new formData
         const uploadData = new FormData();
 
@@ -75,7 +76,7 @@ const UpdateUser = () => {
         userUpdate.img = ImageResponse.data.img;
       }
       await updateUser(userUpdate);
-      localStorage.setItem('userImg', userUpdate.img);
+      authenticateUser();
 
       navigate('/stores');
     } catch (error) {

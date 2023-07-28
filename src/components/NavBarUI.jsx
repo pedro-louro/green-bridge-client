@@ -12,15 +12,13 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
-  useColorModeValue,
-  Stack,
-  Image
+  useColorModeValue
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
-import logo from '../assets/logo.png';
+import ProfileAvatar from './ProfileAvatar';
 
 const links = [
   { name: 'For Plants Lovers', to: '/stores' },
@@ -51,7 +49,6 @@ const NavLink = ({ children }) => (
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
-  const userImg = localStorage.getItem('userImg');
 
   return (
     <Box
@@ -103,13 +100,12 @@ const NavBar = () => {
           spacing={8}
           alignItems={'center'}
         >
-          <Box bg={'white'}>
-            <Image
-              src={logo}
-              h={16}
-              alignSelf={'baseline'}
-            />
-          </Box>
+          <Avatar
+            src={
+              'https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690506422/green-bridge/logo_lcqxhl.png'
+            }
+            size={'lg'}
+          />
           {isLoggedIn && (
             <HStack
               as={'nav'}
@@ -133,10 +129,7 @@ const NavBar = () => {
                 cursor={'pointer'}
                 minW={0}
               >
-                <Avatar
-                  size={'sm'}
-                  src={userImg}
-                />
+                <ProfileAvatar />
               </MenuButton>
               <MenuList>
                 <MenuItem color={'black'}>

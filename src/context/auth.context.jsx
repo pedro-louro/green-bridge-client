@@ -40,6 +40,8 @@ const AuthProviderWrapper = props => {
 
   useEffect(() => {
     authenticateUser();
+
+    console.log(user);
   }, []);
 
   // delete token from localstorage
