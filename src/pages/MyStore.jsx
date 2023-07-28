@@ -106,7 +106,14 @@ const MyStore = () => {
           >
             <TabList mb='1em'>
               <Tab
-                _selected={{ color: 'black', bg: '#F2B13A' }}
+                bg={'#fcfadb'}
+                color={'black'}
+                _selected={{
+                  color: 'black',
+                  bg: '#F2B13A',
+                  boxShadow: '2xl',
+                  fontWeight: 'bold'
+                }}
                 onClick={() => {
                   setCurrentTab('products');
                 }}
@@ -114,7 +121,14 @@ const MyStore = () => {
                 Products
               </Tab>
               <Tab
-                _selected={{ color: 'black', bg: '#F2B13A' }}
+                bg={'#fcfadb'}
+                color={'black'}
+                _selected={{
+                  color: 'black',
+                  bg: '#F2B13A',
+                  boxShadow: '2xl',
+                  fontWeight: 'bold'
+                }}
                 onClick={() => {
                   setCurrentTab('orders');
                 }}
@@ -122,7 +136,14 @@ const MyStore = () => {
                 Orders
               </Tab>
               <Tab
-                _selected={{ color: 'black', bg: '#F2B13A' }}
+                bg={'#fcfadb'}
+                color={'black'}
+                _selected={{
+                  color: 'black',
+                  bg: '#F2B13A',
+                  boxShadow: '2xl',
+                  fontWeight: 'bold'
+                }}
                 onClick={() => {
                   setCurrentTab('updateStore');
                 }}

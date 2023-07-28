@@ -103,10 +103,28 @@ const OrdersToDeliver = () => {
         colorScheme='green'
       >
         <TabList mb='1em'>
-          <Tab _selected={{ color: 'black', bg: '#F2B13A' }}>
+          <Tab
+            bg={'#fcfadb'}
+            color={'black'}
+            _selected={{
+              color: 'black',
+              bg: '#F2B13A',
+              boxShadow: '2xl',
+              fontWeight: 'bold'
+            }}
+          >
             Find orders to Deliver
           </Tab>
-          <Tab _selected={{ color: 'black', bg: '#F2B13A' }}>
+          <Tab
+            bg={'#fcfadb'}
+            color={'black'}
+            _selected={{
+              color: 'black',
+              bg: '#F2B13A',
+              boxShadow: '2xl',
+              fontWeight: 'bold'
+            }}
+          >
             My Driver Orders
           </Tab>
         </TabList>
