@@ -60,7 +60,7 @@ const OrderCard = ({ order }) => {
               fontSize={'2xl'}
               fontFamily={'body'}
             >
-              {order.store.name}
+              {order.store.name} Store
             </Heading>
           </HStack>
 

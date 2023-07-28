@@ -45,7 +45,6 @@ const AddressSearchBar = ({ handleAddress, currentAddress }) => {
         setFormattedAddress(responseJSON.results[0].formatted_address);
         setCoordinates({ lat, lng });
       });
-    // toast.success('We found your address!');
     toast.success('We found your address!', {
       position: 'top-center',
       autoClose: 3000

@@ -11,7 +11,8 @@ import {
   Heading,
   Box,
   Divider,
-  AbsoluteCenter
+  AbsoluteCenter,
+  Spinner
 } from '@chakra-ui/react';
 
 const StoreOrders = ({ storeId }) => {
@@ -20,6 +21,7 @@ const StoreOrders = ({ storeId }) => {
   const [orders, setOrders] = useState(null);
   const [pastOrders, setPastOrders] = useState(null);
   const [statusChanged, setStatusChanged] = useState(false);
+  const [storeFetched, setStoreFetched] = useState(false);
 
   const fetchStore = async () => {
     if (storeId) {
@@ -39,16 +41,19 @@ const StoreOrders = ({ storeId }) => {
         } else {
           setOrders(null);
         }
+
         // To render past orders
         const nonActiveOrders = response.data.orders.filter(
           order => order.status === 'delivered' || order.status === 'canceled'
         );
-        setPastOrders(nonActiveOrders);
+        // Reverse array to show more recent orders first
+        setPastOrders(nonActiveOrders.reverse());
         setStatusChanged(false);
       } catch (error) {
         console.log(error);
       }
     }
+    setStoreFetched(true);
   };
 
   const refreshStores = () => {
@@ -76,12 +81,24 @@ const StoreOrders = ({ storeId }) => {
 
   return (
     <div>
-      {!orders && (
+      {!storeFetched && (
+        <AbsoluteCenter>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#2F8559'
+            size='xl'
+          />
+        </AbsoluteCenter>
+      )}
+
+      {!orders && storeFetched && (
         <div>
           <Heading size='lg'>You don't have any open order! </Heading>
         </div>
       )}
-      {orders && (
+      {orders && storeFetched && (
         <VStack
           p={10}
           pt={20}
@@ -90,13 +107,12 @@ const StoreOrders = ({ storeId }) => {
           <SimpleGrid
             spacing={5}
             columns={[1, null, 2, null, 3]}
-            bg='#ebf2e8'
-            pl={'120px'}
-            pr={'120px'}
-            pt={'70px'}
-            pb={'70px'}
+            bg='#f2efda'
+            p={'5%'}
+            pl={'10%'}
+            pr={'10%'}
+            minW={'240px'}
             h='100%'
-            w={'80%'}
           >
             {orders &&
               orders.map(order => {
@@ -119,7 +135,7 @@ const StoreOrders = ({ storeId }) => {
         </VStack>
       )}
 
-      {pastOrders && (
+      {pastOrders && storeFetched && (
         <Box
           position='relative'
           p={20}
@@ -139,12 +155,14 @@ const StoreOrders = ({ storeId }) => {
         pt={20}
       >
         <SimpleGrid
-          spacing={5}
+          spacing={3}
           columns={[1, null, 2, null, 3]}
-          bg='#ebf2e8'
-          h='100%'
+          bg='#f2efda'
           p={'5%'}
+          pl={'10%'}
+          pr={'10%'}
           minW={'240px'}
+          h='100%'
         >
           {pastOrders &&
             pastOrders.map(pastOrder => {

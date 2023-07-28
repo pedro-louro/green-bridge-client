@@ -11,7 +11,9 @@ import {
   Box,
   Link,
   Heading,
-  Icon
+  Icon,
+  AbsoluteCenter,
+  Spinner
 } from '@chakra-ui/react';
 import OrderCard from '../components/OrderCard';
 import { PiPottedPlant } from 'react-icons/pi';
@@ -20,6 +22,7 @@ const MyOrders = () => {
   const userId = localStorage.getItem('userId');
   const [pastOrders, setPastOrders] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [ordersFetched, setOrdersFetched] = useState(false);
 
   const fetchUserOrders = async () => {
     try {
@@ -42,7 +45,10 @@ const MyOrders = () => {
       const nonActiveOrders = response.data.filter(
         order => order.status === 'delivered' || order.status === 'canceled'
       );
-      setPastOrders(nonActiveOrders);
+
+      // Reverse the order of the array to show more recent orders first
+      setPastOrders(nonActiveOrders.reverse());
+      setOrdersFetched(true);
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +60,18 @@ const MyOrders = () => {
 
   return (
     <div>
-      <Box h={'50px'}></Box>
+      <Box h={'60px'}></Box>
+      {!ordersFetched && (
+        <AbsoluteCenter>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#2F8559'
+            size='xl'
+          />
+        </AbsoluteCenter>
+      )}
       <Tabs
         p={6}
         isFitted
@@ -62,12 +79,34 @@ const MyOrders = () => {
         colorScheme='green'
       >
         <TabList>
-          <Tab _selected={{ color: 'white', bg: 'green.500' }}>Open Orders</Tab>
-          <Tab _selected={{ color: 'white', bg: 'green.500' }}>Past Orders</Tab>
+          <Tab
+            bg={'#fcfadb'}
+            color={'black'}
+            _selected={{
+              color: 'black',
+              bg: '#F2B13A',
+              boxShadow: '2xl',
+              fontWeight: 'bold'
+            }}
+          >
+            Open Orders
+          </Tab>
+          <Tab
+            bg={'#fcfadb'}
+            color={'black'}
+            _selected={{
+              color: 'black',
+              bg: '#F2B13A',
+              boxShadow: '2xl',
+              fontWeight: 'bold'
+            }}
+          >
+            Past Orders
+          </Tab>
         </TabList>
         <TabPanels p={4}>
           <TabPanel>
-            {!orders && (
+            {!orders && ordersFetched && (
               <VStack>
                 <Heading
                   size='lg'
@@ -92,16 +131,18 @@ const MyOrders = () => {
                 </Link>
               </VStack>
             )}
-            {orders && (
+            {orders && ordersFetched && (
               <VStack
                 p={10}
                 pt={20}
               >
                 <SimpleGrid
                   spacing={3}
-                  columns={[1, null, 2]}
-                  bg='#ebf2e8'
+                  columns={[1, null, 2, null, 3]}
+                  bg='#f2efda'
                   p={'5%'}
+                  pl={'10%'}
+                  pr={'10%'}
                   minW={'240px'}
                   h='100%'
                 >
@@ -120,19 +161,19 @@ const MyOrders = () => {
           </TabPanel>
 
           <TabPanel>
-            {pastOrders && (
+            {pastOrders && ordersFetched && (
               <VStack
                 p={10}
                 pt={20}
               >
                 <SimpleGrid
-                  spacing={5}
-                  columns={[1, null, 2]}
-                  bg='#ebf2e8'
-                  pl={'120px'}
-                  pr={'120px'}
-                  pt={'70px'}
-                  pb={'70px'}
+                  spacing={3}
+                  columns={[1, null, 2, null, 3]}
+                  bg='#f2efda'
+                  p={'5%'}
+                  pl={'10%'}
+                  pr={'10%'}
+                  minW={'240px'}
                   h='100%'
                 >
                   {pastOrders &&

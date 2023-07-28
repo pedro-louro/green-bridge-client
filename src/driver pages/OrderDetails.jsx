@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getOrder, updateOrder } from '../api/order.api';
 import { useEffect, useState } from 'react';
 import {
@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { MdLocationOn } from 'react-icons/md';
 import { GiRoad } from 'react-icons/gi';
+import { toast } from 'react-toastify';
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -25,6 +26,7 @@ const OrderDetails = () => {
   const [storeAddress, setStoreAddress] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [orderFetched, setOrderFetched] = useState(false);
+  const navigate = useNavigate();
 
   const fetchOrder = async () => {
     const response = await getOrder(orderId);
@@ -34,13 +36,26 @@ const OrderDetails = () => {
     setOrderFetched(true);
   };
 
-  const orderDelivered = async () => {
+  const updateOrderStatus = async status => {
     try {
       const response = await updateOrder({
         _id: orderId,
-        status: 'delivered'
+        status: status
       });
       setIsDelivered(true);
+      if (status === 'delivered') {
+        toast.success('Order Delivered!', {
+          position: 'top-center',
+          autoClose: 3000
+        });
+      }
+      if (status === 'canceled') {
+        toast.success('Order Canceled!', {
+          position: 'top-center',
+          autoClose: 3000
+        });
+      }
+      navigate('/driver/orders');
     } catch (error) {
       console.log(error);
     }
@@ -208,18 +223,32 @@ const OrderDetails = () => {
                   </Text>
                 </Box>
               </Stack>
-              <Button
-                color={'white'}
-                bg={'green.500'}
-                _hover={{
-                  bg: 'green.700'
-                }}
-                onClick={() => {
-                  orderDelivered();
-                }}
-              >
-                Deliver Order
-              </Button>
+              <Center>
+                <Button
+                  color={'white'}
+                  bg={'red.400'}
+                  _hover={{
+                    bg: 'red.600'
+                  }}
+                  onClick={() => {
+                    updateOrderStatus('canceled');
+                  }}
+                >
+                  Cancel Order
+                </Button>
+                <Button
+                  color={'white'}
+                  bg={'green.500'}
+                  _hover={{
+                    bg: 'green.700'
+                  }}
+                  onClick={() => {
+                    updateOrderStatus('delivered');
+                  }}
+                >
+                  Order Delivered
+                </Button>
+              </Center>
               <Text>
                 Order ID <i>{order._id.slice(-4)}</i>
               </Text>

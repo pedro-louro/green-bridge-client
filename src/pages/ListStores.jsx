@@ -1,6 +1,14 @@
 import { getAllStores } from '../api/stores.api';
 import { useState, useEffect } from 'react';
-import { SimpleGrid, VStack, Box, Text, Icon } from '@chakra-ui/react';
+import {
+  SimpleGrid,
+  VStack,
+  Box,
+  Text,
+  Icon,
+  Spinner,
+  AbsoluteCenter
+} from '@chakra-ui/react';
 
 import { getUser } from '../api/auth.api';
 import StoreCard from '../components/StoreCard';
@@ -85,6 +93,7 @@ const Stores = () => {
   return (
     <div>
       <Box h='50px'></Box>
+
       <VStack
         p={10}
         pt={20}
@@ -100,28 +109,42 @@ const Stores = () => {
             <u>Change Delivery Address</u>
           </Link>
         </Box>
-        <SimpleGrid
-          spacing={5}
-          columns={[1, null, 2, null, 3]}
-          bg='#f2efda'
-          p={'5%'}
-          pl={'10%'}
-          pr={'10%'}
-          minW={'240px'}
-          h='100%'
-        >
-          {stores &&
-            stores.map(store => {
-              const distance = calcDistance(store.address, user.address);
-              return (
-                <StoreCard
-                  key={store._id}
-                  store={store}
-                  distance={distance}
-                />
-              );
-            })}
-        </SimpleGrid>
+        {!stores && (
+          <AbsoluteCenter>
+            <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              color='#2F8559'
+              size='xl'
+            />
+          </AbsoluteCenter>
+        )}
+
+        {stores && (
+          <SimpleGrid
+            spacing={5}
+            columns={[1, null, 2, null, 3]}
+            bg='#f2efda'
+            p={'5%'}
+            pl={'10%'}
+            pr={'10%'}
+            minW={'240px'}
+            h='100%'
+          >
+            {stores &&
+              stores.map(store => {
+                const distance = calcDistance(store.address, user.address);
+                return (
+                  <StoreCard
+                    key={store._id}
+                    store={store}
+                    distance={distance}
+                  />
+                );
+              })}
+          </SimpleGrid>
+        )}
       </VStack>
     </div>
   );

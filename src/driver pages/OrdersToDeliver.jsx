@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getOrderStatus, updateOrder } from '../api/order.api';
-import { Link, useNavigate } from 'react-router-dom';
+import { getOrderStatus } from '../api/order.api';
 import { getUser } from '../api/auth.api';
 import AddressSearchBar from '../components/AddressSearchBar';
 import {
-  Button,
   SimpleGrid,
   VStack,
   Tabs,
@@ -12,10 +10,11 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  HStack,
   Heading,
   Icon,
-  Box
+  Box,
+  AbsoluteCenter,
+  Spinner
 } from '@chakra-ui/react';
 import DriverOrderCard from './DriverOrderCard';
 import { MdLocationOn } from 'react-icons/md';
@@ -28,7 +27,7 @@ const OrdersToDeliver = () => {
   const [numOrders, setNumOrders] = useState([]);
   const [address, setAddress] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState('');
-  const navigate = useNavigate();
+  const [ordersFetched, setOrdersFetched] = useState(false);
 
   const fetchOrders = async () => {
     try {
@@ -38,6 +37,7 @@ const OrdersToDeliver = () => {
         setOrders(response.data);
         setNumOrders(response.data.length);
       }
+      setOrdersFetched(true);
     } catch (error) {
       console.log(error);
     }
@@ -103,13 +103,14 @@ const OrdersToDeliver = () => {
         colorScheme='green'
       >
         <TabList mb='1em'>
-          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
+          <Tab _selected={{ color: 'black', bg: '#F2B13A' }}>
             Find orders to Deliver
           </Tab>
-          <Tab _selected={{ color: 'white', bg: 'green.500' }}>
+          <Tab _selected={{ color: 'black', bg: '#F2B13A' }}>
             My Driver Orders
           </Tab>
         </TabList>
+
         <TabPanels>
           <TabPanel>
             <VStack
@@ -124,17 +125,30 @@ const OrdersToDeliver = () => {
                 handleAddress={handleAddress}
                 currentAddress={formattedAddress}
               />
-              {!orders && (
+              {!ordersFetched && (
+                <AbsoluteCenter>
+                  <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='#2F8559'
+                    size='xl'
+                  />
+                </AbsoluteCenter>
+              )}
+              {!orders && ordersFetched && (
                 <Heading size='md'>
                   There are no orders ready to be delivered at the moment.
                 </Heading>
               )}
-              {orders && (
+              {orders && ordersFetched && (
                 <SimpleGrid
                   spacing={5}
                   columns={[1, null, 2, null, 3]}
-                  bg='#ebf2e8'
+                  bg='#f2efda'
                   p={'5%'}
+                  pl={'10%'}
+                  pr={'10%'}
                   minW={'240px'}
                   h='100%'
                 >

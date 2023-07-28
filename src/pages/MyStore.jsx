@@ -27,7 +27,9 @@ import {
   Icon,
   Avatar,
   HStack,
-  VStack
+  VStack,
+  Spinner,
+  AbsoluteCenter
 } from '@chakra-ui/react';
 import StoreProductCard from '../components/MyStoreProductCard';
 import StoreOrders from './StoreOrders';
@@ -69,6 +71,17 @@ const MyStore = () => {
   return (
     <div>
       <Box h={'50px'}></Box>
+      {!fetchedStore && (
+        <AbsoluteCenter>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='#2F8559'
+            size='xl'
+          />
+        </AbsoluteCenter>
+      )}
 
       <Stack>
         {myStore && (
@@ -154,10 +167,12 @@ const MyStore = () => {
                 </Box>
 
                 <SimpleGrid
-                  spacing={3}
+                  spacing={5}
                   columns={[1, null, 2, null, 3]}
                   bg='#f2efda'
                   p={'5%'}
+                  pl={'10%'}
+                  pr={'10%'}
                   minW={'240px'}
                   h='100%'
                 >
