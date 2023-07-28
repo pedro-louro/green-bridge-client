@@ -38,9 +38,7 @@ const Login = () => {
       const user = { email, password };
       // const response = await login(user);
       const response = await toast.promise(login(user), {
-        pending: 'We are working on your request, please wait',
-        success: 'Welcome',
-        error: 'Something went wrong - try again later'
+        pending: 'We are working on your request, please wait'
       });
 
       //Store the login token in the local storage (function from the auth context)
@@ -63,7 +61,7 @@ const Login = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('green.50', 'gray.800')}
+      bg={'#f2efda'}
       bgImage="url('https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690059727/green-bridge/imgbin_large-monstera-leaf-png_1_el0b7v.png')"
       bgRepeat='no-repeat'
     >
@@ -85,28 +83,30 @@ const Login = () => {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={'gray.50'}
           boxShadow={'lg'}
           p={8}
         >
           <Stack spacing={4}>
             <FormControl id='email'>
-              <FormLabel>Email address</FormLabel>
+              <FormLabel color={'black'}>Email address</FormLabel>
               <Input
                 type='email'
                 value={email}
                 onChange={handleEmail}
+                borderColor={'gray.300'}
               />
             </FormControl>
             <FormControl id='password'>
-              <FormLabel>Password</FormLabel>
+              <FormLabel color={'black'}>Password</FormLabel>
               <Input
                 type='password'
                 value={password}
                 onChange={handlePassword}
+                borderColor={'gray.300'}
               />
             </FormControl>
-            <Stack spacing={10}>
+            <Stack spacing={5}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 align={'start'}

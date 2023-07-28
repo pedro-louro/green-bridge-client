@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../api/auth.api';
 import {
   Flex,
@@ -14,8 +14,7 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
-  Link
+  useColorModeValue
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import AddressSearchBar from '../components/AddressSearchBar';
@@ -65,14 +64,15 @@ const Signup = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('green.50', 'gray.800')}
+      bg={'#f2efda'}
       bgImage="url('https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690059727/green-bridge/imgbin_large-monstera-leaf-png_1_el0b7v.png')"
       bgRepeat='no-repeat'
     >
       <Stack
         spacing={8}
         mx={'auto'}
-        maxW={'lg'}
+        maxW={'xl'}
+        minW={'md'}
         py={12}
         px={6}
       >
@@ -92,7 +92,7 @@ const Signup = () => {
         </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          bg={'gray.50'}
           boxShadow={'lg'}
           p={8}
         >
@@ -107,6 +107,8 @@ const Signup = () => {
                   <Input
                     type='text'
                     onChange={handleName}
+                    borderColor={'gray.300'}
+                    w='sm'
                   />
                 </FormControl>
               </Box>
@@ -119,6 +121,8 @@ const Signup = () => {
               <Input
                 type='email'
                 onChange={handleEmail}
+                borderColor={'gray.300'}
+                w='sm'
               />
             </FormControl>
             <FormControl
@@ -130,6 +134,8 @@ const Signup = () => {
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   onChange={handlePassword}
+                  borderColor={'gray.300'}
+                  w='sm'
                 />
                 <InputRightElement h={'full'}>
                   <Button
@@ -144,9 +150,13 @@ const Signup = () => {
               </InputGroup>
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl
+              isRequired
+              w='sm'
+            >
               <FormLabel>Address</FormLabel>
               <AddressSearchBar
+                borderColor={'gray.300'}
                 handleAddress={handleAddress}
                 currentAddress={formattedAddress}
               />
@@ -171,7 +181,13 @@ const Signup = () => {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user? <Link color={'blue.400'}>Login</Link>
+                Already a user?{' '}
+                <Link
+                  to='/login'
+                  style={{ color: '#4399E1' }}
+                >
+                  <u>Login</u>
+                </Link>
               </Text>
             </Stack>
           </Stack>

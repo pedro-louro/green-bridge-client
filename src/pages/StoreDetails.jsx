@@ -81,8 +81,16 @@ const StoreDetails = () => {
           status: 'cart'
         });
         setOrderDetails(addToOrder.data);
+        toast.success('Product added to cart!', {
+          position: 'top-center',
+          autoClose: 3000
+        });
       } catch (error) {
         console.log(error);
+        toast.error('Something went wrong', {
+          position: 'top-center',
+          autoClose: 3000
+        });
       }
     }
   };
