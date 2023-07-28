@@ -13,12 +13,14 @@ import {
   MenuDivider,
   useDisclosure,
   useColorModeValue,
-  Stack
+  Stack,
+  Image
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
 import Cart from './CartUI';
+import logo from '../assets/logo.png';
 
 const links = [
   { name: 'For Plants Lovers', to: '/stores' },
@@ -78,7 +80,13 @@ const NavBar = () => {
           spacing={8}
           alignItems={'center'}
         >
-          <Box>Logo</Box>
+          <Box bg={'white'}>
+            <Image
+              src={logo}
+              h={16}
+              alignSelf={'baseline'}
+            />
+          </Box>
           {isLoggedIn && (
             <HStack
               as={'nav'}
