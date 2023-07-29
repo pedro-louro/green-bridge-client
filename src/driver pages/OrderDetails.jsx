@@ -13,9 +13,10 @@ import {
   Center,
   VStack,
   Button,
+  Flex,
   Icon
 } from '@chakra-ui/react';
-import { MdLocationOn } from 'react-icons/md';
+import { TfiMapAlt } from 'react-icons/tfi';
 import { GiRoad } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 
@@ -149,19 +150,23 @@ const OrderDetails = () => {
                   <b>From</b> {order.store.name} Store
                 </Text>
 
-                <a
-                  href={`geo:${order.store.address.lat},${order.store.address.lng}`}
-                  target='_blank'
+                <Heading
+                  color={'green'}
+                  size='sm'
+                  textDecoration={'underline'}
                 >
-                  <Heading
-                    color={'green'}
-                    size='sm'
-                    fontFamily={'body'}
+                  <Icon
+                    w={8}
+                    as={TfiMapAlt}
+                    color={'green.600'}
+                  />
+                  {'  '}
+                  <Link
+                    to={`geo:${order.store.address.lat},${order.store.address.lng}`}
                   >
-                    <Icon as={MdLocationOn} /> {storeAddress}
-                  </Heading>
-                </a>
-
+                    {storeAddress}
+                  </Link>
+                </Heading>
                 <Text
                   color={'grey'}
                   size='sm'
@@ -171,9 +176,19 @@ const OrderDetails = () => {
                 <Heading
                   color={'green'}
                   size='sm'
-                  fontFamily={'body'}
+                  textDecoration={'underline'}
                 >
-                  <Icon as={MdLocationOn} /> {userAddress}
+                  <Icon
+                    w={8}
+                    as={TfiMapAlt}
+                    color={'green.600'}
+                  />
+                  {'  '}
+                  <Link
+                    to={`geo:${order.user.address.lat},${order.user.address.lng}`}
+                  >
+                    {userAddress}
+                  </Link>
                 </Heading>
                 <Text>
                   <Icon as={GiRoad} />
