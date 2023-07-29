@@ -46,8 +46,14 @@ const StoreOrders = ({ storeId }) => {
         const nonActiveOrders = response.data.orders.filter(
           order => order.status === 'delivered' || order.status === 'canceled'
         );
-        // Reverse array to show more recent orders first
-        setPastOrders(nonActiveOrders.reverse());
+        if (nonActiveOrders.length) {
+          // Reverse array to show more recent orders first
+          setPastOrders(nonActiveOrders.reverse());
+          setPastOrders(nonActiveOrders.reverse());
+        } else {
+          setPastOrders(null);
+        }
+
         setStatusChanged(false);
       } catch (error) {
         console.log(error);
@@ -92,27 +98,26 @@ const StoreOrders = ({ storeId }) => {
           />
         </AbsoluteCenter>
       )}
-
+      <Box
+        position='relative'
+        p={20}
+      >
+        <Divider w={'100vw'} />
+        <AbsoluteCenter
+          bg='white'
+          px='4'
+          fontSize={'3xl'}
+        >
+          Open Orders
+        </AbsoluteCenter>
+      </Box>
       {!orders && storeFetched && (
         <div>
-          <Heading size='lg'>You don't have any open order! </Heading>
+          <Heading size='md'>You don't have any open order! </Heading>
         </div>
       )}
       {orders && storeFetched && (
         <VStack>
-          <Box
-            position='relative'
-            p={20}
-          >
-            <Divider w={'100vw'} />
-            <AbsoluteCenter
-              bg='white'
-              px='4'
-              fontSize={'3xl'}
-            >
-              Open Orders
-            </AbsoluteCenter>
-          </Box>
           <SimpleGrid
             spacing={5}
             columns={[1, null, 2, null, 3]}
@@ -143,48 +148,52 @@ const StoreOrders = ({ storeId }) => {
           </SimpleGrid>
         </VStack>
       )}
-
-      {pastOrders && storeFetched && (
-        <Box
-          position='relative'
-          p={10}
-        >
-          <Divider w={'100vw'} />
-          <AbsoluteCenter
-            bg='white'
-            px='4'
-            fontSize={'3xl'}
-          >
-            Past Orders
-          </AbsoluteCenter>
-        </Box>
-      )}
-      <VStack
+      <Box
+        position='relative'
         p={10}
-        pt={10}
       >
-        <SimpleGrid
-          spacing={3}
-          columns={[1, null, 2, null, 3]}
-          bg='#f2efda'
-          p={'5%'}
-          pl={'10%'}
-          pr={'10%'}
-          minW={'240px'}
-          h='100%'
+        <Divider w={'100vw'} />
+        <AbsoluteCenter
+          bg='white'
+          px='4'
+          fontSize={'3xl'}
         >
-          {pastOrders &&
-            pastOrders.map(pastOrder => {
-              return (
-                <StoreOrderCard
-                  key={pastOrder._id}
-                  order={pastOrder}
-                  store={store}
-                />
-              );
-            })}
-        </SimpleGrid>
-      </VStack>
+          Past Orders
+        </AbsoluteCenter>
+      </Box>
+      {!pastOrders && storeFetched && (
+        <div>
+          <Heading size='md'>You don't have any past orders! </Heading>
+        </div>
+      )}
+      {pastOrders && storeFetched && (
+        <VStack
+          p={10}
+          pt={10}
+        >
+          <SimpleGrid
+            spacing={3}
+            columns={[1, null, 2, null, 3]}
+            bg='#f2efda'
+            p={'5%'}
+            pl={'10%'}
+            pr={'10%'}
+            minW={'240px'}
+            h='100%'
+          >
+            {pastOrders &&
+              pastOrders.map(pastOrder => {
+                return (
+                  <StoreOrderCard
+                    key={pastOrder._id}
+                    order={pastOrder}
+                    store={store}
+                  />
+                );
+              })}
+          </SimpleGrid>
+        </VStack>
+      )}
     </div>
   );
 };

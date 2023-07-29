@@ -1,7 +1,4 @@
 import {
-  Card,
-  CardHeader,
-  CardBody,
   Heading,
   Stack,
   Text,
@@ -10,8 +7,7 @@ import {
   Badge,
   Image,
   HStack,
-  Center,
-  Avatar
+  Center
 } from '@chakra-ui/react';
 import { getUser } from '../api/auth.api';
 
@@ -94,6 +90,7 @@ const StoreOrderCard = ({ store, order }) => {
 
               {order.products &&
                 order.products.map(orderProduct => {
+                  console.log(order.products);
                   return (
                     <HStack
                       key={orderProduct.product._id}
