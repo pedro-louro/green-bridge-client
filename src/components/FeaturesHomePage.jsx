@@ -16,20 +16,20 @@ import { MdDeliveryDining } from 'react-icons/md';
 
 const FeaturesHomePage = () => {
   return (
-    <HStack
+    <Stack
+      direction={['column', 'row']}
       spacing={40}
-      p={5}
+      align={'center'}
+      p={20}
     >
       <Image
-        w={'md'}
+        objectFit={'scale-down'}
+        h={'50vh'}
         rounded={'md'}
         alt={'monstera design by pngtree.com '}
         src='https://res.cloudinary.com/dbdzfjr4x/image/upload/c_thumb,h_3000,g_auto/v1690570820/green-bridge/Pngtree_nordic_present_decoration_green_plant_3799519_hpecmt.png'
       />
-      <Box
-        spacing={4}
-        w={'xl'}
-      >
+      <Stack spacing={4}>
         <Heading>
           <Icon
             fontSize={{ base: '1xl', sm: '2xl', md: '4xl' }}
@@ -139,8 +139,8 @@ const FeaturesHomePage = () => {
             </Text>
           </Stack>
         </Stack>
-      </Box>
-    </HStack>
+      </Stack>
+    </Stack>
   );
 };
 export default FeaturesHomePage;

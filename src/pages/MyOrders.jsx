@@ -20,8 +20,8 @@ import { PiPottedPlant } from 'react-icons/pi';
 
 const MyOrders = () => {
   const userId = localStorage.getItem('userId');
-  const [pastOrders, setPastOrders] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [pastOrders, setPastOrders] = useState(null);
+  const [orders, setOrders] = useState(null);
   const [ordersFetched, setOrdersFetched] = useState(false);
 
   const fetchUserOrders = async () => {
@@ -45,9 +45,12 @@ const MyOrders = () => {
       const nonActiveOrders = response.data.filter(
         order => order.status === 'delivered' || order.status === 'canceled'
       );
-
+      if (nonActiveOrders.length) {
+        setPastOrders(nonActiveOrders.reverse());
+      } else {
+        setPastOrders(null);
+      }
       // Reverse the order of the array to show more recent orders first
-      setPastOrders(nonActiveOrders.reverse());
       setOrdersFetched(true);
     } catch (error) {
       console.log(error);
@@ -101,7 +104,7 @@ const MyOrders = () => {
               fontWeight: 'bold'
             }}
           >
-            Past Orders
+            Orders History
           </Tab>
         </TabList>
         <TabPanels p={4}>
@@ -161,6 +164,31 @@ const MyOrders = () => {
           </TabPanel>
 
           <TabPanel>
+            {!pastOrders && ordersFetched && (
+              <VStack>
+                <Heading
+                  size='lg'
+                  mb={5}
+                >
+                  You don't have any Past orders!{' '}
+                </Heading>
+                <Link
+                  to={'/stores/'}
+                  color='white'
+                  size='lg'
+                  bg='green.700'
+                  p={3}
+                  rounded={'xl'}
+                >
+                  <Icon
+                    as={PiPottedPlant}
+                    size='md'
+                  />
+                  {'  '}
+                  Find you Favorite Plants Store here!
+                </Link>
+              </VStack>
+            )}
             {pastOrders && ordersFetched && (
               <VStack
                 p={10}

@@ -27,7 +27,6 @@ const HomePage = () => {
       <VStack>
         <Box
           bg='#f2efda'
-          h={'100vh'}
           w='full'
         >
           <Container maxW={'5xl'}>
@@ -142,7 +141,9 @@ const HomePage = () => {
             </Stack>
           </Container>
         </Box>
-        <FeaturesHomePage />
+        <Stack>
+          <FeaturesHomePage />
+        </Stack>
         <Footer />
       </VStack>
     </Box>
