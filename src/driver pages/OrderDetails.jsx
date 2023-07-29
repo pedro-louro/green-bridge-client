@@ -148,13 +148,19 @@ const OrderDetails = () => {
                 >
                   <b>From</b> {order.store.name} Store
                 </Text>
-                <Heading
-                  color={'green'}
-                  size='sm'
-                  fontFamily={'body'}
+
+                <a
+                  href={`geo:${order.store.address.lat},${order.store.address.lng}`}
+                  target='_blank'
                 >
-                  <Icon as={MdLocationOn} /> {storeAddress}
-                </Heading>
+                  <Heading
+                    color={'green'}
+                    size='sm'
+                    fontFamily={'body'}
+                  >
+                    <Icon as={MdLocationOn} /> {storeAddress}
+                  </Heading>
+                </a>
 
                 <Text
                   color={'grey'}
