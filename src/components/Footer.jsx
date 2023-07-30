@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   Icon
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaLinkedin } from 'react-icons/fa';
 import { ImGithub } from 'react-icons/im';
 
 const Footer = () => {
@@ -36,7 +36,9 @@ const Footer = () => {
           <Link href={'#'}>Home</Link>
           <Link href={'/stores'}>Stores</Link>
           <Link href={'/drivers'}>Drivers</Link>
-          <Link href={'mailto:pedrolouro93@gmail.com'}>Contact</Link>
+          <Link href={'https://www.linkedin.com/in/pedro-dlouro/'}>
+            Contact
+          </Link>
         </Stack>
       </Container>
 
@@ -55,24 +57,18 @@ const Footer = () => {
           align={{ base: 'center', md: 'center' }}
         >
           <Link href={'https://github.com/pedro-louro/green-bridge-client'}>
-            <Icon as={ImGithub} /> Open on GitHub
+            <Icon as={ImGithub} /> See on GitHub - pedro-louro
           </Link>
           <Stack
             direction={'row'}
             spacing={6}
           >
-            <Icon
-              label={'Twitter'}
-              as={FaTwitter}
-            />
-            <Icon
-              label={'Twitter'}
-              as={FaYoutube}
-            />
-            <Icon
-              label={'Twitter'}
-              as={FaInstagram}
-            />
+            <Link href={'https://www.linkedin.com/in/pedro-dlouro/'}>
+              <Icon
+                label={'Linkedin'}
+                as={FaLinkedin}
+              />
+            </Link>
           </Stack>
         </Container>
       </Box>
