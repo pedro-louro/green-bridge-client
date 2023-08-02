@@ -28,8 +28,7 @@ const HomePage = () => {
         <Stack
           bg='#f2efda'
           w='full'
-          h='100vh'
-          minH={'100vh'}
+          pb={20}
         >
           <Container maxW={'5xl'}>
             <Stack
@@ -77,7 +76,7 @@ const HomePage = () => {
                     sm: '10rem',
                     md: '17rem',
                     lg: '25rem',
-                    xl: '35rem'
+                    xl: '30rem'
                   }}
                   src='https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690560007/green-bridge/7542099_bgi1hw.png'
                 />
@@ -86,13 +85,13 @@ const HomePage = () => {
                   fontSize={{ base: '4xl', sm: '5xl', md: '6xl' }}
                 >
                   <Icon
-                    fontSize={{ base: '1xl', sm: '2xl', md: '4xl' }}
+                    fontSize={{ base: '1xl', sm: '2xl', md: '3xl' }}
                     as={PiPlant}
                     color={'#00923A'}
                   />{' '}
                   Green Bridge{' '}
                   <Icon
-                    fontSize={{ base: '1xl', sm: '2xl', md: '4xl' }}
+                    fontSize={{ base: '1xl', sm: '2xl', md: '3xl' }}
                     as={MdDeliveryDining}
                     color={'#00923A'}
                   />
