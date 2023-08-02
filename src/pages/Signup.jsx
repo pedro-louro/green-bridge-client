@@ -61,6 +61,7 @@ const Signup = () => {
 
   return (
     <Flex
+      direction={'column'}
       minH={'100vh'}
       align={'center'}
       justify={'center'}
@@ -68,13 +69,13 @@ const Signup = () => {
       bgImage="url('https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690059727/green-bridge/imgbin_large-monstera-leaf-png_1_el0b7v.png')"
       bgRepeat='no-repeat'
     >
+      <Box h='60px'></Box>
       <Stack
         spacing={8}
         mx={'auto'}
-        maxW={'xl'}
-        minW={'md'}
-        py={12}
-        px={6}
+        maxW={'lg'}
+        // py={12}
+        // px={6}
       >
         <Stack align={'center'}>
           <Heading
@@ -108,7 +109,7 @@ const Signup = () => {
                     type='text'
                     onChange={handleName}
                     borderColor={'gray.300'}
-                    w='sm'
+                    w='xs'
                   />
                 </FormControl>
               </Box>
@@ -122,7 +123,7 @@ const Signup = () => {
                 type='email'
                 onChange={handleEmail}
                 borderColor={'gray.300'}
-                w='sm'
+                w='xs'
               />
             </FormControl>
             <FormControl
@@ -135,7 +136,7 @@ const Signup = () => {
                   type={showPassword ? 'text' : 'password'}
                   onChange={handlePassword}
                   borderColor={'gray.300'}
-                  w='sm'
+                  w='xs'
                 />
                 <InputRightElement h={'full'}>
                   <Button
@@ -152,7 +153,7 @@ const Signup = () => {
 
             <FormControl
               isRequired
-              w='sm'
+              w='xs'
             >
               <FormLabel>Address</FormLabel>
               <AddressSearchBar
@@ -194,12 +195,6 @@ const Signup = () => {
         </Box>
       </Stack>
     </Flex>
-
-    // {errorMessage && <p className='error-message'>{errorMessage}</p>}
-
-    // <p>Already have account?</p>
-    // <Link to={'/login'}> Login</Link>
-    // </div>
   );
 };
 

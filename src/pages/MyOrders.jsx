@@ -118,7 +118,7 @@ const MyOrders = () => {
                   You don't have any open orders!{' '}
                 </Heading>
                 <Link
-                  to={'/stores/'}
+                  href={'/stores/'}
                   color='white'
                   size='lg'
                   bg='green.700'
