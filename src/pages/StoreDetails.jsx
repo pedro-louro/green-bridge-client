@@ -198,13 +198,15 @@ const StoreDetails = () => {
       >
         {store &&
           store.products.map(product => {
-            return (
-              <ProductCard
-                key={product._id}
-                product={product}
-                handleOrder={handleOrder}
-              />
-            );
+            if (product.status !== 'deleted') {
+              return (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  handleOrder={handleOrder}
+                />
+              );
+            }
           })}
       </SimpleGrid>
     </div>

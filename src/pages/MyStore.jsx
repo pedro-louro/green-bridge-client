@@ -3,7 +3,7 @@ import { getStore } from '../api/stores.api';
 import { useState, useEffect } from 'react';
 import { getUser } from '../api/auth.api';
 import CreateProduct from './CreateProduct';
-import { deleteProduct } from '../api/product.api';
+import { updateProduct } from '../api/product.api';
 import {
   Button,
   Modal,
@@ -48,6 +48,7 @@ const MyStore = () => {
     try {
       const fetchUser = await getUser(userId);
       const response = await getStore(fetchUser.data.store);
+
       setMyStore(response.data);
       setFectchedStore(true);
     } catch (error) {
@@ -57,8 +58,10 @@ const MyStore = () => {
   };
   const removeProduct = async productId => {
     try {
-      await deleteProduct(productId);
+      // update product status to "delete" to soft delete the product
+      await updateProduct({ _id: productId, status: 'deleted' });
       await fetchStore();
+      console.log(myStore);
     } catch (error) {
       console.log(error);
     }
@@ -199,14 +202,16 @@ const MyStore = () => {
                 >
                   {myStore &&
                     myStore.products.map(product => {
-                      return (
-                        <Container key={product._id}>
-                          <StoreProductCard
-                            product={product}
-                            removeProduct={removeProduct}
-                          />
-                        </Container>
-                      );
+                      if (product.status !== 'deleted') {
+                        return (
+                          <Container key={product._id}>
+                            <StoreProductCard
+                              product={product}
+                              removeProduct={removeProduct}
+                            />
+                          </Container>
+                        );
+                      }
                     })}
                 </SimpleGrid>
               </TabPanel>

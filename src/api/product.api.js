@@ -21,6 +21,10 @@ export const deleteProduct = productID => {
   return axios.delete(`${baseURL}/products/${productID}`);
 };
 
+export const updateProduct = product => {
+  return axios.put(`${baseURL}/products/${product._id}`, product);
+};
+
 export const uploadImage = uploadData => {
   return axios.post(`${baseURL}/upload`, uploadData);
 };
