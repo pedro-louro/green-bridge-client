@@ -13,8 +13,7 @@ import {
   Stack,
   Button,
   Heading,
-  Text,
-  useColorModeValue
+  Text
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import AddressSearchBar from '../components/AddressSearchBar';

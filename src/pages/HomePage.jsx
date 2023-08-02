@@ -25,9 +25,11 @@ const HomePage = () => {
     <Box>
       <Box h={'60px'}></Box>
       <VStack>
-        <Box
+        <Stack
           bg='#f2efda'
           w='full'
+          h='100vh'
+          minH={'100vh'}
         >
           <Container maxW={'5xl'}>
             <Stack
@@ -71,7 +73,12 @@ const HomePage = () => {
                   </Text>
                 </Heading>
                 <Image
-                  height={{ sm: '24rem', lg: '35rem' }}
+                  height={{
+                    sm: '10rem',
+                    md: '17rem',
+                    lg: '25rem',
+                    xl: '35rem'
+                  }}
                   src='https://res.cloudinary.com/dbdzfjr4x/image/upload/v1690560007/green-bridge/7542099_bgi1hw.png'
                 />
                 <Heading
@@ -140,7 +147,7 @@ const HomePage = () => {
               </VStack>
             </Stack>
           </Container>
-        </Box>
+        </Stack>
         <Stack>
           <FeaturesHomePage />
         </Stack>
