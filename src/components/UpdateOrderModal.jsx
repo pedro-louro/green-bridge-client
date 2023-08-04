@@ -35,7 +35,7 @@ function UpdateOrderModal({ orderDetails, updateStatus, refreshStores }) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Order Status</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Select
